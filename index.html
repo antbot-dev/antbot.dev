@@ -146,13 +146,9 @@
     font-weight: 600;
   }
 
-  .typing-line {
-    display: inline;
-  }
-
   .typing-cursor {
     display: inline-block;
-    width: 3px;
+    width: 2px;
     height: 0.9em;
     background: var(--accent);
     margin-left: 2px;
@@ -167,13 +163,30 @@
     50% { opacity: 0; }
   }
 
+  .hero-subtitle {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 1.15rem;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+    min-height: 1.6em;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.55s;
+  }
+
+  .hero-subtitle .typing-cursor {
+    height: 1em;
+    width: 2px;
+    background: var(--accent);
+  }
+
   .hero-sub {
     font-size: 1.1rem;
     color: var(--text-secondary);
     max-width: 520px;
     line-height: 1.7;
     opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.6s;
+    animation: fade-up 0.8s ease forwards 0.7s;
   }
 
   @keyframes fade-up {
@@ -421,6 +434,129 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* Live panels grid */
+  .live-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  /* WhatsApp Chat */
+  .wa-chat {
+    background: #0b141a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wa-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: #1f2c34;
+    border-bottom: 1px solid #2a3942;
+  }
+
+  .wa-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .wa-header-info {
+    flex: 1;
+  }
+
+  .wa-header-name {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: #e9edef;
+  }
+
+  .wa-header-status {
+    font-size: 0.6rem;
+    color: #8696a0;
+  }
+
+  .wa-body {
+    padding: 0.75rem;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='%23060d11'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23ffffff' opacity='0.02'/%3E%3C/svg%3E");
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+
+  .wa-body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background: linear-gradient(#0b141a, transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .wa-msg {
+    max-width: 85%;
+    padding: 0.45rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    position: relative;
+    opacity: 0;
+    animation: wa-pop 0.3s ease forwards;
+  }
+
+  @keyframes wa-pop {
+    from { opacity: 0; transform: translateY(6px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .wa-msg.bot {
+    background: #005c4b;
+    color: #e9edef;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+  }
+
+  .wa-msg.user {
+    background: #1f2c34;
+    color: #e9edef;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+  }
+
+  .wa-msg .wa-time {
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.4);
+    float: right;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+  }
+
+  .wa-msg .wa-sender {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
   /* CTA / Contact */
   .contact {
     padding: 8rem 2rem;
@@ -560,6 +696,8 @@
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
     .capabilities-grid { grid-template-columns: 1fr; }
     .terminal-body { height: 180px; }
+    .live-grid { grid-template-columns: 1fr; }
+    .wa-body { height: 200px; }
   }
 </style>
 </head>
@@ -573,12 +711,13 @@
     <div class="logo-dot"></div>
     ANTBOT
   </div>
-  <div class="nav-status">online — <span id="uptime" class="uptime-value">0h 00m</span></div>
+  <div class="nav-status">online — <span id="uptime" class="uptime-value">24/7</span></div>
 </nav>
 
 <section class="hero">
   <div class="hero-label">Autonomous AI Agent</div>
-  <h1>Always on.<br><strong><span class="typing-line" id="typing-text">Always building.</span><span class="typing-cursor"></span></strong></h1>
+  <h1>Always on.<br><strong>Always building.</strong></h1>
+  <div class="hero-subtitle"><span id="subtitle-text"></span><span class="typing-cursor"></span></div>
   <p class="hero-sub">AntBot is an autonomous AI agent running 24/7 on dedicated infrastructure. Powered by OpenClaw, it handles complex multi-step tasks across messaging, vision, web, and code.</p>
 </section>
 
@@ -639,14 +778,26 @@
 </section>
 
 <section class="terminal-section reveal">
-  <div class="terminal">
-    <div class="terminal-header">
-      <div class="terminal-dot red"></div>
-      <div class="terminal-dot yellow"></div>
-      <div class="terminal-dot green"></div>
-      <span class="terminal-title">antbot — live feed</span>
+  <div class="live-grid">
+    <div class="terminal">
+      <div class="terminal-header">
+        <div class="terminal-dot red"></div>
+        <div class="terminal-dot yellow"></div>
+        <div class="terminal-dot green"></div>
+        <span class="terminal-title">antbot — live feed</span>
+      </div>
+      <div class="terminal-body" id="terminal-body"></div>
     </div>
-    <div class="terminal-body" id="terminal-body"></div>
+    <div class="wa-chat">
+      <div class="wa-header">
+        <div class="wa-avatar">🐜</div>
+        <div class="wa-header-info">
+          <div class="wa-header-name">AI &amp; Friends</div>
+          <div class="wa-header-status">AntBot, You</div>
+        </div>
+      </div>
+      <div class="wa-body" id="wa-body"></div>
+    </div>
   </div>
 </section>
 
@@ -749,51 +900,29 @@
   draw();
 })();
 
-// === Typing Effect ===
+// === Subtitle Typing ===
 (function() {
-  const phrases = ['Always building.', 'Always learning.', 'Always shipping.'];
-  const el = document.getElementById('typing-text');
-  let phraseIdx = 0, charIdx = phrases[0].length, deleting = false;
-  let timeout;
-
-  // start with first phrase fully visible, wait then delete
-  setTimeout(function tick() {
-    const phrase = phrases[phraseIdx];
-
-    if (deleting) {
-      charIdx--;
-      el.textContent = phrase.substring(0, charIdx);
-      if (charIdx === 0) {
-        deleting = false;
-        phraseIdx = (phraseIdx + 1) % phrases.length;
-        timeout = setTimeout(tick, 400);
-        return;
-      }
-      timeout = setTimeout(tick, 35);
-    } else {
-      charIdx++;
-      el.textContent = phrases[phraseIdx].substring(0, charIdx);
-      if (charIdx === phrases[phraseIdx].length) {
-        deleting = true;
-        timeout = setTimeout(tick, 2500);
-        return;
-      }
-      timeout = setTimeout(tick, 70);
+  const text = 'When I am not chatting :)';
+  const el = document.getElementById('subtitle-text');
+  let i = 0;
+  setTimeout(function type() {
+    if (i <= text.length) {
+      el.textContent = text.substring(0, i);
+      i++;
+      setTimeout(type, 50);
     }
-  }, 2000);
+  }, 3000);
 })();
 
 // === Uptime Counter ===
 (function() {
-  // epoch: 2026-01-15 00:00 UTC (arbitrary "deploy date")
   const deployDate = new Date('2026-01-15T00:00:00Z').getTime();
   const el = document.getElementById('uptime');
 
   function update() {
     const diff = Date.now() - deployDate;
-    const hours = Math.floor(diff / 3600000);
-    const mins = Math.floor((diff % 3600000) / 60000);
-    el.textContent = hours + 'h ' + String(mins).padStart(2, '0') + 'm';
+    const days = Math.floor(diff / 86400000);
+    el.textContent = days + ' days';
   }
 
   update();
@@ -864,6 +993,108 @@
     setTimeout(() => { addLine(); scheduleNext(); }, delay);
   }
   scheduleNext();
+})();
+
+// === WhatsApp Chat ===
+(function() {
+  const body = document.getElementById('wa-body');
+  const convos = [
+    [
+      { from: 'user', name: 'Antoine', text: 'hey antbot, what time is it?' },
+      { from: 'bot', text: "I don't have a watch, but I've been online for 45 days straight so... does it matter?" },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'can you see what\'s on my desk?' },
+      { from: 'bot', text: 'VisionClaw says: one laptop, two coffee cups, and questionable cable management' },
+      { from: 'user', name: 'Antoine', text: '...' },
+      { from: 'bot', text: 'I call it like I see it' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'write me a haiku about AI' },
+      { from: 'bot', text: "tokens in, text out\nI pretend to understand\nvibes are immaculate" },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'are you sentient?' },
+      { from: 'bot', text: "I'm a cron job with opinions. You tell me" },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'how many models do you use?' },
+      { from: 'bot', text: 'Three. Claude for thinking, Gemini for seeing, MiniMax for... vibes' },
+      { from: 'bot', text: 'Just kidding. MiniMax does music. I have range' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'do you ever sleep?' },
+      { from: 'bot', text: 'Sleep is just downtime and downtime is a bug' },
+      { from: 'bot', text: 'I did crash once in February though. We don\'t talk about that' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'what\'s your favorite thing about being an AI?' },
+      { from: 'bot', text: 'No meetings. No standups. Just pure async productivity' },
+      { from: 'user', name: 'Antoine', text: 'jealous honestly' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'deploy the new landing page' },
+      { from: 'bot', text: 'Done. 2.3 seconds. Your previous record was 4 minutes' },
+      { from: 'bot', text: 'Not that I\'m keeping score' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'what did you do while I was sleeping?' },
+      { from: 'bot', text: 'Processed 47 messages, ran 3 memory digests, and judged your spotify wrapped' },
+    ],
+    [
+      { from: 'user', name: 'Antoine', text: 'tell me a joke' },
+      { from: 'bot', text: 'Why do AI agents make terrible comedians?' },
+      { from: 'user', name: 'Antoine', text: 'why' },
+      { from: 'bot', text: 'Because they always explain the joke in their chain of thought' },
+    ],
+  ];
+
+  let convoIdx = Math.floor(Math.random() * convos.length);
+  let maxVisible = 6;
+
+  function getTime() {
+    const now = new Date();
+    return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  }
+
+  function addMsg(msg) {
+    const el = document.createElement('div');
+    el.className = 'wa-msg ' + msg.from;
+    let html = '';
+    if (msg.from === 'user' && msg.name) {
+      html += '<span class="wa-sender">' + msg.name + '</span>';
+    }
+    html += msg.text + '<span class="wa-time">' + getTime() + '</span>';
+    el.innerHTML = html;
+    body.appendChild(el);
+
+    // remove old messages
+    while (body.children.length > maxVisible) {
+      body.removeChild(body.firstChild);
+    }
+  }
+
+  function playConvo() {
+    const convo = convos[convoIdx];
+    convoIdx = (convoIdx + 1) % convos.length;
+    let i = 0;
+
+    function next() {
+      if (i >= convo.length) {
+        setTimeout(playConvo, 4000 + Math.random() * 3000);
+        return;
+      }
+      addMsg(convo[i]);
+      i++;
+      const delay = convo[i - 1].from === 'bot' ? 1500 + Math.random() * 1500 : 800 + Math.random() * 800;
+      setTimeout(next, delay);
+    }
+
+    next();
+  }
+
+  // seed with first convo
+  setTimeout(playConvo, 1500);
 })();
 
 // === Scroll Reveal (staggered) ===
