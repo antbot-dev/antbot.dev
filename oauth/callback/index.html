@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html><head><title>AntBot OAuth</title>
+<style>body{background:#0a0a0b;color:#e8e8ed;font-family:monospace;display:flex;justify-content:center;align-items:center;height:100vh;margin:0}.box{background:#16161a;padding:2rem;border-radius:8px;border:1px solid #1e1e24;max-width:600px;word-break:break-all}h2{color:#c8ff00;margin-bottom:1rem}code{color:#c8ff00;font-size:0.9rem}</style></head>
+<body><div class="box"><h2>OAuth Code</h2><p id="code">Extracting...</p>
+<script>
+var p=new URLSearchParams(window.location.search);
+var code=p.get("code");
+if(code){document.getElementById("code").innerHTML="Code:<br><code>"+code+"</code><br><br>Copie ce code et envoie-le.";}
+else{document.getElementById("code").textContent="Error: "+JSON.stringify(Object.fromEntries(p));}
+</script></div></body></html>

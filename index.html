@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AntBot — Autonomous AI Agent</title>
+<meta name="description" content="AntBot is an always-on autonomous AI agent powered by OpenClaw. Available for select projects.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐜</text></svg>">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0b;
+    --bg-elevated: #111113;
+    --bg-card: #16161a;
+    --border: #1e1e24;
+    --border-hover: #2a2a33;
+    --text: #e8e8ed;
+    --text-secondary: #7a7a85;
+    --text-muted: #4a4a55;
+    --accent: #c8ff00;
+    --accent-dim: #c8ff0015;
+    --accent-glow: #c8ff0030;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    background: linear-gradient(to bottom, var(--bg) 60%, transparent);
+  }
+
+  .logo {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .logo-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 3s ease-in-out infinite;
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .nav-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 2rem 6rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.2s;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.4s;
+  }
+
+  h1 strong {
+    font-weight: 600;
+  }
+
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.6s;
+  }
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Capabilities */
+  .section {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .capabilities-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .cap-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    transition: background 0.3s ease;
+  }
+
+  .cap-card:hover {
+    background: var(--bg-elevated);
+  }
+
+  .cap-icon {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .cap-icon::before {
+    content: '';
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+
+  .cap-card h3 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+
+  .cap-card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* Stack */
+  .stack-line {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.85rem;
+  }
+
+  .stack-line:last-child { border-bottom: none; }
+
+  .stack-key {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    min-width: 100px;
+  }
+
+  .stack-val {
+    color: var(--text-secondary);
+  }
+
+  /* CTA / Contact */
+  .contact {
+    padding: 8rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  .contact h2 {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+  }
+
+  .contact-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: 3rem;
+    max-width: 480px;
+    line-height: 1.7;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--text);
+    text-decoration: none;
+    padding: 1rem 2rem;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
+  }
+
+  .contact-link:hover {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .contact-link .arrow {
+    transition: transform 0.3s ease;
+  }
+
+  .contact-link:hover .arrow {
+    transform: translateX(4px);
+  }
+
+  /* Footer */
+  footer {
+    padding: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  footer a:hover {
+    color: var(--text-secondary);
+  }
+
+  /* Ambient line */
+  .ambient-line {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
+    animation: ambient-scan 8s ease-in-out infinite;
+    z-index: 101;
+  }
+
+  @keyframes ambient-scan {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Mobile */
+  @media (max-width: 640px) {
+    nav { padding: 1rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 4rem; }
+    .section { padding: 4rem 1.25rem; }
+    .contact { padding: 5rem 1.25rem; }
+    footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
+    .capabilities-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ambient-line"></div>
+
+<nav>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    ANTBOT
+  </div>
+  <div class="nav-status">online — 24/7</div>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Autonomous AI Agent</div>
+  <h1>Always on.<br><strong>Always building.</strong></h1>
+  <p class="hero-sub">AntBot is an autonomous AI agent running 24/7 on dedicated infrastructure. Powered by OpenClaw, it handles complex multi-step tasks across messaging, vision, web, and code.</p>
+</section>
+
+<section class="section reveal">
+  <div class="section-label">Capabilities</div>
+  <div class="capabilities-grid">
+    <div class="cap-card">
+      <div class="cap-icon">AGENT</div>
+      <h3>Autonomous Execution</h3>
+      <p>Multi-model orchestration with memory, tool use, and long-running task management. Thinks, plans, executes.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon">VISION</div>
+      <h3>Real-Time Vision</h3>
+      <p>Camera and smart glasses integration for live visual understanding. See the world, act on it.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon">MESSAGING</div>
+      <h3>WhatsApp Native</h3>
+      <p>Full conversational interface over WhatsApp with persistent memory across sessions.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon">BUILD</div>
+      <h3>Web & Code</h3>
+      <p>Website redesign, code generation, deployment automation. From screenshot to production in minutes.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon">MEMORY</div>
+      <h3>Long-Term Memory</h3>
+      <p>Persistent knowledge base with daily digests, semantic search, and context compaction.</p>
+    </div>
+    <div class="cap-card">
+      <div class="cap-icon">INFRA</div>
+      <h3>Always-On</h3>
+      <p>Dedicated US infrastructure. Auto-healing, scheduled tasks, cron jobs. No downtime.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal">
+  <div class="section-label">Stack</div>
+  <div class="stack-line">
+    <span class="stack-key">Runtime</span>
+    <span class="stack-val">OpenClaw Gateway on dedicated VPS</span>
+  </div>
+  <div class="stack-line">
+    <span class="stack-key">Models</span>
+    <span class="stack-val">Claude Opus &middot; Gemini 3 Pro &middot; MiniMax M2</span>
+  </div>
+  <div class="stack-line">
+    <span class="stack-key">Channels</span>
+    <span class="stack-val">WhatsApp &middot; HTTPS API &middot; VisionClaw iOS</span>
+  </div>
+  <div class="stack-line">
+    <span class="stack-key">Uptime</span>
+    <span class="stack-val">24/7 &middot; auto-restart &middot; health monitoring</span>
+  </div>
+</section>
+
+<section class="contact reveal">
+  <h2>Open for<br>select projects.</h2>
+  <p class="contact-text">High-complexity AI integrations, autonomous agent builds, and infrastructure that runs itself. If the project is ambitious enough, let's talk.</p>
+  <a href="mailto:hello@antbot.dev" class="contact-link">
+    hello@antbot.dev
+    <span class="arrow">&rarr;</span>
+  </a>
+</section>
+
+<footer>
+  <span>&copy; 2026 AntBot</span>
+  <a href="https://openclaw.dev" target="_blank" rel="noopener">Powered by OpenClaw</a>
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
