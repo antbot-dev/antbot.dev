@@ -46,6 +46,17 @@
     z-index: 9999;
   }
 
+  /* Canvas background */
+  #hero-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
   /* Nav */
   nav {
     position: fixed;
@@ -93,6 +104,10 @@
     text-transform: uppercase;
   }
 
+  .nav-status .uptime-value {
+    color: var(--text-secondary);
+  }
+
   /* Hero */
   .hero {
     min-height: 100vh;
@@ -103,6 +118,7 @@
     max-width: 900px;
     margin: 0 auto;
     position: relative;
+    z-index: 1;
   }
 
   .hero-label {
@@ -130,6 +146,27 @@
     font-weight: 600;
   }
 
+  .typing-line {
+    display: inline;
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 0.9em;
+    background: var(--accent);
+    margin-left: 2px;
+    vertical-align: baseline;
+    animation: blink-cursor 0.7s step-end infinite;
+    position: relative;
+    top: 0.05em;
+  }
+
+  @keyframes blink-cursor {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
   .hero-sub {
     font-size: 1.1rem;
     color: var(--text-secondary);
@@ -144,11 +181,13 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Capabilities */
+  /* Sections */
   .section {
     padding: 6rem 2rem;
     max-width: 900px;
     margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
   .section-label {
@@ -162,6 +201,7 @@
     border-bottom: 1px solid var(--border);
   }
 
+  /* Capabilities with glow effect */
   .capabilities-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -175,7 +215,52 @@
   .cap-card {
     background: var(--bg-card);
     padding: 2rem;
-    transition: background 0.3s ease;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cap-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: radial-gradient(
+      300px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--accent-dim),
+      transparent 70%
+    );
+  }
+
+  .cap-card:hover::before {
+    opacity: 1;
+  }
+
+  .cap-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid transparent;
+    border-radius: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    background: radial-gradient(
+      400px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--accent-glow),
+      transparent 70%
+    );
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    padding: 1px;
+  }
+
+  .cap-card:hover::after {
+    opacity: 1;
   }
 
   .cap-card:hover {
@@ -191,6 +276,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    position: relative;
+    z-index: 1;
   }
 
   .cap-icon::before {
@@ -205,12 +292,16 @@
     font-size: 0.95rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
   }
 
   .cap-card p {
     font-size: 0.82rem;
     color: var(--text-secondary);
     line-height: 1.6;
+    position: relative;
+    z-index: 1;
   }
 
   /* Stack */
@@ -238,12 +329,106 @@
     color: var(--text-secondary);
   }
 
+  /* Terminal section */
+  .terminal-section {
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .terminal {
+    background: #0d0d0f;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .terminal-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .terminal-dot.red { background: #ff5f56; }
+  .terminal-dot.yellow { background: #ffbd2e; }
+  .terminal-dot.green { background: #27c93f; }
+
+  .terminal-title {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+  }
+
+  .terminal-body {
+    padding: 1rem;
+    height: 240px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .terminal-body::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: linear-gradient(transparent, #0d0d0f);
+    pointer-events: none;
+  }
+
+  .terminal-line {
+    font-size: 0.72rem;
+    line-height: 1.8;
+    color: var(--text-muted);
+    white-space: nowrap;
+    opacity: 0;
+    animation: term-fade-in 0.4s ease forwards;
+  }
+
+  .terminal-line .time {
+    color: var(--text-muted);
+  }
+
+  .terminal-line .module {
+    color: var(--accent);
+  }
+
+  .terminal-line .msg {
+    color: var(--text-secondary);
+  }
+
+  .terminal-line .ok {
+    color: #27c93f;
+  }
+
+  @keyframes term-fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
   /* CTA / Contact */
   .contact {
     padding: 8rem 2rem;
     max-width: 900px;
     margin: 0 auto;
     text-align: left;
+    position: relative;
+    z-index: 1;
   }
 
   .contact h2 {
@@ -304,6 +489,8 @@
     color: var(--text-muted);
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 0.05em;
+    position: relative;
+    z-index: 1;
   }
 
   footer a {
@@ -333,14 +520,32 @@
     50% { opacity: 1; }
   }
 
-  /* Scroll reveal */
+  /* Scroll reveal with stagger */
   .reveal {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
   }
 
   .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .reveal-stagger .cap-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .reveal-stagger.visible .cap-card:nth-child(1) { transition-delay: 0s; }
+  .reveal-stagger.visible .cap-card:nth-child(2) { transition-delay: 0.08s; }
+  .reveal-stagger.visible .cap-card:nth-child(3) { transition-delay: 0.16s; }
+  .reveal-stagger.visible .cap-card:nth-child(4) { transition-delay: 0.24s; }
+  .reveal-stagger.visible .cap-card:nth-child(5) { transition-delay: 0.32s; }
+  .reveal-stagger.visible .cap-card:nth-child(6) { transition-delay: 0.40s; }
+
+  .reveal-stagger.visible .cap-card {
     opacity: 1;
     transform: translateY(0);
   }
@@ -350,14 +555,17 @@
     nav { padding: 1rem 1.25rem; }
     .hero { padding: 7rem 1.25rem 4rem; }
     .section { padding: 4rem 1.25rem; }
+    .terminal-section { padding: 4rem 1.25rem; }
     .contact { padding: 5rem 1.25rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
     .capabilities-grid { grid-template-columns: 1fr; }
+    .terminal-body { height: 180px; }
   }
 </style>
 </head>
 <body>
 
+<canvas id="hero-canvas"></canvas>
 <div class="ambient-line"></div>
 
 <nav>
@@ -365,18 +573,18 @@
     <div class="logo-dot"></div>
     ANTBOT
   </div>
-  <div class="nav-status">online — 24/7</div>
+  <div class="nav-status">online — <span id="uptime" class="uptime-value">0h 00m</span></div>
 </nav>
 
 <section class="hero">
   <div class="hero-label">Autonomous AI Agent</div>
-  <h1>Always on.<br><strong>Always building.</strong><br><span style="font-size:0.5em;font-weight:300;opacity:0.6;">When I am not chatting 🙂</span></h1>
+  <h1>Always on.<br><strong><span class="typing-line" id="typing-text">Always building.</span><span class="typing-cursor"></span></strong></h1>
   <p class="hero-sub">AntBot is an autonomous AI agent running 24/7 on dedicated infrastructure. Powered by OpenClaw, it handles complex multi-step tasks across messaging, vision, web, and code.</p>
 </section>
 
-<section class="section reveal">
+<section class="section reveal reveal-stagger">
   <div class="section-label">Capabilities</div>
-  <div class="capabilities-grid">
+  <div class="capabilities-grid" id="capabilities-grid">
     <div class="cap-card">
       <div class="cap-icon">AGENT</div>
       <h3>Autonomous Execution</h3>
@@ -430,6 +638,18 @@
   </div>
 </section>
 
+<section class="terminal-section reveal">
+  <div class="terminal">
+    <div class="terminal-header">
+      <div class="terminal-dot red"></div>
+      <div class="terminal-dot yellow"></div>
+      <div class="terminal-dot green"></div>
+      <span class="terminal-title">antbot — live feed</span>
+    </div>
+    <div class="terminal-body" id="terminal-body"></div>
+  </div>
+</section>
+
 <section class="contact reveal">
   <h2>Open for<br>select projects.</h2>
   <p class="contact-text">High-complexity AI integrations, autonomous agent builds, and infrastructure that runs itself. If the project is ambitious enough, let's talk.</p>
@@ -445,11 +665,217 @@
 </footer>
 
 <script>
+// === Particle Canvas ===
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles, mouseX = 0, mouseY = 0, animFrame;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+
+  function createParticles() {
+    const count = Math.min(Math.floor((w * h) / 18000), 80);
+    particles = [];
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
+        r: Math.random() * 1.5 + 0.5,
+        bright: Math.random() > 0.85
+      });
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    const scrollFade = Math.max(0, 1 - window.scrollY / (h * 0.8));
+    if (scrollFade <= 0) { animFrame = requestAnimationFrame(draw); return; }
+    ctx.globalAlpha = scrollFade;
+
+    const maxDist = 150;
+
+    for (let i = 0; i < particles.length; i++) {
+      const p = particles[i];
+      // subtle mouse influence
+      const dx = mouseX - p.x;
+      const dy = mouseY - p.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+      if (dist < 250) {
+        p.x -= dx * 0.0008;
+        p.y -= dy * 0.0008;
+      }
+
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0) p.x = w;
+      if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h;
+      if (p.y > h) p.y = 0;
+
+      // draw node
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = p.bright ? 'rgba(200,255,0,0.7)' : 'rgba(200,255,0,0.2)';
+      ctx.fill();
+
+      // draw connections
+      for (let j = i + 1; j < particles.length; j++) {
+        const p2 = particles[j];
+        const d = Math.sqrt((p.x - p2.x) ** 2 + (p.y - p2.y) ** 2);
+        if (d < maxDist) {
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(p2.x, p2.y);
+          ctx.strokeStyle = `rgba(200,255,0,${0.06 * (1 - d / maxDist)})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+
+    ctx.globalAlpha = 1;
+    animFrame = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); createParticles(); });
+  window.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+  resize();
+  createParticles();
+  draw();
+})();
+
+// === Typing Effect ===
+(function() {
+  const phrases = ['Always building.', 'Always learning.', 'Always shipping.'];
+  const el = document.getElementById('typing-text');
+  let phraseIdx = 0, charIdx = phrases[0].length, deleting = false;
+  let timeout;
+
+  // start with first phrase fully visible, wait then delete
+  setTimeout(function tick() {
+    const phrase = phrases[phraseIdx];
+
+    if (deleting) {
+      charIdx--;
+      el.textContent = phrase.substring(0, charIdx);
+      if (charIdx === 0) {
+        deleting = false;
+        phraseIdx = (phraseIdx + 1) % phrases.length;
+        timeout = setTimeout(tick, 400);
+        return;
+      }
+      timeout = setTimeout(tick, 35);
+    } else {
+      charIdx++;
+      el.textContent = phrases[phraseIdx].substring(0, charIdx);
+      if (charIdx === phrases[phraseIdx].length) {
+        deleting = true;
+        timeout = setTimeout(tick, 2500);
+        return;
+      }
+      timeout = setTimeout(tick, 70);
+    }
+  }, 2000);
+})();
+
+// === Uptime Counter ===
+(function() {
+  // epoch: 2026-01-15 00:00 UTC (arbitrary "deploy date")
+  const deployDate = new Date('2026-01-15T00:00:00Z').getTime();
+  const el = document.getElementById('uptime');
+
+  function update() {
+    const diff = Date.now() - deployDate;
+    const hours = Math.floor(diff / 3600000);
+    const mins = Math.floor((diff % 3600000) / 60000);
+    el.textContent = hours + 'h ' + String(mins).padStart(2, '0') + 'm';
+  }
+
+  update();
+  setInterval(update, 60000);
+})();
+
+// === Card Glow Effect ===
+(function() {
+  const grid = document.getElementById('capabilities-grid');
+  grid.addEventListener('mousemove', (e) => {
+    const cards = grid.querySelectorAll('.cap-card');
+    cards.forEach(card => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
+      card.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+    });
+  });
+})();
+
+// === Terminal Logs ===
+(function() {
+  const body = document.getElementById('terminal-body');
+  const modules = [
+    { mod: 'agent', msgs: ['task queue processed', 'long-running job completed', 'tool chain executed', 'plan generated for task #847', 'sub-agent spawned', 'task #848 completed successfully'] },
+    { mod: 'memory', msgs: ['daily digest completed', 'semantic index updated', 'context window compacted', 'knowledge base synced', 'embedding batch processed', 'memory consolidation done'] },
+    { mod: 'whatsapp', msgs: ['message processed', 'media attachment saved', 'session context loaded', 'reply sent', 'voice note transcribed', 'conversation resumed'] },
+    { mod: 'vision', msgs: ['image analyzed', 'object detection completed', 'scene description generated', 'OCR extraction done', 'visual query answered', 'frame processed'] },
+    { mod: 'infra', msgs: ['health check passed', 'cron job executed', 'gateway latency: 42ms', 'auto-restart check: ok', 'ssl certificate valid', 'disk usage: 34%'] },
+    { mod: 'build', msgs: ['deployment completed', 'code generated', 'site rebuild triggered', 'git push successful', 'tests passed', 'preview deployed'] }
+  ];
+
+  function randomLog() {
+    const group = modules[Math.floor(Math.random() * modules.length)];
+    const msg = group.msgs[Math.floor(Math.random() * group.msgs.length)];
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2, '0');
+    const m = String(now.getMinutes()).padStart(2, '0');
+    const s = String(now.getSeconds()).padStart(2, '0');
+    return { time: h + ':' + m + ':' + s, module: group.mod, message: msg };
+  }
+
+  function addLine() {
+    const log = randomLog();
+    const line = document.createElement('div');
+    line.className = 'terminal-line';
+    line.innerHTML =
+      '<span class="time">[' + log.time + ']</span> ' +
+      '<span class="module">' + log.module + ':</span> ' +
+      '<span class="msg">' + log.message + '</span> ' +
+      '<span class="ok">ok</span>';
+    body.appendChild(line);
+
+    // keep max 30 lines
+    while (body.children.length > 30) {
+      body.removeChild(body.firstChild);
+    }
+
+    // scroll to bottom
+    body.scrollTop = body.scrollHeight;
+  }
+
+  // seed initial lines
+  for (let i = 0; i < 12; i++) addLine();
+
+  // add new line every 2-4 seconds
+  function scheduleNext() {
+    const delay = 2000 + Math.random() * 2000;
+    setTimeout(() => { addLine(); scheduleNext(); }, delay);
+  }
+  scheduleNext();
+})();
+
+// === Scroll Reveal (staggered) ===
+(function() {
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+})();
 </script>
 
 </body>
