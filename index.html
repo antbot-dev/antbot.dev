@@ -699,6 +699,20 @@
     .live-grid { grid-template-columns: 1fr; }
     .wa-body { height: 200px; }
   }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+
+  .ai-logo {
+    opacity: 0.7;
+    transition: opacity 0.3s;
+  }
+
+  .ai-logo:hover {
+    opacity: 1;
+  }
 </style>
 </head>
 <body>
@@ -728,7 +742,7 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <span class="terminal-title"><img src="https://cdn.stickermule.com/artworks/5719926a-04ae-4afb-9925-f1f4521d38ce/large.png?cacheFor=b1c948c6194db63359b0f8564d4a7eed" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;border-radius:3px;" alt="Claude">antbot — live feed</span>
+        <span class="terminal-title">antbot — live feed</span>
       </div>
       <div class="terminal-body" id="terminal-body"></div>
     </div>
@@ -1068,7 +1082,7 @@
     ],
   ];
 
-  let convoIdx = Math.floor(Math.random() * convos.length);
+  let convoIdx = 0;
   let maxVisible = 6;
 
   function getTime() {
