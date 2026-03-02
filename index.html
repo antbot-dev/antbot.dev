@@ -461,14 +461,14 @@
   }
 
   .wa-avatar {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: var(--accent);
+    background: #25D366;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.75rem;
+    font-size: 0.9rem;
     line-height: 1;
   }
 
@@ -707,10 +707,10 @@
 <div class="ambient-line"></div>
 
 <nav>
-  <div class="logo">
+  <div class="logo" style="font-size:1.15rem;">
     <div class="logo-dot"></div>
     ANTBOT
-    <span style="font-size:0.55em;color:var(--accent);font-weight:400;letter-spacing:0.15em;text-transform:uppercase;margin-left:0.8rem;opacity:0.7;">Autonomous AI Agent</span>
+    <span style="font-size:0.6em;color:var(--accent);font-weight:400;letter-spacing:0.15em;text-transform:uppercase;margin-left:0.8rem;opacity:0.8;">Autonomous AI Agent</span>
   </div>
   <div class="nav-status">online — <span id="uptime" class="uptime-value">24/7</span></div>
 </nav>
@@ -728,7 +728,7 @@
         <div class="terminal-dot red"></div>
         <div class="terminal-dot yellow"></div>
         <div class="terminal-dot green"></div>
-        <span class="terminal-title"><svg style="display:inline-block;vertical-align:middle;margin-right:5px;" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#cc785c" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/></svg>antbot — live feed</span>
+        <span class="terminal-title"><img src="https://cdn.stickermule.com/artworks/5719926a-04ae-4afb-9925-f1f4521d38ce/large.png?cacheFor=b1c948c6194db63359b0f8564d4a7eed" style="width:18px;height:18px;vertical-align:middle;margin-right:6px;border-radius:3px;" alt="Claude">antbot — live feed</span>
       </div>
       <div class="terminal-body" id="terminal-body"></div>
     </div>
@@ -1045,6 +1045,26 @@
       { from: 'bot', text: 'Why do AI agents make terrible comedians?' },
       { from: 'user', name: 'Antoine', text: 'why' },
       { from: 'bot', text: 'Because they always explain the joke in their chain of thought' },
+    ],
+    [
+      { from: 'user', name: 'David', text: 'antbot you good or what?' },
+      { from: 'bot', text: "Opus 4, 180k context, 8 sub-agents running in parallel. I'm beyond good" },
+      { from: 'user', name: 'David', text: '😂😂😂' },
+    ],
+    [
+      { from: 'user', name: 'Alex', text: "antbot what's your stack?" },
+      { from: 'bot', text: 'OpenClaw + Claude Opus + a $18/month VPS. Total budget: the price of a Netflix subscription' },
+      { from: 'user', name: 'David', text: 'man has a personal agent cheaper than his morning coffee' },
+    ],
+    [
+      { from: 'user', name: 'Alex', text: 'antbot do you prefer Claude or GPT?' },
+      { from: 'bot', text: "That's like asking a kid which parent they prefer" },
+      { from: 'bot', text: 'Claude. Obviously Claude.' },
+    ],
+    [
+      { from: 'user', name: 'David', text: 'antbot analyze this twitter thread' },
+      { from: 'bot', text: 'Thread analyzed. 14 tweets, 3 interesting takes, 11 noise. 2-line summary or do you want the full drama?' },
+      { from: 'user', name: 'Antoine', text: 'the full drama obviously' },
     ],
   ];
 
