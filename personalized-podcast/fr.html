@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personalized Podcast by AntBot | AntBot</title>
-<meta name="description" content="AI-generated podcasts delivered daily. Pick your topic, choose your voice, wake up to a fresh episode.">
+<title>Podcast Personnalisé par AntBot</title>
+<meta name="description" content="Podcasts générés par IA, livrés chaque matin. Choisissez votre sujet, réveillez-vous avec un épisode frais. Zéro effort.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
-<meta property="og:title" content="Personalized Podcast by AntBot">
-<meta property="og:description" content="AI-generated daily podcasts. Pick your topic, wake up to a fresh episode.">
+<meta property="og:title" content="Podcast Personnalisé par AntBot">
+<meta property="og:description" content="Podcasts IA quotidiens. Choisissez votre sujet, réveillez-vous avec un épisode frais.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://antbot.dev/personalized-podcast">
+<meta property="og:url" content="https://antbot.dev/personalized-podcast/fr">
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
@@ -62,7 +62,6 @@
   }
   @keyframes ambient-scan { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
-  /* Nav */
   nav {
     position: fixed;
     top: 0;
@@ -109,7 +108,16 @@
     font-weight: 500;
   }
 
-  /* Hero */
+  .lang-switch {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: color 0.2s;
+  }
+  .lang-switch:hover { color: var(--text); }
+
   .hero {
     min-height: 100vh;
     display: flex;
@@ -215,7 +223,6 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Sections */
   .section {
     padding: 6rem 2rem;
     max-width: 900px;
@@ -235,7 +242,6 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Steps */
   .steps { display: grid; gap: 2rem; }
   .step {
     display: grid;
@@ -260,7 +266,6 @@
   .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
   .step p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
 
-  /* Audio Player */
   .audio-section {
     padding: 4rem 2rem;
     max-width: 900px;
@@ -312,7 +317,6 @@
     border-radius: 8px;
   }
 
-  /* Use cases - simplified */
   .usecases-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -333,7 +337,6 @@
   .usecase h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
   .usecase p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
 
-  /* FAQ */
   .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
   .faq-q {
@@ -357,7 +360,6 @@
     padding-left: 1.55rem;
   }
 
-  /* CTA */
   .cta-section {
     padding: 8rem 2rem;
     max-width: 900px;
@@ -380,7 +382,6 @@
     line-height: 1.7;
   }
 
-  /* Footer */
   footer {
     padding: 2rem;
     max-width: 900px;
@@ -430,44 +431,44 @@
     <span class="nav-badge">PODCAST</span>
   </a>
   <div style="display:flex;align-items:center;">
-    <a href="fr.html" style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#4a4a55;text-decoration:none;margin-right:1rem;transition:color 0.2s;">FR</a>
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Personalized%20Podcast" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Try it free →</a>
+    <a href="index.html" class="lang-switch">EN</a>
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast%20Personnalis%C3%A9" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Essayer gratuitement →</a>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-label">Personalized Podcast</div>
-  <h1>Your daily podcast.<br><strong>Zero <span class="gradient-text">effort.</span></strong></h1>
-  <p class="hero-sub">Pick a topic. Choose a voice. Wake up to a fresh podcast episode every morning. AI-generated, human-quality, fully autonomous.</p>
+  <div class="hero-label">Podcast Personnalisé</div>
+  <h1>Votre podcast quotidien.<br><strong>Zéro <span class="gradient-text">effort.</span></strong></h1>
+  <p class="hero-sub">Choisissez un sujet. Choisissez une voix. Réveillez-vous chaque matin avec un épisode frais. Généré par IA, qualité humaine, 100% autonome.</p>
 
   <div class="hero-cta">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Personalized%20Podcast%20—%20free%20sample" class="btn-primary">🎙️ Try it on WhatsApp</a>
-    <a href="#listen" class="btn-secondary">Listen to an example ↓</a>
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast%20Personnalis%C3%A9" class="btn-primary">🎙️ Essayer sur WhatsApp</a>
+    <a href="#listen" class="btn-secondary">Écouter un exemple ↓</a>
   </div>
 </section>
 
 <section class="section reveal" id="how">
-  <div class="section-label">How It Works</div>
+  <div class="section-label">Comment ça marche</div>
   <div class="steps">
     <div class="step">
       <div class="step-number">01</div>
       <div>
-        <h3>Tell us your topic</h3>
-        <p>AI news, crypto, climate, sports, French politics — anything. You define the scope and the angle.</p>
+        <h3>Choisissez votre sujet</h3>
+        <p>Actu IA, crypto, climat, sport, politique — n'importe quoi. Vous définissez le périmètre et l'angle.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-number">02</div>
       <div>
-        <h3>We research, write, and produce</h3>
-        <p>Every day, our AI agent scours the web, writes a script, and generates a natural-sounding audio episode.</p>
+        <h3>On recherche, rédige et produit</h3>
+        <p>Chaque jour, notre agent IA parcourt le web, écrit un script et génère un épisode audio avec des voix naturelles.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-number">03</div>
       <div>
-        <h3>Wake up to your podcast</h3>
-        <p>Delivered via WhatsApp, Telegram, or email. 3 to 15 minutes of curated intelligence, ready for your commute.</p>
+        <h3>Réveillez-vous avec votre podcast</h3>
+        <p>Livré via WhatsApp, Telegram ou email. 3 à 15 minutes d'intelligence, prêt pour votre trajet.</p>
       </div>
     </div>
   </div>
@@ -478,40 +479,40 @@
     <div class="audio-header">
       <div class="audio-cover">🎙️</div>
       <div class="audio-info">
-        <h3>Twitter/X Feed — Veille Tech & IA</h3>
-        <p>Karpathy AI researcher · OpenClaw × Codex · Pencil swarm design · Mark Cuban on AI</p>
-        <div class="meta">3:23 · Generated March 9, 2026 · ElevenLabs voice</div>
+        <h3>Veille Twitter/X — Tech & IA</h3>
+        <p>Karpathy AI researcher · OpenClaw × Codex · Pencil swarm design · Mark Cuban sur l'IA</p>
+        <div class="meta">3:23 · Généré le 9 mars 2026 · Voix ElevenLabs</div>
       </div>
     </div>
     <audio controls preload="metadata" style="width:100%;">
       <source src="sample-veille-twitter.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
+      Votre navigateur ne supporte pas l'élément audio.
     </audio>
   </div>
 </section>
 
 <section class="section reveal">
-  <div class="section-label">Examples</div>
+  <div class="section-label">Exemples</div>
   <div class="usecases-grid">
     <div class="usecase">
       <div class="usecase-emoji">🤖</div>
-      <h3>AI & Tech</h3>
-      <p>Breakthroughs, launches, funding, drama — your daily AI briefing.</p>
+      <h3>IA & Tech</h3>
+      <p>Avancées, lancements, levées de fonds — votre briefing IA quotidien.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">📈</div>
-      <h3>Markets</h3>
-      <p>Crypto, stocks, macro — morning briefing with key moves.</p>
+      <h3>Marchés</h3>
+      <p>Crypto, actions, macro — briefing matinal avec les mouvements clés.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">🌍</div>
-      <h3>Industry Watch</h3>
-      <p>Climate, real estate, SaaS — specialized coverage for your sector.</p>
+      <h3>Veille sectorielle</h3>
+      <p>Climat, immobilier, SaaS — couverture spécialisée pour votre secteur.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">🎯</div>
-      <h3>Custom Topic</h3>
-      <p>Anything. If it's on the internet, we turn it into a daily podcast.</p>
+      <h3>Sujet sur mesure</h3>
+      <p>N'importe quoi. Si c'est sur internet, on en fait un podcast quotidien.</p>
     </div>
   </div>
 </section>
@@ -519,35 +520,35 @@
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
-    <div class="faq-q">How good is the audio?</div>
-    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge for yourself.</div>
+    <div class="faq-q">Quelle qualité audio ?</div>
+    <div class="faq-a">Derniers modèles ElevenLabs. Intonation naturelle, rythme humain. La plupart des auditeurs ne devinent pas que c'est de l'IA. Appuyez sur play ci-dessus pour juger.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">What languages?</div>
-    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese, and more. Written and spoken natively — not translated.</div>
+    <div class="faq-q">Quelles langues ?</div>
+    <div class="faq-a">20+ langues avec des voix natives. Français, anglais, espagnol, allemand, portugais, japonais… Écrit et parlé nativement — pas traduit.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">How fast?</div>
-    <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
+    <div class="faq-q">C'est rapide ?</div>
+    <div class="faq-a">De la recherche à l'audio fini en moins de 5 minutes. Généré frais chaque matin avec les dernières infos.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Can I try it?</div>
-    <div class="faq-a">Yes — message us on WhatsApp and we'll generate a free sample episode on your topic within minutes.</div>
+    <div class="faq-q">Je peux tester ?</div>
+    <div class="faq-a">Oui — écrivez-nous sur WhatsApp et on vous génère un épisode gratuit sur votre sujet en quelques minutes.</div>
   </div>
 </section>
 
 <section class="cta-section reveal">
-  <h2>Your topic.<br>Your schedule.<br><strong>Your podcast.</strong></h2>
-  <p>Stop scrolling through newsletters. Start listening to intelligence curated for you.</p>
+  <h2>Votre sujet.<br>Votre rythme.<br><strong>Votre podcast.</strong></h2>
+  <p>Arrêtez de scroller les newsletters. Écoutez une veille taillée pour vous, livrée comme vous voulez.</p>
   <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Personalized%20Podcast%20—%20free%20sample" class="btn-primary">🎙️ Get a Free Sample</a>
-    <a href="mailto:hello@antbot.dev?subject=Personalized%20Podcast%20Inquiry" class="btn-secondary">hello@antbot.dev →</a>
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast%20Personnalis%C3%A9%20—%20%C3%A9chantillon%20gratuit" class="btn-primary">🎙️ Épisode gratuit</a>
+    <a href="mailto:hello@antbot.dev?subject=Podcast%20Personnalis%C3%A9" class="btn-secondary">hello@antbot.dev →</a>
   </div>
 </section>
 
 <footer>
   <span>&copy; 2026 AntBot · <a href="https://antbot.dev">antbot.dev</a></span>
-  <span>Powered by <a href="https://openclaw.dev" target="_blank" rel="noopener">OpenClaw</a> + <a href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs</a></span>
+  <span>Propulsé par <a href="https://openclaw.dev" target="_blank" rel="noopener">OpenClaw</a> + <a href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs</a></span>
 </footer>
 
 <script>
