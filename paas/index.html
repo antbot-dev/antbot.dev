@@ -1,1774 +1,741 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Personalized Podcast by AntBot</title>
-<meta name="description" content="AI-generated podcasts delivered to your WhatsApp every morning. Pick your topic, wake up to a fresh episode.">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
-<meta property="og:title" content="Personalized Podcast by AntBot">
-<meta property="og:description" content="AI-generated daily podcasts. Pick your topic, wake up to a fresh episode.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://antbot.dev/podcast">
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PAAS — Podcast as a Service</title>
+  <meta name="description" content="Turn any topic into a daily AI-generated podcast. Delivered to your WhatsApp every morning.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --bg: #0a0a0b;
-    --bg-elevated: #111113;
-    --bg-card: #16161a;
-    --border: #1e1e24;
-    --border-hover: #2a2a33;
-    --text: #e8e8ed;
-    --text-secondary: #7a7a85;
-    --text-muted: #4a4a55;
-    --accent: #c8ff00;
-    --accent-dim: #c8ff0015;
-    --accent-glow: #c8ff0030;
-    --purple: #a855f7;
-    --wa-green: #25D366;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.6;
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 9999;
-  }
-
-  .ambient {
-    position: fixed;
-    top: -30%;
-    left: -15%;
-    width: 60vw;
-    height: 60vw;
-    background: radial-gradient(circle, rgba(200, 255, 0, 0.035) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  /* Nav */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    padding: 1.25rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 100;
-    background: linear-gradient(to bottom, var(--bg) 60%, transparent);
-  }
-
-  .logo {
-    font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    font-size: 0.9rem;
-    letter-spacing: 0.05em;
-    color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    text-decoration: none;
-  }
-
-  .logo-dot {
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse-dot 3s ease-in-out infinite;
-    box-shadow: 0 0 8px var(--accent-glow);
-  }
-  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  .nav-right { display: flex; align-items: center; gap: 1rem; }
-  .lang-switch {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-  .lang-switch:hover { color: var(--text); }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--bg);
-    background: var(--accent);
-    text-decoration: none;
-    padding: 0.9rem 2rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    letter-spacing: 0.02em;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px var(--accent-glow);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--text);
-    text-decoration: none;
-    padding: 0.9rem 2rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    letter-spacing: 0.02em;
-  }
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-    color: var(--accent);
-  }
-
-  /* Hero */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 8rem 2rem 3rem;
-    max-width: 1100px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-content {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: center;
-    width: 100%;
-  }
-
-  .hero-left { text-align: left; }
-
-  .hero-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.2s;
-  }
-
-  /* Social proof badge */
-  .social-proof-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    background: var(--accent-dim);
-    border: 1px solid rgba(200, 255, 0, 0.15);
-    border-radius: 100px;
-    padding: 0.4rem 1rem;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.1s;
-  }
-  .social-proof-badge .dot-live {
-    width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
-    animation: pulse-dot 2s ease-in-out infinite;
-  }
-  .social-proof-badge span {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--accent);
-    letter-spacing: 0.05em;
-  }
-
-  h1 {
-    font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.2rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.4s;
-  }
-  h1 strong { font-weight: 700; }
-  .gradient-text {
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    font-size: 1.05rem;
-    color: var(--text-secondary);
-    max-width: 440px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.6s;
-  }
-
-  @keyframes fade-up {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Hero WhatsApp Mockup */
-  .hero-right {
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.8s;
-  }
-
-  .wa-mockup {
-    background: #0b141a;
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    overflow: hidden;
-    max-width: 360px;
-    margin: 0 auto;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
-  }
-
-  .wa-mock-header {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.6rem 0.8rem;
-    background: #1f2c34;
-    border-bottom: 1px solid #2a3942;
-  }
-  .wa-mock-back { color: #8696a0; font-size: 0.9rem; }
-  .wa-mock-avatar {
-    width: 34px; height: 34px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8rem;
-  }
-  .wa-mock-info { flex: 1; }
-  .wa-mock-name { font-size: 0.8rem; font-weight: 500; color: #e9edef; }
-  .wa-mock-status { font-size: 0.6rem; color: #8696a0; }
-  .wa-mock-icons { display: flex; gap: 1rem; color: #aebac1; font-size: 0.85rem; }
-
-  .wa-mock-body {
-    padding: 0.6rem;
-    min-height: 260px;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='%23060d11'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23ffffff' opacity='0.02'/%3E%3C/svg%3E");
-    display: flex;
-    flex-direction: column;
-    gap: 0.3rem;
-  }
-
-  .wa-date-chip {
-    align-self: center;
-    background: #182229;
-    color: #8696a0;
-    font-size: 0.6rem;
-    padding: 0.2rem 0.6rem;
-    border-radius: 6px;
-    margin-bottom: 0.3rem;
-  }
-
-  .wa-mock-msg {
-    max-width: 85%;
-    padding: 0.45rem 0.6rem;
-    border-radius: 8px;
-    font-size: 0.75rem;
-    line-height: 1.45;
-    position: relative;
-  }
-  .wa-mock-msg.bot {
-    background: #005c4b;
-    color: #e9edef;
-    align-self: flex-start;
-    border-top-left-radius: 2px;
-  }
-  .wa-mock-msg.user {
-    background: #1f2c34;
-    color: #e9edef;
-    align-self: flex-end;
-    border-top-right-radius: 2px;
-  }
-  .wa-mock-msg .msg-time {
-    font-size: 0.5rem;
-    color: rgba(255,255,255,0.35);
-    float: right;
-    margin-left: 0.4rem;
-    margin-top: 0.15rem;
-  }
-  .wa-mock-msg .msg-sender {
-    font-size: 0.6rem;
-    font-weight: 500;
-    color: var(--accent);
-    display: block;
-    margin-bottom: 0.1rem;
-  }
-
-  /* Audio bubble in mockup */
-  .wa-mock-audio {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    margin-bottom: 2px;
-  }
-  .wa-mock-play {
-    width: 30px; height: 30px;
-    border-radius: 50%;
-    background: var(--wa-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  .wa-mock-play svg { width: 10px; height: 10px; fill: #fff; margin-left: 1px; }
-  .wa-mock-waveform {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 1.5px;
-    height: 22px;
-  }
-  .mock-bar {
-    width: 2.5px;
-    border-radius: 1px;
-    transition: background 0.3s;
-  }
-  .mock-bar.played { background: var(--wa-green); opacity: 0.9; }
-  .mock-bar.unplayed { background: rgba(255,255,255,0.2); }
-  .wa-mock-dur {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.5rem;
-    color: rgba(255,255,255,0.45);
-    flex-shrink: 0;
-    min-width: 24px;
-  }
-  .wa-mock-audio-title {
-    font-size: 0.65rem;
-    color: rgba(255,255,255,0.55);
-  }
-
-  .wa-mock-input {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 0.6rem;
-    background: #1f2c34;
-    border-top: 1px solid #2a3942;
-  }
-  .wa-mock-input-field {
-    flex: 1;
-    background: #2a3942;
-    border: none;
-    border-radius: 20px;
-    padding: 0.4rem 0.8rem;
-    font-size: 0.7rem;
-    color: #8696a0;
-  }
-  .wa-mock-send {
-    width: 32px; height: 32px;
-    border-radius: 50%;
-    background: var(--wa-green);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .wa-mock-send svg { width: 14px; height: 14px; fill: #fff; }
-
-  /* Onboarding Form */
-  .onboarding-form-wrapper {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 0 2rem 4rem;
-    position: relative;
-    z-index: 1;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 1s;
-  }
-
-  .onboarding-form {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 2rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .onboarding-form::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--accent), var(--purple), var(--accent));
-    background-size: 200% 100%;
-    animation: gradient-slide 3s linear infinite;
-  }
-  @keyframes gradient-slide {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 200% 0%; }
-  }
-
-  .form-title {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-  }
-  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
-  .form-group.full { grid-column: 1 / -1; }
-  .form-group label {
-    font-size: 0.72rem;
-    color: var(--text-secondary);
-    font-weight: 500;
-  }
-  .form-group input,
-  .form-group select {
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 0.7rem 0.9rem;
-    font-size: 0.85rem;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    transition: border-color 0.2s;
-    outline: none;
-    width: 100%;
-  }
-  .form-group input::placeholder { color: var(--text-muted); }
-  .form-group input:focus,
-  .form-group select:focus { border-color: var(--accent); }
-  .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7a85' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2rem; }
-  .form-group select option { background: var(--bg-card); color: var(--text); }
-
-  .channel-selector {
-    display: flex;
-    gap: 0.5rem;
-  }
-  .channel-btn {
-    flex: 1;
-    padding: 0.6rem;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    background: var(--bg-elevated);
-    color: var(--text-secondary);
-    font-size: 0.78rem;
-    font-family: 'Inter', sans-serif;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3rem;
-  }
-  .channel-btn:hover { border-color: var(--border-hover); color: var(--text); }
-  .channel-btn.active {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-    color: var(--accent);
-  }
-
-  .form-submit {
-    grid-column: 1 / -1;
-    margin-top: 0.5rem;
-  }
-  .form-submit .btn-primary {
-    width: 100%;
-    justify-content: center;
-    padding: 1rem;
-    font-size: 0.9rem;
-  }
-
-  /* Divider */
-  .divider {
-    max-width: 900px;
-    margin: 0 auto;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--border), transparent);
-  }
-
-  /* Sections */
-  .section {
-    padding: 5rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 3rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  /* Steps */
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2rem;
-  }
-  .step { text-align: center; }
-  .step-number {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 2.5rem;
-    font-weight: 600;
-    color: var(--accent);
-    line-height: 1;
-    margin-bottom: 0.75rem;
-  }
-  .step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
-  .step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
-
-  /* Live Example Section */
-  .live-example {
-    padding: 4rem 2rem;
-    max-width: 700px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .live-player {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.75rem;
-    position: relative;
-    overflow: hidden;
-  }
-  .live-player::after {
-    content: '';
-    position: absolute;
-    top: 0; right: 0;
-    width: 200px; height: 200px;
-    background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .live-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: rgba(255, 59, 48, 0.15);
-    border: 1px solid rgba(255, 59, 48, 0.25);
-    border-radius: 100px;
-    padding: 0.25rem 0.75rem;
-    margin-bottom: 1.25rem;
-  }
-  .live-dot {
-    width: 6px; height: 6px;
-    background: #ff3b30;
-    border-radius: 50%;
-    animation: pulse-dot 1.5s ease-in-out infinite;
-  }
-  .live-badge span {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: #ff6b6b;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-  }
-
-  .live-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .live-cover {
-    width: 56px; height: 56px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    position: relative;
-  }
-  .live-cover::after {
-    content: '';
-    position: absolute;
-    inset: -3px;
-    border-radius: 14px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    z-index: -1;
-    opacity: 0.3;
-    animation: pulse-glow 2s ease-in-out infinite;
-  }
-  @keyframes pulse-glow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.05); } }
-
-  .live-info h3 { font-size: 0.95rem; font-weight: 600; }
-  .live-info p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; line-height: 1.5; }
-  .live-info .live-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.58rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-    letter-spacing: 0.05em;
-  }
-
-  /* Animated waveform */
-  .live-waveform-container {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-  .live-play-btn {
-    width: 40px; height: 40px;
-    border-radius: 50%;
-    background: var(--accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .live-play-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px var(--accent-glow); }
-  .live-play-btn svg { width: 14px; height: 14px; fill: var(--bg); margin-left: 2px; }
-
-  .live-waveform {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    height: 32px;
-  }
-  .live-bar {
-    width: 3px;
-    border-radius: 1.5px;
-    transition: height 0.3s ease;
-  }
-  .live-bar.played { background: var(--accent); }
-  .live-bar.unplayed { background: rgba(200, 255, 0, 0.15); }
-
-  .live-time {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-  }
-
-  /* Real audio player */
-  .audio-section {
-    padding: 2rem 2rem 4rem;
-    max-width: 700px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .audio-player {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 1.5rem;
-  }
-
-  .audio-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .audio-cover {
-    width: 48px; height: 48px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.3rem;
-    flex-shrink: 0;
-  }
-
-  .audio-info h3 { font-size: 0.85rem; font-weight: 500; }
-  .audio-info p { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem; }
-  .audio-info .meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.58rem;
-    color: var(--text-muted);
-    margin-top: 0.2rem;
-    letter-spacing: 0.05em;
-  }
-  .audio-player audio { width: 100%; height: 36px; outline: none; }
-
-  /* Topic pills */
-  .topic-grid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 2rem;
-  }
-  .topic-pill {
-    padding: 10px 22px;
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    transition: all 0.25s;
-    cursor: default;
-  }
-  .topic-pill:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--accent-dim);
-    cursor: pointer;
-  }
-  .topic-pill.featured {
-    border-color: rgba(200, 255, 0, 0.2);
-    color: var(--accent);
-    background: var(--accent-dim);
-  }
-  .topic-pill.selected {
-    border-color: var(--accent);
-    color: var(--bg);
-    background: var(--accent);
-    font-weight: 500;
-  }
-  .topic-cta {
-    margin-top: 2rem;
-    text-align: center;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.4s ease;
-    pointer-events: none;
-  }
-  .topic-cta.visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: all;
-  }
-  .topic-selected-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.05em;
-  }
-
-  /* Pricing */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .pricing-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 2rem 1.5rem;
-    position: relative;
-    transition: all 0.3s;
-  }
-  .pricing-card:hover {
-    border-color: var(--border-hover);
-    transform: translateY(-4px);
-  }
-  .pricing-card.popular {
-    border-color: var(--accent);
-    box-shadow: 0 0 40px var(--accent-dim);
-  }
-
-  .pricing-popular-tag {
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--accent);
-    color: var(--bg);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    padding: 0.25rem 0.75rem;
-    border-radius: 100px;
-  }
-
-  .pricing-name {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    margin-bottom: 0.75rem;
-  }
-
-  .pricing-price {
-    font-size: 2.2rem;
-    font-weight: 700;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-  .pricing-price .currency { font-size: 1.2rem; font-weight: 400; vertical-align: top; margin-right: 2px; }
-  .pricing-price .period { font-size: 0.8rem; font-weight: 300; color: var(--text-secondary); }
-
-  .pricing-desc {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
-  }
-
-  .pricing-features {
-    list-style: none;
-    margin-bottom: 1.75rem;
-  }
-  .pricing-features li {
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    padding: 0.35rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  .pricing-features li::before {
-    content: '✓';
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.7rem;
-    flex-shrink: 0;
-  }
-
-  .pricing-btn {
-    display: block;
-    width: 100%;
-    text-align: center;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-    padding: 0.75rem;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: all 0.3s;
-    letter-spacing: 0.02em;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-  }
-  .pricing-btn.primary {
-    background: var(--accent);
-    color: var(--bg);
-  }
-  .pricing-btn.primary:hover {
-    box-shadow: 0 6px 24px var(--accent-glow);
-    transform: translateY(-1px);
-  }
-  .pricing-btn.outline {
-    background: transparent;
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .pricing-btn.outline:hover {
-    border-color: var(--accent);
-    color: var(--accent);
-    background: var(--accent-dim);
-  }
-
-  /* FAQ */
-  .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
-  .faq-item:last-child { border-bottom: none; }
-  .faq-q {
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 0.4rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .faq-q::before {
-    content: '→';
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-  }
-  .faq-a {
-    font-size: 0.82rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    padding-left: 1.55rem;
-  }
-
-  /* CTA */
-  .cta-section {
-    padding: 6rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-  }
-  .cta-section h2 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-  .cta-section p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-bottom: 2.5rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.7;
-  }
-
-  /* Footer */
-  footer {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--border);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 1;
-  }
-  footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  footer a:hover { color: var(--text-secondary); }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
-
-  /* Social proof bar */
-  .social-proof-bar {
-    text-align: center;
-    padding: 1.5rem 2rem;
-    position: relative;
-    z-index: 1;
-  }
-  .social-proof-bar p {
-    font-size: 0.78rem;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.03em;
-  }
-  .social-proof-bar .sp-highlight { color: var(--accent); }
-  .social-proof-avatars {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0.6rem;
-  }
-  .sp-avatar {
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    border: 2px solid var(--bg);
-    margin-left: -8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.6rem;
-  }
-  .sp-avatar:first-child { margin-left: 0; }
-
-  @media (max-width: 768px) {
-    /* Mobile: Minimal dark theme - reduce all neon/decorative elements */
-    
-    /* Hide Christmas lights effect */
-    .ambient { display: none !important; }
-    
-    /* Logo dot - no animation on mobile */
-    .logo-dot { animation: none !important; box-shadow: none !important; opacity: 0.6 !important; }
-    
-    /* Darker backgrounds, less accent */
     :root {
+      --bg: #0a0a0b;
+      --surface: #141416;
+      --border: #222225;
+      --text: #e8e8ec;
+      --text-secondary: #8a8a8e;
+      --accent: #c8ff00;
       --accent-dim: rgba(200, 255, 0, 0.08);
-      --accent-glow: rgba(200, 255, 0, 0.15);
     }
-    
-    .hero-content { grid-template-columns: 1fr; text-align: center; }
-    .hero-left { text-align: center; }
-    .hero-sub { margin: 0 auto; }
-    .hero-right { 
-      order: -1; 
-      display: none; /* Hide WhatsApp mockup on mobile - too colorful */
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
-    .wa-mockup { max-width: 320px; }
-    
-    /* Hide social proof badge on mobile - too bright */
-    .social-proof-badge { display: none !important; }
-    
-    /* Simplify hero text */
-    h1 {
-      font-size: clamp(1.8rem, 6vw, 2.5rem);
+
+    /* Layout */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
-    
-    .hero-sub {
-      font-size: 0.95rem;
+
+    section {
+      padding: 80px 0;
     }
-    
-    .hero-left > div[style*="margin-top"] {
-      justify-content: center;
-      flex-direction: column;
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 16px 24px;
+      background: rgba(10, 10, 11, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
       align-items: center;
     }
-    
-    .form-grid { grid-template-columns: 1fr; }
-    
-    /* Vertical pricing - clean spacing */
-    .pricing-grid { 
-      grid-template-columns: 1fr; 
-      max-width: 340px; 
-      margin-left: auto; 
-      margin-right: auto; 
-      gap: 1.25rem;
+
+    .logo {
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
     }
-    
-    .pricing-card {
-      padding: 1.5rem 1.25rem;
-    }
-    
-    /* Hide social proof bar avatars on mobile */
-    .social-proof-bar { display: none !important; }
-    
-    /* Reduce waveform animations - simpler, fewer bars */
-    .live-waveform { gap: 1px; }
-    .live-bar { width: 2px; }
-    
-    /* Hide animated glow effects on mobile */
-    .live-cover::after,
-    .pricing-card.popular {
-      box-shadow: none;
-      animation: none;
-      background: var(--bg-card);
-    }
-    
-    .pricing-card.popular {
-      border-color: var(--border);
-    }
-    
-    /* Darker form */
-    .onboarding-form::before {
-      display: none;
-    }
-    
-    /* Simpler buttons */
-    .btn-primary, .btn-secondary {
-      padding: 0.8rem 1.5rem;
-      font-size: 0.8rem;
-    }
-    
-    /* Hide live badge glow */
-    .live-badge {
-      background: rgba(255, 59, 48, 0.08);
-      border-color: rgba(255, 59, 48, 0.12);
-    }
-    
-    /* Topic pills - simpler */
-    .topic-pill {
+
+    .logo span { color: var(--accent); }
+
+    nav .cta-sm {
+      font-size: 13px;
       padding: 8px 16px;
-      font-size: 0.75rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: border-color 0.2s;
     }
-    
-    /* CTA section */
-    .cta-section h2 {
-      font-size: clamp(1.5rem, 5vw, 2rem);
-    }
-    
-    /* Remove gradient text on mobile - too colorful */
-    .gradient-text {
-      background: var(--accent);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: var(--accent);
-      background-clip: text;
-    }
-    
-    /* Footer */
-    footer {
-      padding: 1.25rem;
+
+    nav .cta-sm:hover { border-color: var(--text-secondary); }
+
+    /* Hero */
+    .hero {
+      padding: 160px 0 100px;
       text-align: center;
     }
-  }
 
-  @media (max-width: 640px) {
-    nav { padding: 1rem 1.25rem; }
-    .hero { padding: 6rem 1rem 2rem; min-height: auto; }
-    .section { padding: 3rem 1rem; }
-    .audio-section { padding: 1.5rem 1rem 2.5rem; }
-    .live-example { padding: 2rem 1rem; }
-    .cta-section { padding: 3.5rem 1rem; }
-    footer { padding: 1.25rem 1rem; flex-direction: column; gap: 0.5rem; }
-    .steps { grid-template-columns: 1fr; gap: 1.5rem; }
-    .onboarding-form-wrapper { padding: 0 1rem 2.5rem; }
-    .onboarding-form { padding: 1.25rem; }
-    .channel-selector { flex-wrap: wrap; }
-    
-    /* Even smaller text on small screens */
-    h1 { font-size: 1.6rem; }
-    .hero-sub { font-size: 0.9rem; }
-    
-    /* Hide nav CTA on very small screens */
-    .nav-right .btn-secondary { display: none; }
-  }
-</style>
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 460px;
+      margin: 0 auto 40px;
+      line-height: 1.6;
+    }
+
+    .cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--accent);
+      color: #0a0a0b;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .cta-primary:hover { opacity: 0.88; }
+
+    /* Demos */
+    .demos { padding-top: 0; }
+
+    .demos h2 {
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+    }
+
+    .demo-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .demo-card {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 20px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color 0.2s;
+    }
+
+    .demo-card:hover { border-color: #333; }
+
+    .play-btn {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .play-btn:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .play-btn.playing {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .play-btn svg { width: 16px; height: 16px; }
+
+    .demo-info { flex: 1; min-width: 0; }
+
+    .demo-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 2px;
+    }
+
+    .demo-meta {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .demo-progress {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      border-radius: 2px;
+      margin-top: 8px;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .demo-card.active .demo-progress { opacity: 1; }
+
+    .demo-progress-bar {
+      height: 100%;
+      background: var(--accent);
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.3s linear;
+    }
+
+    /* How it works */
+    .steps h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    @media (max-width: 600px) {
+      .steps-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+
+    .step {
+      text-align: center;
+      padding: 32px 20px;
+    }
+
+    .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    .step h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Pricing */
+    .pricing h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+
+    .pricing > .container > p {
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 15px;
+      margin-bottom: 48px;
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 700px) {
+      .pricing-grid { grid-template-columns: 1fr; gap: 12px; }
+    }
+
+    .price-card {
+      padding: 28px 24px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .price-card.featured {
+      border-color: var(--accent);
+    }
+
+    .price-label {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+
+    .price-card.featured .price-label { color: var(--accent); }
+
+    .price-amount {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .price-period {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 20px;
+    }
+
+    .price-features {
+      list-style: none;
+      text-align: left;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .price-features li {
+      padding: 6px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .price-features li::before {
+      content: "✓";
+      color: var(--text-secondary);
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+
+    .price-card.featured .price-features li::before { color: var(--accent); }
+
+    /* FAQ */
+    .faq h2 {
+      text-align: center;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 40px;
+    }
+
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .faq-item {
+      background: var(--surface);
+    }
+
+    .faq-q {
+      width: 100%;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 15px;
+      font-weight: 500;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: inherit;
+    }
+
+    .faq-q:hover { background: rgba(255,255,255,0.02); }
+
+    .faq-q span {
+      color: var(--text-secondary);
+      font-size: 18px;
+      transition: transform 0.2s;
+    }
+
+    .faq-item.open .faq-q span { transform: rotate(45deg); }
+
+    .faq-a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .faq-a-inner {
+      padding: 0 24px 20px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* CTA bottom */
+    .bottom-cta {
+      text-align: center;
+      padding: 80px 0 60px;
+    }
+
+    .bottom-cta h2 {
+      font-size: 24px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 24px;
+    }
+
+    /* Footer */
+    footer {
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    footer a:hover { color: var(--text); }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
 
-<div class="ambient"></div>
+  <!-- Nav -->
+  <nav>
+    <div class="container">
+      <a href="#" class="logo">PAAS<span>.</span></a>
+      <a href="https://wa.me/33675486172?text=Hey%20I%20want%20to%20try%20PAAS%20-%203%20free%20episodes" class="cta-sm">Get started</a>
+    </div>
+  </nav>
 
-<nav>
-  <a href="https://antbot.dev" class="logo">
-    <div class="logo-dot"></div>
-    ANTBOT<span style="font-size:0.55rem;letter-spacing:0.15em;color:var(--bg);background:var(--accent);padding:0.15rem 0.5rem;border-radius:3px;margin-left:0.4rem;">PODCAST</span>
-  </a>
-  <div class="nav-right">
-    <a href="fr/" class="lang-switch">FR</a>
-    <a href="#pricing" class="btn-secondary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Pricing</a>
-    <a href="#onboarding" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Try it free →</a>
-  </div>
-</nav>
-
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-left">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
       <h1>Turn any topic into<br>a daily podcast.</h1>
-      <p class="hero-sub">Pick a topic. Wake up to a fresh episode.</p>
-      <div style="margin-top:2.5rem;display:flex;justify-content:center;opacity:0;animation:fade-up 0.8s ease forwards 0.8s;">
-        <a href="#onboarding" class="btn-primary" style="font-size:1rem;padding:1.1rem 2.5rem;">🎙️ Get Started →</a>
-      </div>
+      <p>AI-generated audio briefings on the topics you care about. Delivered to WhatsApp every morning.</p>
+      <a href="https://wa.me/33675486172?text=Hey%20I%20want%20to%20try%20PAAS%20-%203%20free%20episodes" class="cta-primary">
+        Try 3 episodes free →
+      </a>
     </div>
-    <div class="hero-right">
-      <!-- WhatsApp Mockup -->
-      <div class="wa-mockup">
-        <div class="wa-mock-header">
-          <span class="wa-mock-back">‹</span>
-          <div class="wa-mock-avatar">🤖</div>
-          <div class="wa-mock-info">
-            <div class="wa-mock-name">AntBot Podcast</div>
-            <div class="wa-mock-status">online</div>
-          </div>
-          <div class="wa-mock-icons">📞 ⋮</div>
-        </div>
-        <div class="wa-mock-body">
-          <div class="wa-date-chip">TODAY</div>
-          <div class="wa-mock-msg bot">
-            <span class="msg-sender">AntBot</span>
-            ☀️ Good morning! Your daily AI briefing is ready.
-            <span class="msg-time">07:00</span>
-          </div>
-          <div class="wa-mock-msg bot">
-            <div class="wa-mock-audio">
-              <div class="wa-mock-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
-              <div class="wa-mock-waveform" id="hero-waveform"></div>
-              <div class="wa-mock-dur">5:32</div>
-            </div>
-            <div class="wa-mock-audio-title">🎙️ AI & Tech Briefing — Mar 9</div>
-            <span class="msg-time">07:00</span>
-          </div>
-          <div class="wa-mock-msg bot">
-            Karpathy's overnight AI researcher · Multi-agent collabs · Design swarm mode
-            <span class="msg-time">07:00</span>
-          </div>
-          <div class="wa-mock-msg user">
-            This is 🔥 thanks!
-            <span class="msg-time">07:23</span>
+  </section>
+
+  <!-- Demo Players -->
+  <section class="demos">
+    <div class="container">
+      <h2 class="reveal">Listen to samples</h2>
+      <div class="demo-list">
+        <div class="demo-card reveal" data-src="https://antbot.dev/podcast/sample-briefing-en.mp3">
+          <button class="play-btn" aria-label="Play AI & Tech News">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon class="icon-play" points="4,2 14,8 4,14"/><g class="icon-pause" style="display:none"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></g></svg>
+          </button>
+          <div class="demo-info">
+            <div class="demo-title">AI & Tech News</div>
+            <div class="demo-meta">Daily briefing · <span class="duration">--:--</span></div>
+            <div class="demo-progress"><div class="demo-progress-bar"></div></div>
           </div>
         </div>
-        <div class="wa-mock-input">
-          <div class="wa-mock-input-field">Type a message</div>
-          <div class="wa-mock-send"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="#fff"/></svg></div>
+        <div class="demo-card reveal" data-src="https://antbot.dev/podcast/sample-veille-climat.mp3">
+          <button class="play-btn" aria-label="Play Climate & Energy">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon class="icon-play" points="4,2 14,8 4,14"/><g class="icon-pause" style="display:none"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></g></svg>
+          </button>
+          <div class="demo-info">
+            <div class="demo-title">Climate & Energy</div>
+            <div class="demo-meta">Weekly digest · <span class="duration">--:--</span></div>
+            <div class="demo-progress"><div class="demo-progress-bar"></div></div>
+          </div>
+        </div>
+        <div class="demo-card reveal" data-src="https://antbot.dev/podcast/sample-veille-twitter.mp3">
+          <button class="play-btn" aria-label="Play Twitter/X Digest">
+            <svg viewBox="0 0 16 16" fill="currentColor"><polygon class="icon-play" points="4,2 14,8 4,14"/><g class="icon-pause" style="display:none"><rect x="3" y="2" width="3.5" height="12"/><rect x="9.5" y="2" width="3.5" height="12"/></g></svg>
+          </button>
+          <div class="demo-info">
+            <div class="demo-title">Twitter/X Digest</div>
+            <div class="demo-meta">Daily roundup · <span class="duration">--:--</span></div>
+            <div class="demo-progress"><div class="demo-progress-bar"></div></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- ===== ONBOARDING FORM ===== -->
-<div class="onboarding-form-wrapper" id="onboarding">
-  <div class="onboarding-form">
-    <div class="form-title">🎙️ Get your free first episode</div>
-    <div class="form-grid">
-      <div class="form-group full">
-        <label>Your topic</label>
-        <input type="text" id="form-topic" placeholder='e.g. "AI news", "Crypto markets", "Ligue 1", "Climate policy"...'>
-      </div>
-      <div class="form-group">
-        <label>Delivery time</label>
-        <select id="form-time">
-          <option value="6:00">6:00 AM</option>
-          <option value="6:30">6:30 AM</option>
-          <option value="7:00" selected>7:00 AM</option>
-          <option value="7:30">7:30 AM</option>
-          <option value="8:00">8:00 AM</option>
-          <option value="8:30">8:30 AM</option>
-          <option value="9:00">9:00 AM</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Channel</label>
-        <div class="channel-selector">
-          <button type="button" class="channel-btn active" data-channel="whatsapp">💬 WhatsApp</button>
-          <button type="button" class="channel-btn" data-channel="telegram">✈️ Telegram</button>
-          <button type="button" class="channel-btn" data-channel="email">📧 Email</button>
+  <!-- How it works -->
+  <section class="steps">
+    <div class="container">
+      <h2 class="reveal">How it works</h2>
+      <div class="steps-grid">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <h3>Pick your topic</h3>
+          <p>Tell us what you want to stay informed about. Any niche, any language.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <h3>AI produces overnight</h3>
+          <p>We gather sources, write a script, and generate a natural-sounding podcast.</p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <h3>Delivered to WhatsApp</h3>
+          <p>Wake up to a fresh episode in your chat. Listen on your commute.</p>
         </div>
       </div>
-      <div class="form-group full" id="contact-field-group">
-        <label id="contact-label">WhatsApp number</label>
-        <input type="text" id="form-contact" placeholder="+33 6 12 34 56 78">
-      </div>
-      <div class="form-submit">
-        <button type="button" class="btn-primary" id="form-submit-btn">🎙️ Get my free first episode →</button>
-      </div>
     </div>
-  </div>
-</div>
+  </section>
 
-<!-- ===== SOCIAL PROOF BAR ===== -->
-<div class="social-proof-bar reveal">
-  <div class="social-proof-avatars">
-    <div class="sp-avatar" style="background:linear-gradient(135deg,#c8ff00,#a855f7);">🇫🇷</div>
-    <div class="sp-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);">🇬🇧</div>
-    <div class="sp-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">🇩🇪</div>
-    <div class="sp-avatar" style="background:linear-gradient(135deg,#10b981,#3b82f6);">🇺🇸</div>
-    <div class="sp-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">🇯🇵</div>
-    <div class="sp-avatar" style="background:var(--bg-card);border-color:var(--border);">+45</div>
-  </div>
-  <p>Listeners across <span class="sp-highlight">12 countries</span> · Topics from AI to Ligue 1 · <span class="sp-highlight">20+ languages</span></p>
-</div>
-
-<div class="divider"></div>
-
-<!-- ===== HOW IT WORKS ===== -->
-<section class="section reveal">
-  <div class="section-label">How It Works</div>
-  <div class="steps">
-    <div class="step">
-      <div class="step-number">01</div>
-      <h3>Pick your topic</h3>
-      <p>AI, crypto, climate, sports, politics — anything you want to stay sharp on.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">02</div>
-      <h3>We produce it overnight</h3>
-      <p>Every day, our AI scours the web, writes a script, and generates a natural-sounding audio episode.</p>
-    </div>
-    <div class="step">
-      <div class="step-number">03</div>
-      <h3>Press play on your commute</h3>
-      <p>A fresh 3–15 min episode hits your WhatsApp every morning. Just press play.</p>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== LIVE EXAMPLE ===== -->
-<section class="live-example reveal" id="live-example">
-  <div class="section-label" style="max-width:900px;margin:0 auto 2rem;">Today's Episode</div>
-  <div class="live-player">
-    <div class="live-badge">
-      <div class="live-dot"></div>
-      <span>Generated today</span>
-    </div>
-    <div class="live-header">
-      <div class="live-cover">🎙️</div>
-      <div class="live-info">
-        <h3>Your Morning AI Briefing</h3>
-        <p>Karpathy's overnight AI researcher · Multi-agent collaboration · Design swarm mode</p>
-        <div class="live-meta">MARCH 9, 2026 · 5:32 · AI VOICE</div>
+  <!-- Pricing -->
+  <section class="pricing">
+    <div class="container">
+      <h2 class="reveal">Simple pricing</h2>
+      <p class="reveal">Start free. Upgrade when you're hooked.</p>
+      <div class="pricing-grid">
+        <div class="price-card reveal">
+          <div class="price-label">Free trial</div>
+          <div class="price-amount">€0</div>
+          <div class="price-period">3 episodes</div>
+          <ul class="price-features">
+            <li>Pick any topic</li>
+            <li>Full-length episodes</li>
+            <li>WhatsApp delivery</li>
+          </ul>
+        </div>
+        <div class="price-card featured reveal">
+          <div class="price-label">Starter</div>
+          <div class="price-amount">€4.99</div>
+          <div class="price-period">per month</div>
+          <ul class="price-features">
+            <li>1 daily podcast</li>
+            <li>Choose your schedule</li>
+            <li>WhatsApp or email</li>
+          </ul>
+        </div>
+        <div class="price-card reveal">
+          <div class="price-label">Pro</div>
+          <div class="price-amount">€12.99</div>
+          <div class="price-period">per month</div>
+          <ul class="price-features">
+            <li>Up to 5 podcasts</li>
+            <li>Priority generation</li>
+            <li>Custom voice & style</li>
+          </ul>
+        </div>
       </div>
     </div>
-    <div class="live-waveform-container">
-      <div class="live-play-btn" id="live-play-toggle">
-        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-      </div>
-      <div class="live-waveform" id="live-waveform"></div>
-    </div>
-    <div class="live-time">
-      <span id="live-time-current">2:14</span>
-      <span>5:32</span>
-    </div>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
-
-<!-- ===== REAL AUDIO ===== -->
-<section class="audio-section reveal" id="listen">
-  <div class="section-label" style="margin-bottom:1.5rem;">Listen to a Real Episode</div>
-  <div class="audio-player">
-    <div class="audio-header">
-      <div class="audio-cover">🎙️</div>
-      <div class="audio-info">
-        <h3>Your Morning AI Briefing</h3>
-        <p>Karpathy's overnight AI researcher · Multi-agent collaboration · Design swarm mode</p>
-        <div class="meta">2:47 · Fresh every morning · AI voice</div>
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="container">
+      <h2 class="reveal">Questions</h2>
+      <div class="faq-list reveal">
+        <div class="faq-item">
+          <button class="faq-q">What kind of topics can I choose?<span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Anything — AI news, crypto, climate, sports, a specific industry, your competitors' blog posts, Twitter accounts to monitor... If it's on the internet, we can turn it into a podcast.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">How long are the episodes?<span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Typically 5 to 12 minutes — enough to cover the key stories without wasting your time. You choose the depth.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Does it sound like a real podcast?<span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Yes. We use premium AI voices that sound natural and engaging. Hit play on the samples above to hear for yourself.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q">Can I cancel anytime?<span>+</span></button>
+          <div class="faq-a"><div class="faq-a-inner">Of course. No contract, no commitment. Send us a message and you're done.</div></div>
+        </div>
       </div>
     </div>
-    <audio controls preload="metadata">
-      <source src="sample-briefing-en.mp3" type="audio/mpeg">
-    </audio>
-  </div>
-</section>
+  </section>
 
-<div class="divider"></div>
-
-<!-- ===== TOPICS ===== -->
-<section class="section reveal">
-  <div class="section-label">Topics</div>
-  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;">Pick the topics you care about. We'll handle the rest.</p>
-  <div class="topic-grid" id="topic-grid">
-    <div class="topic-pill" data-topic="AI & Tech">AI & Tech</div>
-    <div class="topic-pill" data-topic="Crypto Markets">Crypto Markets</div>
-    <div class="topic-pill" data-topic="Climate & Energy">Climate & Energy</div>
-    <div class="topic-pill" data-topic="French Politics">French Politics</div>
-    <div class="topic-pill" data-topic="European Startups">European Startups</div>
-    <div class="topic-pill" data-topic="Sports">Sports</div>
-    <div class="topic-pill" data-topic="Science & Space">Science & Space</div>
-    <div class="topic-pill" data-topic="Global Economics">Global Economics</div>
-    <div class="topic-pill" data-topic="Health & Biotech">Health & Biotech</div>
-    <div class="topic-pill" data-topic="Geopolitics">Geopolitics</div>
-    <div class="topic-pill" data-topic="Real Estate">Real Estate</div>
-    <div class="topic-pill" data-topic="Custom Topic">✨ Custom Topic</div>
-  </div>
-  <div class="topic-cta" id="topic-cta">
-    <div class="topic-selected-label" id="topic-label"></div>
-    <a id="topic-wa-btn" href="#" class="btn-primary">🎙️ Get my free episode →</a>
-  </div>
-</section>
-
-<!-- ===== DEMOS ===== -->
-<section class="section reveal" style="padding-top:3rem;">
-  <div class="section-label">🎧 Try These Demos</div>
-  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;">Tap to listen. Real episodes. Real AI.</p>
-  
-  <div style="display:grid;gap:1rem;max-width:600px;margin:0 auto;">
-    <div class="demo-row" data-audio="https://antbot.dev/podcast/sample-briefing-en.mp3" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;align-items:center;gap:1rem;cursor:pointer;" onclick="toggleDemo(this)">
-      <div class="demo-btn" style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;transition:0.2s;">▶</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-weight:500;font-size:0.9rem;">AI & Tech News</div>
-        <div style="font-size:0.75rem;color:var(--text-muted);">Daily • 4:32</div>
-      </div>
-      <div class="demo-wave" style="display:flex;align-items:center;gap:2px;height:20px;opacity:0.3;">
-        <div style="width:3px;height:8px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:14px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:10px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:16px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:12px;background:var(--accent);border-radius:1px;"></div>
-      </div>
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="container reveal">
+      <h2>Ready to try it?</h2>
+      <a href="https://wa.me/33675486172?text=Hey%20I%20want%20to%20try%20PAAS%20-%203%20free%20episodes" class="cta-primary">
+        Try 3 episodes free →
+      </a>
     </div>
-    
-    <div class="demo-row" data-audio="https://antbot.dev/podcast/sample-veille-twitter.mp3" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;align-items:center;gap:1rem;cursor:pointer;" onclick="toggleDemo(this)">
-      <div class="demo-btn" style="width:40px;height:40px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;transition:0.2s;">▶</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-weight:500;font-size:0.9rem;">Climate Watch</div>
-        <div style="font-size:0.75rem;color:var(--text-muted);">Daily • 5:18</div>
-      </div>
-      <div class="demo-wave" style="display:flex;align-items:center;gap:2px;height:20px;opacity:0.3;">
-        <div style="width:3px;height:12px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:10px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:16px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:8px;background:var(--accent);border-radius:1px;"></div>
-        <div style="width:3px;height:14px;background:var(--accent);border-radius:1px;"></div>
-      </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>PAAS by <a href="https://antbot.dev">antbot.dev</a></p>
     </div>
+  </footer>
 
-    <div class="demo-row" data-audio="https://antbot.dev/podcast/sample-briefing-en.mp3" style="background:var(--bg-card);border:1px solid var(--border);border-radius:8px;padding:1rem;display:flex;align-items:center;gap:1rem;cursor:pointer;" onclick="toggleDemo(this)">
-      <div class="demo-btn" style="width:40px;height:40px;border-radius:50%;background:var(--purple-dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1rem;transition:0.2s;color:var(--purple);">🎙️</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-weight:500;font-size:0.9rem;">Your Topic Here</div>
-        <div style="font-size:0.75rem;color:var(--text-muted);">Custom • Preview</div>
-      </div>
-    </div>
-  </div>
-  
-  <p style="text-align:center;color:var(--text-muted);font-size:0.8rem;margin-top:1.5rem;">🎙️ Powered by ElevenLabs • Real voices, zero robots</p>
-</section>
+  <script>
+    // Audio player
+    const cards = document.querySelectorAll('.demo-card');
+    let currentAudio = null;
+    let currentCard = null;
 
-<script>
-let currentAudio = null;
-function toggleDemo(row) {
-  const btn = row.querySelector('.demo-btn');
-  const wave = row.querySelector('.demo-wave');
-  const audioSrc = row.dataset.audio;
-  
-  if (currentAudio && currentAudio.src !== audioSrc) {
-    currentAudio.pause();
-    currentAudio = null;
-    document.querySelectorAll('.demo-row').forEach(r => {
-      r.querySelector('.demo-btn').textContent = '▶';
-      r.querySelector('.demo-wave').style.opacity = '0.3';
-    });
-  }
-  
-  if (!currentAudio) {
-    currentAudio = new Audio(audioSrc);
-    currentAudio.play();
-    btn.textContent = '⏸';
-    wave.style.opacity = '1';
-    currentAudio.onended = function() {
-      btn.textContent = '▶';
-      wave.style.opacity = '0.3';
-      currentAudio = null;
-    };
-  } else if (currentAudio.paused) {
-    currentAudio.play();
-    btn.textContent = '⏸';
-    wave.style.opacity = '1';
-  } else {
-    currentAudio.pause();
-    btn.textContent = '▶';
-    wave.style.opacity = '0.3';
-  }
-}
-</script>
-
-<div class="divider"></div>
-
-<!-- ===== PRICING ===== -->
-<section class="section reveal" id="pricing">
-  <div class="section-label">Pricing</div>
-  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:0.5rem;">First episode free. No card required.</p>
-  <div class="pricing-grid">
-    <!-- Starter -->
-    <div class="pricing-card">
-      <div class="pricing-name">Starter</div>
-      <div class="pricing-price">
-        <span class="currency">€</span>4.99<span class="period">/mo</span>
-      </div>
-      <div class="pricing-desc">Perfect for staying sharp on one topic.</div>
-      <ul class="pricing-features">
-        <li>1 daily podcast</li>
-        <li>Any topic</li>
-        <li>WhatsApp, Telegram or Email</li>
-        <li>3–5 min episodes</li>
-        <li>20+ languages</li>
-      </ul>
-      <a href="#stripe-starter" class="pricing-btn outline">Subscribe →</a>
-    </div>
-    <!-- Pro -->
-    <div class="pricing-card popular">
-      <div class="pricing-popular-tag">Most Popular</div>
-      <div class="pricing-name">Pro</div>
-      <div class="pricing-price">
-        <span class="currency">€</span>12.99<span class="period">/mo</span>
-      </div>
-      <div class="pricing-desc">Multiple topics, longer episodes, priority delivery.</div>
-      <ul class="pricing-features">
-        <li>Up to 5 daily podcasts</li>
-        <li>Mix & match topics</li>
-        <li>All channels</li>
-        <li>Up to 15 min episodes</li>
-        <li>Custom delivery schedule</li>
-        <li>Priority generation</li>
-      </ul>
-      <a href="#stripe-pro" class="pricing-btn primary">Subscribe →</a>
-    </div>
-    <!-- Enterprise -->
-    <div class="pricing-card">
-      <div class="pricing-name">Enterprise</div>
-      <div class="pricing-price">
-        <span class="currency">€</span>49<span class="period">/mo</span>
-      </div>
-      <div class="pricing-desc">For teams and power users who need it all.</div>
-      <ul class="pricing-features">
-        <li>Unlimited podcasts</li>
-        <li>Custom sources & feeds</li>
-        <li>All channels + API</li>
-        <li>Up to 30 min episodes</li>
-        <li>White-label option</li>
-        <li>Dedicated support</li>
-        <li>Team management</li>
-      </ul>
-      <a href="#stripe-enterprise" class="pricing-btn outline">Contact us →</a>
-    </div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== FAQ ===== -->
-<section class="section reveal">
-  <div class="section-label">FAQ</div>
-  <div class="faq-item">
-    <div class="faq-q">How good is the audio?</div>
-    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge yourself.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">What languages?</div>
-    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese. Written and spoken natively — not translated.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">How fast?</div>
-    <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Is it free to try?</div>
-    <div class="faq-a">Your first episode is completely free — no card, no commitment. Just tell us your topic and where to send it.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Can I cancel anytime?</div>
-    <div class="faq-a">Yes. No lock-in, no tricks. Cancel with one click and your subscription ends at the end of the billing period.</div>
-  </div>
-</section>
-
-<div class="divider"></div>
-
-<!-- ===== FINAL CTA ===== -->
-<section class="cta-section reveal">
-  <h2>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h2>
-  <p>A voice in your pocket that knows exactly what you care about, ready the moment you wake up.</p>
-  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
-    <a href="#onboarding" class="btn-primary">🎙️ Get a Free Episode</a>
-    <a href="mailto:hello@antbot.dev?subject=Personalized%20Podcast" class="btn-secondary">hello@antbot.dev →</a>
-  </div>
-</section>
-
-<footer>
-  <span>&copy; 2026 AntBot · <a href="https://antbot.dev">antbot.dev</a></span>
-  <span>Powered by <a href="https://openclaw.dev" target="_blank" rel="noopener">OpenClaw</a> + <a href="https://elevenlabs.io" target="_blank" rel="noopener">ElevenLabs</a></span>
-</footer>
-
-<script>
-// === Mobile check ===
-const isMobile = window.innerWidth <= 768;
-
-// === Hero Waveform Bars ===
-(function() {
-  const wf = document.getElementById('hero-waveform');
-  if (!wf) return;
-  // Fewer bars on mobile
-  const bars = isMobile ? 14 : 22;
-  const played = Math.floor(bars * 0.45);
-  for (let i = 0; i < bars; i++) {
-    const h = Math.floor(Math.random() * 14) + 4;
-    const bar = document.createElement('div');
-    bar.className = 'mock-bar ' + (i < played ? 'played' : 'unplayed');
-    bar.style.height = h + 'px';
-    wf.appendChild(bar);
-  }
-})();
-
-// === Live Example Animated Waveform ===
-(function() {
-  const wf = document.getElementById('live-waveform');
-  if (!wf) return;
-  // Fewer bars on mobile for performance
-  const count = isMobile ? 28 : 50;
-  const bars = [];
-  for (let i = 0; i < count; i++) {
-    const bar = document.createElement('div');
-    const h = Math.floor(Math.random() * 24) + 6;
-    bar.className = 'live-bar';
-    bar.style.height = h + 'px';
-    bar.dataset.maxH = h;
-    wf.appendChild(bar);
-    bars.push(bar);
-  }
-
-  let progress = 0.4; // fake progress at 40%
-  let playing = true;
-  // Slower animation on mobile
-  const animationSpeed = isMobile ? 0.00015 : 0.0003;
-
-  function updateBars() {
-    const playedIdx = Math.floor(progress * count);
-    bars.forEach(function(b, i) {
-      if (i < playedIdx) {
-        b.className = 'live-bar played';
-      } else {
-        b.className = 'live-bar unplayed';
-      }
-      // Animate heights slightly (only on desktop)
-      if (!isMobile && playing && i >= playedIdx - 2 && i <= playedIdx + 2) {
-        const h = parseInt(b.dataset.maxH);
-        b.style.height = (h + Math.sin(Date.now() / 300 + i) * 4) + 'px';
-      }
-    });
-
-    // Update time
-    const totalSec = 332; // 5:32
-    const currentSec = Math.floor(progress * totalSec);
-    const m = Math.floor(currentSec / 60);
-    const s = String(currentSec % 60).padStart(2, '0');
-    const el = document.getElementById('live-time-current');
-    if (el) el.textContent = m + ':' + s;
-  }
-
-  function tick() {
-    if (playing) {
-      progress += animationSpeed;
-      if (progress > 1) progress = 0;
-    }
-    updateBars();
-    requestAnimationFrame(tick);
-  }
-  tick();
-
-  const btn = document.getElementById('live-play-toggle');
-  if (btn) {
-    btn.addEventListener('click', function() {
-      playing = !playing;
-      btn.innerHTML = playing
-        ? '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>'
-        : '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18" fill="var(--bg)"/><rect x="15" y="3" width="4" height="18" fill="var(--bg)"/></svg>';
-    });
-  }
-})();
-
-// === Onboarding Form ===
-(function() {
-  const channelBtns = document.querySelectorAll('.channel-btn');
-  const contactLabel = document.getElementById('contact-label');
-  const contactInput = document.getElementById('form-contact');
-  const submitBtn = document.getElementById('form-submit-btn');
-  let activeChannel = 'whatsapp';
-
-  channelBtns.forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      channelBtns.forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      activeChannel = btn.dataset.channel;
-
-      if (activeChannel === 'whatsapp') {
-        contactLabel.textContent = 'WhatsApp number';
-        contactInput.placeholder = '+33 6 12 34 56 78';
-        contactInput.type = 'text';
-      } else if (activeChannel === 'telegram') {
-        contactLabel.textContent = 'Telegram username';
-        contactInput.placeholder = '@username';
-        contactInput.type = 'text';
-      } else {
-        contactLabel.textContent = 'Email address';
-        contactInput.placeholder = 'you@example.com';
-        contactInput.type = 'email';
-      }
-    });
-  });
-
-  submitBtn.addEventListener('click', function() {
-    var topic = document.getElementById('form-topic').value.trim();
-    var time = document.getElementById('form-time').value;
-    var contact = contactInput.value.trim();
-
-    if (!topic) {
-      document.getElementById('form-topic').focus();
-      document.getElementById('form-topic').style.borderColor = '#ff3b30';
-      setTimeout(function() { document.getElementById('form-topic').style.borderColor = ''; }, 2000);
-      return;
+    function formatTime(s) {
+      if (!s || isNaN(s)) return '--:--';
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
     }
 
-    // Build WhatsApp message with all info
-    var msg = 'Hey AntBot, I want a daily podcast about: ' + topic;
-    msg += '\n⏰ Delivery: ' + time;
-    msg += '\n📱 Channel: ' + activeChannel;
-    if (contact) msg += '\n📍 Contact: ' + contact;
+    function resetCard(card) {
+      card.classList.remove('active');
+      const btn = card.querySelector('.play-btn');
+      btn.classList.remove('playing');
+      btn.querySelector('.icon-play').style.display = '';
+      btn.querySelector('.icon-pause').style.display = 'none';
+      card.querySelector('.demo-progress-bar').style.width = '0%';
+    }
 
-    window.open('https://wa.me/33769516191?text=' + encodeURIComponent(msg), '_blank');
-  });
-})();
+    cards.forEach(card => {
+      const btn = card.querySelector('.play-btn');
+      const src = card.dataset.src;
+      const durationEl = card.querySelector('.duration');
+      const progressBar = card.querySelector('.demo-progress-bar');
 
-// === Interactive Topics ===
-(function() {
-  const grid = document.getElementById('topic-grid');
-  const cta = document.getElementById('topic-cta');
-  const label = document.getElementById('topic-label');
-  const waBtn = document.getElementById('topic-wa-btn');
-  const selected = new Set();
-
-  grid.addEventListener('click', function(e) {
-    const pill = e.target.closest('.topic-pill');
-    if (!pill) return;
-
-    const topic = pill.dataset.topic;
-
-    if (selected.has(topic)) {
-      selected.delete(topic);
-      pill.classList.remove('selected');
-    } else {
-      selected.forEach(function(t) {
-        grid.querySelector('[data-topic="' + t + '"]').classList.remove('selected');
+      // Preload metadata for duration
+      const tempAudio = new Audio();
+      tempAudio.preload = 'metadata';
+      tempAudio.src = src;
+      tempAudio.addEventListener('loadedmetadata', () => {
+        durationEl.textContent = formatTime(tempAudio.duration);
       });
-      selected.clear();
-      selected.add(topic);
-      pill.classList.add('selected');
-    }
 
-    if (selected.size > 0) {
-      const t = Array.from(selected)[0];
-      label.textContent = '→ ' + t;
-      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Hey AntBot, I want a daily podcast about: ' + t);
-      cta.classList.add('visible');
+      btn.addEventListener('click', () => {
+        // If clicking the same card that's playing, pause it
+        if (currentCard === card && currentAudio && !currentAudio.paused) {
+          currentAudio.pause();
+          btn.classList.remove('playing');
+          btn.querySelector('.icon-play').style.display = '';
+          btn.querySelector('.icon-pause').style.display = 'none';
+          return;
+        }
 
-      // Also fill the form topic
-      var formTopic = document.getElementById('form-topic');
-      if (formTopic) formTopic.value = t;
-    } else {
-      cta.classList.remove('visible');
-    }
-  });
-})();
+        // Stop any other playing audio
+        if (currentAudio) {
+          currentAudio.pause();
+          currentAudio.currentTime = 0;
+          if (currentCard) resetCard(currentCard);
+        }
 
-// === Scroll Reveal ===
-(function() {
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
-  }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  reveals.forEach(function(el) { observer.observe(el); });
-})();
-</script>
+        // Create new audio or resume
+        if (currentCard !== card) {
+          currentAudio = new Audio(src);
+          currentAudio.addEventListener('timeupdate', () => {
+            if (currentAudio.duration) {
+              const pct = (currentAudio.currentTime / currentAudio.duration) * 100;
+              progressBar.style.width = pct + '%';
+              durationEl.textContent = formatTime(currentAudio.currentTime) + ' / ' + formatTime(currentAudio.duration);
+            }
+          });
+          currentAudio.addEventListener('ended', () => {
+            resetCard(card);
+            durationEl.textContent = formatTime(currentAudio.duration);
+            currentCard = null;
+          });
+        }
+
+        currentCard = card;
+        card.classList.add('active');
+        btn.classList.add('playing');
+        btn.querySelector('.icon-play').style.display = 'none';
+        btn.querySelector('.icon-pause').style.display = '';
+        currentAudio.play();
+      });
+    });
+
+    // FAQ toggles
+    document.querySelectorAll('.faq-q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.parentElement;
+        const answer = item.querySelector('.faq-a');
+        const isOpen = item.classList.contains('open');
+
+        // Close all
+        document.querySelectorAll('.faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.faq-a').style.maxHeight = null;
+        });
+
+        if (!isOpen) {
+          item.classList.add('open');
+          answer.style.maxHeight = answer.scrollHeight + 'px';
+        }
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
 
 </body>
 </html>
