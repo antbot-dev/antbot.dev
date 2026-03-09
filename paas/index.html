@@ -1022,27 +1022,143 @@
   .sp-avatar:first-child { margin-left: 0; }
 
   @media (max-width: 768px) {
+    /* Mobile: Minimal dark theme - reduce all neon/decorative elements */
+    
+    /* Hide Christmas lights effect */
+    .ambient { display: none !important; }
+    
+    /* Logo dot - no animation on mobile */
+    .logo-dot { animation: none !important; box-shadow: none !important; opacity: 0.6 !important; }
+    
+    /* Darker backgrounds, less accent */
+    :root {
+      --accent-dim: rgba(200, 255, 0, 0.08);
+      --accent-glow: rgba(200, 255, 0, 0.15);
+    }
+    
     .hero-content { grid-template-columns: 1fr; text-align: center; }
     .hero-left { text-align: center; }
     .hero-sub { margin: 0 auto; }
-    .hero-right { order: -1; }
+    .hero-right { 
+      order: -1; 
+      display: none; /* Hide WhatsApp mockup on mobile - too colorful */
+    }
     .wa-mockup { max-width: 320px; }
+    
+    /* Hide social proof badge on mobile - too bright */
+    .social-proof-badge { display: none !important; }
+    
+    /* Simplify hero text */
+    h1 {
+      font-size: clamp(1.8rem, 6vw, 2.5rem);
+    }
+    
+    .hero-sub {
+      font-size: 0.95rem;
+    }
+    
+    .hero-left > div[style*="margin-top"] {
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+    }
+    
     .form-grid { grid-template-columns: 1fr; }
-    .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
+    
+    /* Vertical pricing - clean spacing */
+    .pricing-grid { 
+      grid-template-columns: 1fr; 
+      max-width: 340px; 
+      margin-left: auto; 
+      margin-right: auto; 
+      gap: 1.25rem;
+    }
+    
+    .pricing-card {
+      padding: 1.5rem 1.25rem;
+    }
+    
+    /* Hide social proof bar avatars on mobile */
+    .social-proof-bar { display: none !important; }
+    
+    /* Reduce waveform animations - simpler, fewer bars */
+    .live-waveform { gap: 1px; }
+    .live-bar { width: 2px; }
+    
+    /* Hide animated glow effects on mobile */
+    .live-cover::after,
+    .pricing-card.popular {
+      box-shadow: none;
+      animation: none;
+      background: var(--bg-card);
+    }
+    
+    .pricing-card.popular {
+      border-color: var(--border);
+    }
+    
+    /* Darker form */
+    .onboarding-form::before {
+      display: none;
+    }
+    
+    /* Simpler buttons */
+    .btn-primary, .btn-secondary {
+      padding: 0.8rem 1.5rem;
+      font-size: 0.8rem;
+    }
+    
+    /* Hide live badge glow */
+    .live-badge {
+      background: rgba(255, 59, 48, 0.08);
+      border-color: rgba(255, 59, 48, 0.12);
+    }
+    
+    /* Topic pills - simpler */
+    .topic-pill {
+      padding: 8px 16px;
+      font-size: 0.75rem;
+    }
+    
+    /* CTA section */
+    .cta-section h2 {
+      font-size: clamp(1.5rem, 5vw, 2rem);
+    }
+    
+    /* Remove gradient text on mobile - too colorful */
+    .gradient-text {
+      background: var(--accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: var(--accent);
+      background-clip: text;
+    }
+    
+    /* Footer */
+    footer {
+      padding: 1.25rem;
+      text-align: center;
+    }
   }
 
   @media (max-width: 640px) {
     nav { padding: 1rem 1.25rem; }
-    .hero { padding: 7rem 1.25rem 2rem; }
-    .section { padding: 3.5rem 1.25rem; }
-    .audio-section { padding: 1.5rem 1.25rem 3rem; }
-    .live-example { padding: 2rem 1.25rem; }
-    .cta-section { padding: 4rem 1.25rem; }
-    footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
+    .hero { padding: 6rem 1rem 2rem; min-height: auto; }
+    .section { padding: 3rem 1rem; }
+    .audio-section { padding: 1.5rem 1rem 2.5rem; }
+    .live-example { padding: 2rem 1rem; }
+    .cta-section { padding: 3.5rem 1rem; }
+    footer { padding: 1.25rem 1rem; flex-direction: column; gap: 0.5rem; }
     .steps { grid-template-columns: 1fr; gap: 1.5rem; }
-    .onboarding-form-wrapper { padding: 0 1.25rem 3rem; }
-    .onboarding-form { padding: 1.5rem; }
+    .onboarding-form-wrapper { padding: 0 1rem 2.5rem; }
+    .onboarding-form { padding: 1.25rem; }
     .channel-selector { flex-wrap: wrap; }
+    
+    /* Even smaller text on small screens */
+    h1 { font-size: 1.6rem; }
+    .hero-sub { font-size: 0.9rem; }
+    
+    /* Hide nav CTA on very small screens */
+    .nav-right .btn-secondary { display: none; }
   }
 </style>
 </head>
@@ -1385,11 +1501,15 @@
 </footer>
 
 <script>
+// === Mobile check ===
+const isMobile = window.innerWidth <= 768;
+
 // === Hero Waveform Bars ===
 (function() {
   const wf = document.getElementById('hero-waveform');
   if (!wf) return;
-  const bars = 22;
+  // Fewer bars on mobile
+  const bars = isMobile ? 14 : 22;
   const played = Math.floor(bars * 0.45);
   for (let i = 0; i < bars; i++) {
     const h = Math.floor(Math.random() * 14) + 4;
@@ -1404,7 +1524,8 @@
 (function() {
   const wf = document.getElementById('live-waveform');
   if (!wf) return;
-  const count = 50;
+  // Fewer bars on mobile for performance
+  const count = isMobile ? 28 : 50;
   const bars = [];
   for (let i = 0; i < count; i++) {
     const bar = document.createElement('div');
@@ -1418,6 +1539,8 @@
 
   let progress = 0.4; // fake progress at 40%
   let playing = true;
+  // Slower animation on mobile
+  const animationSpeed = isMobile ? 0.00015 : 0.0003;
 
   function updateBars() {
     const playedIdx = Math.floor(progress * count);
@@ -1427,8 +1550,8 @@
       } else {
         b.className = 'live-bar unplayed';
       }
-      // Animate heights slightly
-      if (playing && i >= playedIdx - 2 && i <= playedIdx + 2) {
+      // Animate heights slightly (only on desktop)
+      if (!isMobile && playing && i >= playedIdx - 2 && i <= playedIdx + 2) {
         const h = parseInt(b.dataset.maxH);
         b.style.height = (h + Math.sin(Date.now() / 300 + i) * 4) + 'px';
       }
@@ -1445,7 +1568,7 @@
 
   function tick() {
     if (playing) {
-      progress += 0.0003;
+      progress += animationSpeed;
       if (progress > 1) progress = 0;
     }
     updateBars();
