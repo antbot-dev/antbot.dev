@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PAAS — Podcast as a Service | AntBot</title>
-<meta name="description" content="AI-generated podcasts delivered daily. Pick your topic, choose your voice, wake up to a fresh episode. Fully autonomous, zero effort.">
+<meta name="description" content="AI-generated podcasts delivered daily. Pick your topic, choose your voice, wake up to a fresh episode.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
 <meta property="og:title" content="PAAS — Podcast as a Service">
 <meta property="og:description" content="AI-generated daily podcasts. Pick your topic, wake up to a fresh episode.">
@@ -28,8 +28,6 @@
     --accent-dim: #c8ff0015;
     --accent-glow: #c8ff0030;
     --purple: #a855f7;
-    --purple-dim: #a855f715;
-    --blue: #3b82f6;
   }
 
   html { scroll-behavior: smooth; }
@@ -52,7 +50,6 @@
     z-index: 9999;
   }
 
-  /* Ambient */
   .ambient-line {
     position: fixed;
     top: 0;
@@ -63,11 +60,7 @@
     animation: ambient-scan 8s ease-in-out infinite;
     z-index: 101;
   }
-
-  @keyframes ambient-scan {
-    0%, 100% { opacity: 0; }
-    50% { opacity: 1; }
-  }
+  @keyframes ambient-scan { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
   /* Nav */
   nav {
@@ -96,18 +89,13 @@
   }
 
   .logo-dot {
-    width: 6px;
-    height: 6px;
+    width: 6px; height: 6px;
     background: var(--accent);
     border-radius: 50%;
     animation: pulse-dot 3s ease-in-out infinite;
     box-shadow: 0 0 8px var(--accent-glow);
   }
-
-  @keyframes pulse-dot {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
-  }
+  @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
   .nav-badge {
     font-family: 'JetBrains Mono', monospace;
@@ -154,9 +142,7 @@
     opacity: 0;
     animation: fade-up 0.8s ease forwards 0.4s;
   }
-
   h1 strong { font-weight: 700; }
-
   h1 .gradient-text {
     background: linear-gradient(135deg, var(--accent), #a855f7);
     -webkit-background-clip: text;
@@ -199,7 +185,6 @@
     border: none;
     cursor: pointer;
   }
-
   .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 30px var(--accent-glow);
@@ -219,7 +204,6 @@
     transition: all 0.3s ease;
     letter-spacing: 0.02em;
   }
-
   .btn-secondary:hover {
     border-color: var(--accent);
     background: var(--accent-dim);
@@ -229,45 +213,6 @@
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Waveform visual */
-  .waveform-container {
-    margin-top: 3rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 1s;
-  }
-
-  .waveform {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    height: 40px;
-    padding: 0.75rem 1.5rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    width: fit-content;
-  }
-
-  .waveform-bar {
-    width: 3px;
-    background: var(--accent);
-    border-radius: 2px;
-    animation: wave 1.2s ease-in-out infinite;
-  }
-
-  @keyframes wave {
-    0%, 100% { height: 4px; opacity: 0.3; }
-    50% { height: 20px; opacity: 1; }
-  }
-
-  .waveform-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-secondary);
-    margin-left: 0.75rem;
-    letter-spacing: 0.05em;
   }
 
   /* Sections */
@@ -290,12 +235,8 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* How it works */
-  .steps {
-    display: grid;
-    gap: 2rem;
-  }
-
+  /* Steps */
+  .steps { display: grid; gap: 2rem; }
   .step {
     display: grid;
     grid-template-columns: 60px 1fr;
@@ -307,11 +248,7 @@
     border-radius: 8px;
     transition: border-color 0.3s ease;
   }
-
-  .step:hover {
-    border-color: var(--border-hover);
-  }
-
+  .step:hover { border-color: var(--border-hover); }
   .step-number {
     font-family: 'JetBrains Mono', monospace;
     font-size: 2rem;
@@ -320,20 +257,62 @@
     opacity: 0.4;
     line-height: 1;
   }
+  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
+  .step p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
 
-  .step h3 {
-    font-size: 1rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
+  /* Audio Player */
+  .audio-section {
+    padding: 4rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
   }
 
-  .step p {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
+  .audio-player {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
   }
 
-  /* Use cases */
+  .audio-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .audio-cover {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .audio-info h3 { font-size: 0.9rem; font-weight: 500; }
+  .audio-info p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; }
+  .audio-info .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  .audio-player audio {
+    width: 100%;
+    height: 40px;
+    outline: none;
+    border-radius: 8px;
+  }
+
+  /* Use cases - simplified */
   .usecases-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -346,254 +325,31 @@
 
   .usecase {
     background: var(--bg-card);
-    padding: 2rem;
+    padding: 1.75rem;
     transition: background 0.3s ease;
   }
-
-  .usecase:hover {
-    background: var(--bg-elevated);
-  }
-
-  .usecase-emoji {
-    font-size: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .usecase h3 {
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 0.4rem;
-  }
-
-  .usecase p {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    line-height: 1.6;
-  }
-
-  /* Example player */
-  .player-section {
-    padding: 4rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .player {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .player-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .player-cover {
-    width: 64px;
-    height: 64px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-  }
-
-  .player-info h3 {
-    font-size: 0.95rem;
-    font-weight: 500;
-  }
-
-  .player-info p {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-  }
-
-  .player-info .player-meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-    letter-spacing: 0.05em;
-  }
-
-  .player-waveform {
-    display: flex;
-    align-items: center;
-    gap: 2px;
-    height: 32px;
-    padding: 0 0.5rem;
-  }
-
-  .player-waveform .bar {
-    flex: 1;
-    background: var(--accent);
-    border-radius: 1px;
-    opacity: 0.3;
-    transition: opacity 0.2s;
-    min-width: 2px;
-  }
-
-  .player-waveform .bar.active {
-    opacity: 0.8;
-  }
-
-  .player-times {
-    display: flex;
-    justify-content: space-between;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    color: var(--text-muted);
-  }
-
-  /* Pricing */
-  .pricing-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .price-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 2.5rem 2rem;
-    transition: border-color 0.3s ease;
-    position: relative;
-  }
-
-  .price-card:hover {
-    border-color: var(--border-hover);
-  }
-
-  .price-card.featured {
-    border-color: var(--accent);
-  }
-
-  .price-card.featured::before {
-    content: 'POPULAR';
-    position: absolute;
-    top: -0.6rem;
-    left: 1.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    color: var(--bg);
-    background: var(--accent);
-    padding: 0.15rem 0.6rem;
-    border-radius: 3px;
-    font-weight: 500;
-  }
-
-  .price-tier {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-  }
-
-  .price-amount {
-    font-size: 2.5rem;
-    font-weight: 600;
-    line-height: 1;
-    margin-bottom: 0.25rem;
-  }
-
-  .price-amount span {
-    font-size: 0.9rem;
-    font-weight: 400;
-    color: var(--text-secondary);
-  }
-
-  .price-desc {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.6;
-  }
-
-  .price-features {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-  }
-
-  .price-features li {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .price-features li::before {
-    content: '✓';
-    color: var(--accent);
-    font-weight: 600;
-    font-size: 0.75rem;
-  }
-
-  /* Stack */
-  .stack-line {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 0.85rem;
-  }
-
-  .stack-line:last-child { border-bottom: none; }
-
-  .stack-key {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    min-width: 100px;
-  }
-
-  .stack-val {
-    color: var(--text-secondary);
-  }
+  .usecase:hover { background: var(--bg-elevated); }
+  .usecase-emoji { font-size: 1.5rem; margin-bottom: 0.6rem; }
+  .usecase h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
+  .usecase p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
 
   /* FAQ */
-  .faq-item {
-    padding: 1.5rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
+  .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
-
   .faq-q {
     font-size: 0.95rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    cursor: pointer;
     display: flex;
     align-items: center;
     gap: 0.75rem;
   }
-
   .faq-q::before {
     content: '→';
     color: var(--accent);
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.8rem;
   }
-
   .faq-a {
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -609,7 +365,6 @@
     position: relative;
     z-index: 1;
   }
-
   .cta-section h2 {
     font-size: clamp(1.8rem, 4vw, 2.8rem);
     font-weight: 300;
@@ -617,7 +372,6 @@
     margin-bottom: 1rem;
     line-height: 1.2;
   }
-
   .cta-section p {
     color: var(--text-secondary);
     font-size: 0.95rem;
@@ -642,39 +396,24 @@
     position: relative;
     z-index: 1;
   }
+  footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--text-secondary); }
 
-  footer a {
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  footer a:hover {
-    color: var(--text-secondary);
-  }
-
-  /* Scroll reveal */
   .reveal {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.7s ease, transform 0.7s ease;
   }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
 
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Mobile */
   @media (max-width: 640px) {
     nav { padding: 1rem 1.25rem; }
     .hero { padding: 7rem 1.25rem 4rem; }
     .section { padding: 4rem 1.25rem; }
-    .player-section { padding: 2rem 1.25rem; }
+    .audio-section { padding: 2rem 1.25rem; }
     .cta-section { padding: 5rem 1.25rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
     .step { grid-template-columns: 40px 1fr; padding: 1.5rem; }
-    .pricing-grid { grid-template-columns: 1fr; }
     .hero-cta { flex-direction: column; }
     .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
   }
@@ -690,23 +429,17 @@
     ANTBOT
     <span class="nav-badge">PAAS</span>
   </a>
-  <a href="#pricing" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Get Started →</a>
+  <a href="https://wa.me/33675486172?text=Hey%20AntBot%2C%20I%20want%20to%20try%20PAAS" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Try it free →</a>
 </nav>
 
 <section class="hero">
   <div class="hero-label">Podcast as a Service</div>
   <h1>Your daily podcast.<br><strong>Zero <span class="gradient-text">effort.</span></strong></h1>
-  <p class="hero-sub">Pick a topic. Choose a voice. Wake up to a fresh podcast episode every morning. AI-generated, human-quality, fully autonomous. No studio, no editing, no crew.</p>
+  <p class="hero-sub">Pick a topic. Choose a voice. Wake up to a fresh podcast episode every morning. AI-generated, human-quality, fully autonomous.</p>
 
   <div class="hero-cta">
-    <a href="https://wa.me/33675486172?text=Hey%20AntBot%2C%20I%20want%20a%20PAAS%20podcast" class="btn-primary">🎙️ Start on WhatsApp</a>
-    <a href="#how" class="btn-secondary">See how it works</a>
-  </div>
-
-  <div class="waveform-container">
-    <div class="waveform" id="waveform">
-      <span class="waveform-label">▶ Generating episode...</span>
-    </div>
+    <a href="https://wa.me/33675486172?text=Hey%20AntBot%2C%20I%20want%20to%20try%20PAAS%20—%20free%20sample" class="btn-primary">🎙️ Try it on WhatsApp</a>
+    <a href="#listen" class="btn-secondary">Listen to an example ↓</a>
   </div>
 </section>
 
@@ -717,148 +450,65 @@
       <div class="step-number">01</div>
       <div>
         <h3>Tell us your topic</h3>
-        <p>AI news, crypto markets, climate policy, tech startups, French politics, sports recap — anything. You define the scope, sources, and angle.</p>
+        <p>AI news, crypto, climate, sports, French politics — anything. You define the scope and the angle.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-number">02</div>
       <div>
         <h3>We research, write, and produce</h3>
-        <p>Every day, our agent scours the web for the latest content on your topic. It writes a script, fact-checks sources, and generates a natural-sounding audio episode with premium AI voices.</p>
+        <p>Every day, our AI agent scours the web, writes a script, and generates a natural-sounding audio episode.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-number">03</div>
       <div>
         <h3>Wake up to your podcast</h3>
-        <p>Delivered via WhatsApp, Telegram, email, or any channel you prefer. 5 to 15 minutes of curated audio intelligence, ready for your commute.</p>
+        <p>Delivered via WhatsApp, Telegram, or email. 3 to 15 minutes of curated intelligence, ready for your commute.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="player-section reveal">
-  <div class="player">
-    <div class="player-header">
-      <div class="player-cover">🎙️</div>
-      <div class="player-info">
-        <h3>AI Veille — Monday, March 9</h3>
-        <p>OpenAI Pentagon drama · Gemini wrongful death lawsuit · OpenClaw fever in China</p>
-        <div class="player-meta">5:32 · Generated at 08:30 CET · ElevenLabs voice</div>
+<section class="audio-section reveal" id="listen">
+  <div class="audio-player">
+    <div class="audio-header">
+      <div class="audio-cover">🎙️</div>
+      <div class="audio-info">
+        <h3>Twitter/X Feed — Veille Tech & IA</h3>
+        <p>Karpathy AI researcher · OpenClaw × Codex · Pencil swarm design · Mark Cuban on AI</p>
+        <div class="meta">3:23 · Generated March 9, 2026 · ElevenLabs voice</div>
       </div>
     </div>
-    <div class="player-waveform" id="player-waveform"></div>
-    <div class="player-times">
-      <span>2:14</span>
-      <span>5:32</span>
-    </div>
+    <audio controls preload="metadata" style="width:100%;">
+      <source src="sample-veille-twitter.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
   </div>
 </section>
 
 <section class="section reveal">
-  <div class="section-label">Use Cases</div>
+  <div class="section-label">Examples</div>
   <div class="usecases-grid">
     <div class="usecase">
       <div class="usecase-emoji">🤖</div>
-      <h3>AI & Tech News</h3>
-      <p>Daily digest of AI breakthroughs, product launches, funding rounds, and industry drama.</p>
+      <h3>AI & Tech</h3>
+      <p>Breakthroughs, launches, funding, drama — your daily AI briefing.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">📈</div>
-      <h3>Market Intelligence</h3>
-      <p>Crypto, stocks, prediction markets — morning briefing with analysis and key moves.</p>
+      <h3>Markets</h3>
+      <p>Crypto, stocks, macro — morning briefing with key moves.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">🌍</div>
       <h3>Industry Watch</h3>
-      <p>Climate policy, real estate, healthcare, SaaS — specialized coverage for your sector.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">🏢</div>
-      <h3>Company Intel</h3>
-      <p>Track competitors, monitor press mentions, aggregate industry signals. Your private intel podcast.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">⚽</div>
-      <h3>Sports Recap</h3>
-      <p>Ligue 1, Premier League, Champions League — scores, analysis, and transfer rumors every morning.</p>
+      <p>Climate, real estate, SaaS — specialized coverage for your sector.</p>
     </div>
     <div class="usecase">
       <div class="usecase-emoji">🎯</div>
       <h3>Custom Topic</h3>
-      <p>Literally anything. If it's on the internet, we can turn it into a daily podcast for you.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section reveal">
-  <div class="section-label">Under the Hood</div>
-  <div class="stack-line">
-    <span class="stack-key">Agent</span>
-    <span class="stack-val">OpenClaw autonomous agent — research, write, produce, deliver</span>
-  </div>
-  <div class="stack-line">
-    <span class="stack-key">Brain</span>
-    <span class="stack-val">Claude Opus 4 · Gemini 3 Pro · multi-source web research</span>
-  </div>
-  <div class="stack-line">
-    <span class="stack-key">Voice</span>
-    <span class="stack-val">ElevenLabs ultra-realistic voices · 20+ languages · custom voice cloning</span>
-  </div>
-  <div class="stack-line">
-    <span class="stack-key">Delivery</span>
-    <span class="stack-val">WhatsApp · Telegram · Email · Slack · RSS · Spotify (coming soon)</span>
-  </div>
-  <div class="stack-line">
-    <span class="stack-key">Schedule</span>
-    <span class="stack-val">Daily, weekly, or custom · any timezone · any time</span>
-  </div>
-  <div class="stack-line">
-    <span class="stack-key">Length</span>
-    <span class="stack-val">3 to 20 minutes · you choose the depth</span>
-  </div>
-</section>
-
-<section class="section reveal" id="pricing">
-  <div class="section-label">Pricing</div>
-  <div class="pricing-grid">
-    <div class="price-card">
-      <div class="price-tier">Starter</div>
-      <div class="price-amount">€49<span>/mo</span></div>
-      <p class="price-desc">Perfect for individuals who want a daily intelligence briefing.</p>
-      <ul class="price-features">
-        <li>1 podcast topic</li>
-        <li>Daily episodes (Mon-Fri)</li>
-        <li>5 min episodes</li>
-        <li>WhatsApp or email delivery</li>
-        <li>Standard voices</li>
-      </ul>
-    </div>
-    <div class="price-card featured">
-      <div class="price-tier">Pro</div>
-      <div class="price-amount">€149<span>/mo</span></div>
-      <p class="price-desc">For teams and power users who need deep, multi-topic coverage.</p>
-      <ul class="price-features">
-        <li>3 podcast topics</li>
-        <li>Daily episodes (7 days)</li>
-        <li>Up to 15 min episodes</li>
-        <li>All delivery channels</li>
-        <li>Premium voices + custom tone</li>
-        <li>Source links & transcript</li>
-      </ul>
-    </div>
-    <div class="price-card">
-      <div class="price-tier">Enterprise</div>
-      <div class="price-amount">Custom</div>
-      <p class="price-desc">White-label podcasts, custom voice cloning, API access, and dedicated support.</p>
-      <ul class="price-features">
-        <li>Unlimited topics</li>
-        <li>Custom voice cloning</li>
-        <li>White-label branding</li>
-        <li>API & webhook integration</li>
-        <li>Priority support</li>
-        <li>Custom delivery pipelines</li>
-      </ul>
+      <p>Anything. If it's on the internet, we turn it into a daily podcast.</p>
     </div>
   </div>
 </section>
@@ -866,34 +516,26 @@
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
-    <div class="faq-q">How good is the audio quality?</div>
-    <div class="faq-a">We use ElevenLabs' latest models — the same tech behind major podcast networks. Natural intonation, proper pacing, zero robotic artifacts. Most listeners can't tell it's AI.</div>
+    <div class="faq-q">How good is the audio?</div>
+    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge for yourself.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Can I get it in French? Other languages?</div>
-    <div class="faq-a">Absolutely. We support 20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese, and more. The AI writes and speaks natively — not translated.</div>
+    <div class="faq-q">What languages?</div>
+    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese, and more. Written and spoken natively — not translated.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">What sources does it use?</div>
-    <div class="faq-a">Our agent searches the live web, Twitter/X, Reddit, specialized news feeds, and any custom sources you define. Every claim is cross-referenced. Source links included in every episode transcript.</div>
+    <div class="faq-q">How fast?</div>
+    <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Can I customize the voice and style?</div>
-    <div class="faq-a">Yes. Choose from our voice library, or clone your own voice (Enterprise). You can also set the tone — professional briefing, casual chat, deep analysis, or even comedic commentary.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">How fast is it produced?</div>
-    <div class="faq-a">Research to finished audio in under 5 minutes. Your podcast is generated fresh every morning with the latest information — not recycled summaries.</div>
-  </div>
-  <div class="faq-item">
-    <div class="faq-q">Can I try it before subscribing?</div>
+    <div class="faq-q">Can I try it?</div>
     <div class="faq-a">Yes — message us on WhatsApp and we'll generate a free sample episode on your topic within minutes.</div>
   </div>
 </section>
 
 <section class="cta-section reveal">
   <h2>Your topic.<br>Your schedule.<br><strong>Your podcast.</strong></h2>
-  <p>Stop scrolling through newsletters. Start listening to intelligence curated for you, delivered the way you want it.</p>
+  <p>Stop scrolling through newsletters. Start listening to intelligence curated for you.</p>
   <div style="display:flex;gap:1rem;flex-wrap:wrap;">
     <a href="https://wa.me/33675486172?text=Hey%20AntBot%2C%20I%20want%20to%20try%20PAAS%20—%20free%20sample" class="btn-primary">🎙️ Get a Free Sample</a>
     <a href="mailto:hello@antbot.dev?subject=PAAS%20Inquiry" class="btn-secondary">hello@antbot.dev →</a>
@@ -906,39 +548,10 @@
 </footer>
 
 <script>
-// === Waveform Animation ===
-(function() {
-  const container = document.getElementById('waveform');
-  const label = container.querySelector('.waveform-label');
-  for (let i = 0; i < 30; i++) {
-    const bar = document.createElement('div');
-    bar.className = 'waveform-bar';
-    bar.style.animationDelay = (i * 0.06) + 's';
-    container.insertBefore(bar, label);
-  }
-})();
-
-// === Player Waveform ===
-(function() {
-  const container = document.getElementById('player-waveform');
-  const total = 80;
-  const progress = 0.4;
-  for (let i = 0; i < total; i++) {
-    const bar = document.createElement('div');
-    bar.className = 'bar' + (i / total < progress ? ' active' : '');
-    const h = Math.random() * 24 + 4;
-    bar.style.height = h + 'px';
-    container.appendChild(bar);
-  }
-})();
-
-// === Scroll Reveal ===
 (function() {
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
-    });
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   reveals.forEach(el => observer.observe(el));
 })();
