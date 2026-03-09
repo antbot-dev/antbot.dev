@@ -28,6 +28,7 @@
     --accent-dim: #c8ff0015;
     --accent-glow: #c8ff0030;
     --purple: #a855f7;
+    --wa-green: #25D366;
   }
 
   html { scroll-behavior: smooth; }
@@ -50,7 +51,6 @@
     z-index: 9999;
   }
 
-  /* Ambient glow */
   .ambient {
     position: fixed;
     top: -30%;
@@ -154,13 +154,22 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 8rem 2rem 4rem;
-    max-width: 900px;
+    padding: 8rem 2rem 3rem;
+    max-width: 1100px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
-    text-align: center;
   }
+
+  .hero-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-left { text-align: left; }
 
   .hero-label {
     font-family: 'JetBrains Mono', monospace;
@@ -168,17 +177,43 @@
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
     opacity: 0;
     animation: fade-up 0.8s ease forwards 0.2s;
   }
 
+  /* Social proof badge */
+  .social-proof-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--accent-dim);
+    border: 1px solid rgba(200, 255, 0, 0.15);
+    border-radius: 100px;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.1s;
+  }
+  .social-proof-badge .dot-live {
+    width: 6px; height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  .social-proof-badge span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
   h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     font-weight: 300;
     line-height: 1.1;
     letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.2rem;
     opacity: 0;
     animation: fade-up 0.8s ease forwards 0.4s;
   }
@@ -191,22 +226,12 @@
   }
 
   .hero-sub {
-    font-size: 1.15rem;
+    font-size: 1.05rem;
     color: var(--text-secondary);
-    max-width: 520px;
+    max-width: 440px;
     line-height: 1.7;
     opacity: 0;
     animation: fade-up 0.8s ease forwards 0.6s;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.8s;
-    flex-wrap: wrap;
-    justify-content: center;
   }
 
   @keyframes fade-up {
@@ -214,150 +239,280 @@
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* WhatsApp Chat Simulation */
-  .wa-section {
-    max-width: 440px;
-    margin: 0 auto;
-    padding: 0 1.5rem 5rem;
-    position: relative;
-    z-index: 1;
+  /* Hero WhatsApp Mockup */
+  .hero-right {
     opacity: 0;
-    animation: fade-up 0.8s ease forwards 1s;
+    animation: fade-up 0.8s ease forwards 0.8s;
   }
 
-  .wa-chat {
+  .wa-mockup {
     background: #0b141a;
     border: 1px solid var(--border);
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
+    max-width: 360px;
+    margin: 0 auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03);
   }
 
-  .wa-header {
+  .wa-mock-header {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    padding: 0.7rem 1rem;
+    padding: 0.6rem 0.8rem;
     background: #1f2c34;
     border-bottom: 1px solid #2a3942;
   }
-
-  .wa-avatar {
-    width: 32px; height: 32px;
+  .wa-mock-back { color: #8696a0; font-size: 0.9rem; }
+  .wa-mock-avatar {
+    width: 34px; height: 34px;
     border-radius: 50%;
-    background: #25D366;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 0.8rem;
   }
-  .wa-avatar svg { width: 18px; height: 18px; fill: #fff; }
+  .wa-mock-info { flex: 1; }
+  .wa-mock-name { font-size: 0.8rem; font-weight: 500; color: #e9edef; }
+  .wa-mock-status { font-size: 0.6rem; color: #8696a0; }
+  .wa-mock-icons { display: flex; gap: 1rem; color: #aebac1; font-size: 0.85rem; }
 
-  .wa-header-name { font-size: 0.8rem; font-weight: 500; color: #e9edef; }
-  .wa-header-status { font-size: 0.6rem; color: #8696a0; }
-
-  .wa-body {
-    padding: 0.75rem;
-    height: 280px;
-    overflow: hidden;
-    position: relative;
+  .wa-mock-body {
+    padding: 0.6rem;
+    min-height: 260px;
     background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='%23060d11'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23ffffff' opacity='0.02'/%3E%3C/svg%3E");
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    gap: 0.35rem;
+    gap: 0.3rem;
   }
 
-  .wa-body::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 40px;
-    background: linear-gradient(#0b141a, transparent);
-    pointer-events: none;
-    z-index: 1;
+  .wa-date-chip {
+    align-self: center;
+    background: #182229;
+    color: #8696a0;
+    font-size: 0.6rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 6px;
+    margin-bottom: 0.3rem;
   }
 
-  .wa-msg {
-    max-width: 88%;
-    padding: 0.5rem 0.65rem;
+  .wa-mock-msg {
+    max-width: 85%;
+    padding: 0.45rem 0.6rem;
     border-radius: 8px;
-    font-size: 0.78rem;
-    line-height: 1.5;
-    opacity: 0;
-    animation: wa-pop 0.3s ease forwards;
+    font-size: 0.75rem;
+    line-height: 1.45;
+    position: relative;
   }
-  @keyframes wa-pop {
-    from { opacity: 0; transform: translateY(6px) scale(0.97); }
-    to { opacity: 1; transform: translateY(0) scale(1); }
-  }
-
-  .wa-msg.bot {
+  .wa-mock-msg.bot {
     background: #005c4b;
     color: #e9edef;
     align-self: flex-start;
-    border-bottom-left-radius: 2px;
+    border-top-left-radius: 2px;
   }
-  .wa-msg.user {
+  .wa-mock-msg.user {
     background: #1f2c34;
     color: #e9edef;
     align-self: flex-end;
-    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
   }
-  .wa-msg .wa-time {
-    font-size: 0.55rem;
-    color: rgba(255,255,255,0.4);
+  .wa-mock-msg .msg-time {
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.35);
     float: right;
-    margin-left: 0.5rem;
-    margin-top: 0.2rem;
+    margin-left: 0.4rem;
+    margin-top: 0.15rem;
   }
-  .wa-msg .wa-sender {
+  .wa-mock-msg .msg-sender {
     font-size: 0.6rem;
     font-weight: 500;
     color: var(--accent);
     display: block;
-    margin-bottom: 0.15rem;
+    margin-bottom: 0.1rem;
   }
 
-  /* Audio message inside WA */
-  .wa-audio {
+  /* Audio bubble in mockup */
+  .wa-mock-audio {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 4px;
+    gap: 6px;
+    margin-bottom: 2px;
   }
-  .wa-play-btn {
-    width: 28px; height: 28px;
+  .wa-mock-play {
+    width: 30px; height: 30px;
     border-radius: 50%;
-    background: #25D366;
+    background: var(--wa-green);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
-  .wa-play-btn svg { width: 10px; height: 10px; fill: #fff; margin-left: 1px; }
-
-  .wa-waveform {
+  .wa-mock-play svg { width: 10px; height: 10px; fill: #fff; margin-left: 1px; }
+  .wa-mock-waveform {
     flex: 1;
     display: flex;
     align-items: center;
     gap: 1.5px;
     height: 22px;
   }
-  .wa-bar {
+  .mock-bar {
     width: 2.5px;
     border-radius: 1px;
-    background: rgba(255,255,255,0.3);
-    transition: all 0.4s;
+    transition: background 0.3s;
   }
-  .wa-bar.played {
-    background: #25D366;
-    opacity: 0.9;
-  }
-  .wa-duration {
+  .mock-bar.played { background: var(--wa-green); opacity: 0.9; }
+  .mock-bar.unplayed { background: rgba(255,255,255,0.2); }
+  .wa-mock-dur {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.55rem;
-    color: rgba(255,255,255,0.5);
+    font-size: 0.5rem;
+    color: rgba(255,255,255,0.45);
     flex-shrink: 0;
-    min-width: 28px;
+    min-width: 24px;
+  }
+  .wa-mock-audio-title {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.55);
+  }
+
+  .wa-mock-input {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0.6rem;
+    background: #1f2c34;
+    border-top: 1px solid #2a3942;
+  }
+  .wa-mock-input-field {
+    flex: 1;
+    background: #2a3942;
+    border: none;
+    border-radius: 20px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.7rem;
+    color: #8696a0;
+  }
+  .wa-mock-send {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--wa-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wa-mock-send svg { width: 14px; height: 14px; fill: #fff; }
+
+  /* Onboarding Form */
+  .onboarding-form-wrapper {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 0 2rem 4rem;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 1s;
+  }
+
+  .onboarding-form {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .onboarding-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--accent), var(--purple), var(--accent));
+    background-size: 200% 100%;
+    animation: gradient-slide 3s linear infinite;
+  }
+  @keyframes gradient-slide {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+  }
+
+  .form-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-group.full { grid-column: 1 / -1; }
+  .form-group label {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+  }
+  .form-group input,
+  .form-group select {
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+    outline: none;
+    width: 100%;
+  }
+  .form-group input::placeholder { color: var(--text-muted); }
+  .form-group input:focus,
+  .form-group select:focus { border-color: var(--accent); }
+  .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%237a7a85' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 0.8rem center; padding-right: 2rem; }
+  .form-group select option { background: var(--bg-card); color: var(--text); }
+
+  .channel-selector {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .channel-btn {
+    flex: 1;
+    padding: 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg-elevated);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+  }
+  .channel-btn:hover { border-color: var(--border-hover); color: var(--text); }
+  .channel-btn.active {
+    border-color: var(--accent);
+    background: var(--accent-dim);
+    color: var(--accent);
+  }
+
+  .form-submit {
+    grid-column: 1 / -1;
+    margin-top: 0.5rem;
+  }
+  .form-submit .btn-primary {
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+    font-size: 0.9rem;
   }
 
   /* Divider */
@@ -388,7 +543,7 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Steps - horizontal */
+  /* Steps */
   .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -405,6 +560,139 @@
   }
   .step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
   .step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+
+  /* Live Example Section */
+  .live-example {
+    padding: 4rem 2rem;
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .live-player {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .live-player::after {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: rgba(255, 59, 48, 0.15);
+    border: 1px solid rgba(255, 59, 48, 0.25);
+    border-radius: 100px;
+    padding: 0.25rem 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .live-dot {
+    width: 6px; height: 6px;
+    background: #ff3b30;
+    border-radius: 50%;
+    animation: pulse-dot 1.5s ease-in-out infinite;
+  }
+  .live-badge span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: #ff6b6b;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .live-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .live-cover {
+    width: 56px; height: 56px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .live-cover::after {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    z-index: -1;
+    opacity: 0.3;
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+  @keyframes pulse-glow { 0%, 100% { opacity: 0.3; transform: scale(1); } 50% { opacity: 0.5; transform: scale(1.05); } }
+
+  .live-info h3 { font-size: 0.95rem; font-weight: 600; }
+  .live-info p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; line-height: 1.5; }
+  .live-info .live-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* Animated waveform */
+  .live-waveform-container {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .live-play-btn {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .live-play-btn:hover { transform: scale(1.05); box-shadow: 0 4px 20px var(--accent-glow); }
+  .live-play-btn svg { width: 14px; height: 14px; fill: var(--bg); margin-left: 2px; }
+
+  .live-waveform {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 32px;
+  }
+  .live-bar {
+    width: 3px;
+    border-radius: 1.5px;
+    transition: height 0.3s ease;
+  }
+  .live-bar.played { background: var(--accent); }
+  .live-bar.unplayed { background: rgba(200, 255, 0, 0.15); }
+
+  .live-time {
+    display: flex;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--text-muted);
+  }
 
   /* Real audio player */
   .audio-section {
@@ -506,6 +794,126 @@
     letter-spacing: 0.05em;
   }
 
+  /* Pricing */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .pricing-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    position: relative;
+    transition: all 0.3s;
+  }
+  .pricing-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-4px);
+  }
+  .pricing-card.popular {
+    border-color: var(--accent);
+    box-shadow: 0 0 40px var(--accent-dim);
+  }
+
+  .pricing-popular-tag {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.75rem;
+    border-radius: 100px;
+  }
+
+  .pricing-name {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+  }
+
+  .pricing-price {
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  .pricing-price .currency { font-size: 1.2rem; font-weight: 400; vertical-align: top; margin-right: 2px; }
+  .pricing-price .period { font-size: 0.8rem; font-weight: 300; color: var(--text-secondary); }
+
+  .pricing-desc {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 1.75rem;
+  }
+  .pricing-features li {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    padding: 0.35rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .pricing-features li::before {
+    content: '✓';
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .pricing-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.8rem;
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.3s;
+    letter-spacing: 0.02em;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+  }
+  .pricing-btn.primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .pricing-btn.primary:hover {
+    box-shadow: 0 6px 24px var(--accent-glow);
+    transform: translateY(-1px);
+  }
+  .pricing-btn.outline {
+    background: transparent;
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .pricing-btn.outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+
   /* FAQ */
   .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
@@ -582,18 +990,59 @@
   }
   .reveal.visible { opacity: 1; transform: translateY(0); }
 
+  /* Social proof bar */
+  .social-proof-bar {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    position: relative;
+    z-index: 1;
+  }
+  .social-proof-bar p {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+  .social-proof-bar .sp-highlight { color: var(--accent); }
+  .social-proof-avatars {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.6rem;
+  }
+  .sp-avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--bg);
+    margin-left: -8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.6rem;
+  }
+  .sp-avatar:first-child { margin-left: 0; }
+
+  @media (max-width: 768px) {
+    .hero-content { grid-template-columns: 1fr; text-align: center; }
+    .hero-left { text-align: center; }
+    .hero-sub { margin: 0 auto; }
+    .hero-right { order: -1; }
+    .wa-mockup { max-width: 320px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin-left: auto; margin-right: auto; }
+  }
+
   @media (max-width: 640px) {
     nav { padding: 1rem 1.25rem; }
-    .hero { padding: 7rem 1.25rem 3rem; }
+    .hero { padding: 7rem 1.25rem 2rem; }
     .section { padding: 3.5rem 1.25rem; }
     .audio-section { padding: 1.5rem 1.25rem 3rem; }
+    .live-example { padding: 2rem 1.25rem; }
     .cta-section { padding: 4rem 1.25rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
     .steps { grid-template-columns: 1fr; gap: 1.5rem; }
-    .hero-cta { flex-direction: column; }
-    .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
-    .wa-section { padding: 0 1.25rem 4rem; }
-    .wa-body { height: 240px; }
+    .onboarding-form-wrapper { padding: 0 1.25rem 3rem; }
+    .onboarding-form { padding: 1.5rem; }
+    .channel-selector { flex-wrap: wrap; }
   }
 </style>
 </head>
@@ -608,36 +1057,129 @@
   </a>
   <div class="nav-right">
     <a href="fr/" class="lang-switch">FR</a>
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Try it free →</a>
+    <a href="#pricing" class="btn-secondary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Pricing</a>
+    <a href="#onboarding" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Try it free →</a>
   </div>
 </nav>
 
+<!-- ===== HERO ===== -->
 <section class="hero">
-  <div class="hero-label">Personalized Podcast</div>
-  <h1>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h1>
-  <p class="hero-sub">Pick a topic. Every morning, a fresh AI podcast lands in your WhatsApp — researched, written, and produced while you slept.</p>
-  <div class="hero-cta">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast%20—%20free%20sample" class="btn-primary">🎙️ Try it on WhatsApp</a>
-    <a href="#listen" class="btn-secondary">Listen to a real episode ↓</a>
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="social-proof-badge">
+        <div class="dot-live"></div>
+        <span>Already delivering daily podcasts to 50+ listeners</span>
+      </div>
+      <div class="hero-label">Podcast as a Service</div>
+      <h1>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h1>
+      <p class="hero-sub">Pick a topic. Every morning, a fresh AI podcast lands in your WhatsApp — researched, written, and produced while you slept.</p>
+      <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fade-up 0.8s ease forwards 0.8s;">
+        <a href="#onboarding" class="btn-primary">🎙️ Get my free first episode</a>
+        <a href="#listen" class="btn-secondary">Listen to a sample ↓</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <!-- WhatsApp Mockup -->
+      <div class="wa-mockup">
+        <div class="wa-mock-header">
+          <span class="wa-mock-back">‹</span>
+          <div class="wa-mock-avatar">🤖</div>
+          <div class="wa-mock-info">
+            <div class="wa-mock-name">AntBot Podcast</div>
+            <div class="wa-mock-status">online</div>
+          </div>
+          <div class="wa-mock-icons">📞 ⋮</div>
+        </div>
+        <div class="wa-mock-body">
+          <div class="wa-date-chip">TODAY</div>
+          <div class="wa-mock-msg bot">
+            <span class="msg-sender">AntBot</span>
+            ☀️ Good morning! Your daily AI briefing is ready.
+            <span class="msg-time">07:00</span>
+          </div>
+          <div class="wa-mock-msg bot">
+            <div class="wa-mock-audio">
+              <div class="wa-mock-play"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>
+              <div class="wa-mock-waveform" id="hero-waveform"></div>
+              <div class="wa-mock-dur">5:32</div>
+            </div>
+            <div class="wa-mock-audio-title">🎙️ AI & Tech Briefing — Mar 9</div>
+            <span class="msg-time">07:00</span>
+          </div>
+          <div class="wa-mock-msg bot">
+            Karpathy's overnight AI researcher · Multi-agent collabs · Design swarm mode
+            <span class="msg-time">07:00</span>
+          </div>
+          <div class="wa-mock-msg user">
+            This is 🔥 thanks!
+            <span class="msg-time">07:23</span>
+          </div>
+        </div>
+        <div class="wa-mock-input">
+          <div class="wa-mock-input-field">Type a message</div>
+          <div class="wa-mock-send"><svg viewBox="0 0 24 24"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" fill="#fff"/></svg></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Live WhatsApp simulation -->
-<section class="wa-section">
-  <div class="wa-chat">
-    <div class="wa-header">
-      <div class="wa-avatar"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
-      <div>
-        <div class="wa-header-name">AntBot</div>
-        <div class="wa-header-status">online</div>
+<!-- ===== ONBOARDING FORM ===== -->
+<div class="onboarding-form-wrapper" id="onboarding">
+  <div class="onboarding-form">
+    <div class="form-title">🎙️ Get your free first episode</div>
+    <div class="form-grid">
+      <div class="form-group full">
+        <label>Your topic</label>
+        <input type="text" id="form-topic" placeholder='e.g. "AI news", "Crypto markets", "Ligue 1", "Climate policy"...'>
+      </div>
+      <div class="form-group">
+        <label>Delivery time</label>
+        <select id="form-time">
+          <option value="6:00">6:00 AM</option>
+          <option value="6:30">6:30 AM</option>
+          <option value="7:00" selected>7:00 AM</option>
+          <option value="7:30">7:30 AM</option>
+          <option value="8:00">8:00 AM</option>
+          <option value="8:30">8:30 AM</option>
+          <option value="9:00">9:00 AM</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Channel</label>
+        <div class="channel-selector">
+          <button type="button" class="channel-btn active" data-channel="whatsapp">💬 WhatsApp</button>
+          <button type="button" class="channel-btn" data-channel="telegram">✈️ Telegram</button>
+          <button type="button" class="channel-btn" data-channel="email">📧 Email</button>
+        </div>
+      </div>
+      <div class="form-group full" id="contact-field-group">
+        <label id="contact-label">WhatsApp number</label>
+        <input type="text" id="form-contact" placeholder="+33 6 12 34 56 78">
+      </div>
+      <div class="form-submit">
+        <button type="button" class="btn-primary" id="form-submit-btn">🎙️ Get my free first episode →</button>
       </div>
     </div>
-    <div class="wa-body" id="wa-body"></div>
   </div>
-</section>
+</div>
+
+<!-- ===== SOCIAL PROOF BAR ===== -->
+<div class="social-proof-bar reveal">
+  <div class="social-proof-avatars">
+    <div class="sp-avatar" style="background:linear-gradient(135deg,#c8ff00,#a855f7);">🇫🇷</div>
+    <div class="sp-avatar" style="background:linear-gradient(135deg,#3b82f6,#06b6d4);">🇬🇧</div>
+    <div class="sp-avatar" style="background:linear-gradient(135deg,#f59e0b,#ef4444);">🇩🇪</div>
+    <div class="sp-avatar" style="background:linear-gradient(135deg,#10b981,#3b82f6);">🇺🇸</div>
+    <div class="sp-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ec4899);">🇯🇵</div>
+    <div class="sp-avatar" style="background:var(--bg-card);border-color:var(--border);">+45</div>
+  </div>
+  <p>Listeners across <span class="sp-highlight">12 countries</span> · Topics from AI to Ligue 1 · <span class="sp-highlight">20+ languages</span></p>
+</div>
 
 <div class="divider"></div>
 
+<!-- ===== HOW IT WORKS ===== -->
 <section class="section reveal">
   <div class="section-label">How It Works</div>
   <div class="steps">
@@ -661,7 +1203,40 @@
 
 <div class="divider"></div>
 
+<!-- ===== LIVE EXAMPLE ===== -->
+<section class="live-example reveal" id="live-example">
+  <div class="section-label" style="max-width:900px;margin:0 auto 2rem;">Today's Episode</div>
+  <div class="live-player">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      <span>Generated today</span>
+    </div>
+    <div class="live-header">
+      <div class="live-cover">🎙️</div>
+      <div class="live-info">
+        <h3>Your Morning AI Briefing</h3>
+        <p>Karpathy's overnight AI researcher · Multi-agent collaboration · Design swarm mode</p>
+        <div class="live-meta">MARCH 9, 2026 · 5:32 · AI VOICE</div>
+      </div>
+    </div>
+    <div class="live-waveform-container">
+      <div class="live-play-btn" id="live-play-toggle">
+        <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+      </div>
+      <div class="live-waveform" id="live-waveform"></div>
+    </div>
+    <div class="live-time">
+      <span id="live-time-current">2:14</span>
+      <span>5:32</span>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== REAL AUDIO ===== -->
 <section class="audio-section reveal" id="listen">
+  <div class="section-label" style="margin-bottom:1.5rem;">Listen to a Real Episode</div>
   <div class="audio-player">
     <div class="audio-header">
       <div class="audio-cover">🎙️</div>
@@ -679,6 +1254,7 @@
 
 <div class="divider"></div>
 
+<!-- ===== TOPICS ===== -->
 <section class="section reveal">
   <div class="section-label">Topics</div>
   <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;">Pick the topics you care about. We'll handle the rest.</p>
@@ -704,6 +1280,69 @@
 
 <div class="divider"></div>
 
+<!-- ===== PRICING ===== -->
+<section class="section reveal" id="pricing">
+  <div class="section-label">Pricing</div>
+  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:0.5rem;">First episode free. No card required.</p>
+  <div class="pricing-grid">
+    <!-- Starter -->
+    <div class="pricing-card">
+      <div class="pricing-name">Starter</div>
+      <div class="pricing-price">
+        <span class="currency">€</span>4.99<span class="period">/mo</span>
+      </div>
+      <div class="pricing-desc">Perfect for staying sharp on one topic.</div>
+      <ul class="pricing-features">
+        <li>1 daily podcast</li>
+        <li>Any topic</li>
+        <li>WhatsApp, Telegram or Email</li>
+        <li>3–5 min episodes</li>
+        <li>20+ languages</li>
+      </ul>
+      <a href="#stripe-starter" class="pricing-btn outline">Subscribe →</a>
+    </div>
+    <!-- Pro -->
+    <div class="pricing-card popular">
+      <div class="pricing-popular-tag">Most Popular</div>
+      <div class="pricing-name">Pro</div>
+      <div class="pricing-price">
+        <span class="currency">€</span>12.99<span class="period">/mo</span>
+      </div>
+      <div class="pricing-desc">Multiple topics, longer episodes, priority delivery.</div>
+      <ul class="pricing-features">
+        <li>Up to 5 daily podcasts</li>
+        <li>Mix & match topics</li>
+        <li>All channels</li>
+        <li>Up to 15 min episodes</li>
+        <li>Custom delivery schedule</li>
+        <li>Priority generation</li>
+      </ul>
+      <a href="#stripe-pro" class="pricing-btn primary">Subscribe →</a>
+    </div>
+    <!-- Enterprise -->
+    <div class="pricing-card">
+      <div class="pricing-name">Enterprise</div>
+      <div class="pricing-price">
+        <span class="currency">€</span>49<span class="period">/mo</span>
+      </div>
+      <div class="pricing-desc">For teams and power users who need it all.</div>
+      <ul class="pricing-features">
+        <li>Unlimited podcasts</li>
+        <li>Custom sources & feeds</li>
+        <li>All channels + API</li>
+        <li>Up to 30 min episodes</li>
+        <li>White-label option</li>
+        <li>Dedicated support</li>
+        <li>Team management</li>
+      </ul>
+      <a href="#stripe-enterprise" class="pricing-btn outline">Contact us →</a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== FAQ ===== -->
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
@@ -719,18 +1358,23 @@
     <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Is it free?</div>
-    <div class="faq-a">Your first episode is completely free — no card, no commitment. After that, it's €4.99/month for daily episodes on any topic. Cancel anytime.</div>
+    <div class="faq-q">Is it free to try?</div>
+    <div class="faq-a">Your first episode is completely free — no card, no commitment. Just tell us your topic and where to send it.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q">Can I cancel anytime?</div>
+    <div class="faq-a">Yes. No lock-in, no tricks. Cancel with one click and your subscription ends at the end of the billing period.</div>
   </div>
 </section>
 
 <div class="divider"></div>
 
+<!-- ===== FINAL CTA ===== -->
 <section class="cta-section reveal">
   <h2>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h2>
   <p>A voice in your pocket that knows exactly what you care about, ready the moment you wake up.</p>
   <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast%20—%20free%20sample" class="btn-primary">🎙️ Get a Free Sample</a>
+    <a href="#onboarding" class="btn-primary">🎙️ Get a Free Episode</a>
     <a href="mailto:hello@antbot.dev?subject=Personalized%20Podcast" class="btn-secondary">hello@antbot.dev →</a>
   </div>
 </section>
@@ -741,114 +1385,135 @@
 </footer>
 
 <script>
-// === WhatsApp Chat Simulation ===
+// === Hero Waveform Bars ===
 (function() {
-  const body = document.getElementById('wa-body');
-  const maxVisible = 5;
+  const wf = document.getElementById('hero-waveform');
+  if (!wf) return;
+  const bars = 22;
+  const played = Math.floor(bars * 0.45);
+  for (let i = 0; i < bars; i++) {
+    const h = Math.floor(Math.random() * 14) + 4;
+    const bar = document.createElement('div');
+    bar.className = 'mock-bar ' + (i < played ? 'played' : 'unplayed');
+    bar.style.height = h + 'px';
+    wf.appendChild(bar);
+  }
+})();
 
-  const convos = [
-    [
-      { from: 'user', text: "I want a daily podcast about AI news" },
-      { from: 'bot', text: "Done 🎙️ You'll get a fresh AI briefing every morning at 7am on WhatsApp." },
-      { from: 'bot', text: "First episode generating now..." },
-      { from: 'bot', text: "", audio: true, title: "AI & Tech Briefing — March 9", duration: "5:32" },
-    ],
-    [
-      { from: 'user', text: "Can I get it in French?" },
-      { from: 'bot', text: "Bien sûr. Switching your podcast to French 🇫🇷" },
-      { from: 'bot', text: "Same depth, native voice. Here's a preview:" },
-      { from: 'bot', text: "", audio: true, title: "Veille IA & Tech — 9 mars", duration: "4:18" },
-    ],
-    [
-      { from: 'user', text: "I want crypto + AI in the same episode" },
-      { from: 'bot', text: "Mixed topic — nice. Your episode will cover both, with AI first then crypto market moves." },
-      { from: 'bot', text: "", audio: true, title: "AI × Crypto Daily — March 9", duration: "7:14" },
-    ],
-    [
-      { from: 'user', text: "This is insane. The voice sounds real" },
-      { from: 'bot', text: "ElevenLabs' latest model. Most people can't tell it's AI 🤫" },
-      { from: 'user', text: "Can I get a sports one too?" },
-      { from: 'bot', text: "Added. Ligue 1 recap every morning at 7:30 ⚽" },
-    ],
-    [
-      { from: 'user', text: "Do you cover European startups?" },
-      { from: 'bot', text: "Funding rounds, product launches, exits — across France, Germany, UK, Nordics. Delivered daily." },
-      { from: 'bot', text: "", audio: true, title: "EU Startup Watch — March 9", duration: "6:03" },
-    ],
-    [
-      { from: 'user', text: "Make me a podcast about climate policy" },
-      { from: 'bot', text: "On it. Sources: IPCC, Carbon Brief, national energy agencies, EU policy trackers." },
-      { from: 'bot', text: "First episode ready 👇" },
-      { from: 'bot', text: "", audio: true, title: "Climate & Energy Brief — March 9", duration: "5:47" },
-    ],
-    [
-      { from: 'user', text: "How much does it cost?" },
-      { from: 'bot', text: "Try it free first. Message me your topic and I'll generate a sample in minutes." },
-      { from: 'user', text: "OK let's do real estate in France" },
-      { from: 'bot', text: "Generating your custom episode now... ⏳" },
-    ],
-  ];
-
-  let convoIdx = 0;
-
-  function getTime() {
-    const now = new Date();
-    return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+// === Live Example Animated Waveform ===
+(function() {
+  const wf = document.getElementById('live-waveform');
+  if (!wf) return;
+  const count = 50;
+  const bars = [];
+  for (let i = 0; i < count; i++) {
+    const bar = document.createElement('div');
+    const h = Math.floor(Math.random() * 24) + 6;
+    bar.className = 'live-bar';
+    bar.style.height = h + 'px';
+    bar.dataset.maxH = h;
+    wf.appendChild(bar);
+    bars.push(bar);
   }
 
-  function createAudioMsg(msg) {
-    const bars = 20;
-    let barsHtml = '';
-    const playedCount = Math.floor(bars * 0.45);
-    for (let i = 0; i < bars; i++) {
-      const h = Math.floor(Math.random() * 16) + 4;
-      barsHtml += '<div class="wa-bar' + (i < playedCount ? ' played' : '') + '" style="height:' + h + 'px"></div>';
-    }
-    return '<div class="wa-audio">' +
-      '<div class="wa-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>' +
-      '<div class="wa-waveform">' + barsHtml + '</div>' +
-      '<div class="wa-duration">' + msg.duration + '</div>' +
-      '</div>' +
-      '<div style="font-size:0.7rem;color:rgba(255,255,255,0.6);">' + msg.title + '</div>';
-  }
+  let progress = 0.4; // fake progress at 40%
+  let playing = true;
 
-  function addMsg(msg) {
-    const el = document.createElement('div');
-    el.className = 'wa-msg ' + msg.from;
-    let html = '';
-    if (msg.audio) {
-      html = createAudioMsg(msg);
-    } else {
-      html = msg.text;
-    }
-    html += '<span class="wa-time">' + getTime() + '</span>';
-    el.innerHTML = html;
-    body.appendChild(el);
-
-    while (body.children.length > maxVisible) {
-      body.removeChild(body.firstChild);
-    }
-  }
-
-  function playConvo() {
-    const convo = convos[convoIdx];
-    convoIdx = (convoIdx + 1) % convos.length;
-    let i = 0;
-
-    function next() {
-      if (i >= convo.length) {
-        setTimeout(playConvo, 5000 + Math.random() * 3000);
-        return;
+  function updateBars() {
+    const playedIdx = Math.floor(progress * count);
+    bars.forEach(function(b, i) {
+      if (i < playedIdx) {
+        b.className = 'live-bar played';
+      } else {
+        b.className = 'live-bar unplayed';
       }
-      addMsg(convo[i]);
-      i++;
-      const delay = convo[i - 1].from === 'bot' ? 1800 + Math.random() * 1200 : 1000 + Math.random() * 600;
-      setTimeout(next, delay);
-    }
-    next();
+      // Animate heights slightly
+      if (playing && i >= playedIdx - 2 && i <= playedIdx + 2) {
+        const h = parseInt(b.dataset.maxH);
+        b.style.height = (h + Math.sin(Date.now() / 300 + i) * 4) + 'px';
+      }
+    });
+
+    // Update time
+    const totalSec = 332; // 5:32
+    const currentSec = Math.floor(progress * totalSec);
+    const m = Math.floor(currentSec / 60);
+    const s = String(currentSec % 60).padStart(2, '0');
+    const el = document.getElementById('live-time-current');
+    if (el) el.textContent = m + ':' + s;
   }
 
-  setTimeout(playConvo, 1200);
+  function tick() {
+    if (playing) {
+      progress += 0.0003;
+      if (progress > 1) progress = 0;
+    }
+    updateBars();
+    requestAnimationFrame(tick);
+  }
+  tick();
+
+  const btn = document.getElementById('live-play-toggle');
+  if (btn) {
+    btn.addEventListener('click', function() {
+      playing = !playing;
+      btn.innerHTML = playing
+        ? '<svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>'
+        : '<svg viewBox="0 0 24 24"><rect x="5" y="3" width="4" height="18" fill="var(--bg)"/><rect x="15" y="3" width="4" height="18" fill="var(--bg)"/></svg>';
+    });
+  }
+})();
+
+// === Onboarding Form ===
+(function() {
+  const channelBtns = document.querySelectorAll('.channel-btn');
+  const contactLabel = document.getElementById('contact-label');
+  const contactInput = document.getElementById('form-contact');
+  const submitBtn = document.getElementById('form-submit-btn');
+  let activeChannel = 'whatsapp';
+
+  channelBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      channelBtns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      activeChannel = btn.dataset.channel;
+
+      if (activeChannel === 'whatsapp') {
+        contactLabel.textContent = 'WhatsApp number';
+        contactInput.placeholder = '+33 6 12 34 56 78';
+        contactInput.type = 'text';
+      } else if (activeChannel === 'telegram') {
+        contactLabel.textContent = 'Telegram username';
+        contactInput.placeholder = '@username';
+        contactInput.type = 'text';
+      } else {
+        contactLabel.textContent = 'Email address';
+        contactInput.placeholder = 'you@example.com';
+        contactInput.type = 'email';
+      }
+    });
+  });
+
+  submitBtn.addEventListener('click', function() {
+    var topic = document.getElementById('form-topic').value.trim();
+    var time = document.getElementById('form-time').value;
+    var contact = contactInput.value.trim();
+
+    if (!topic) {
+      document.getElementById('form-topic').focus();
+      document.getElementById('form-topic').style.borderColor = '#ff3b30';
+      setTimeout(function() { document.getElementById('form-topic').style.borderColor = ''; }, 2000);
+      return;
+    }
+
+    // Build WhatsApp message with all info
+    var msg = 'Hey AntBot, I want a daily podcast about: ' + topic;
+    msg += '\n⏰ Delivery: ' + time;
+    msg += '\n📱 Channel: ' + activeChannel;
+    if (contact) msg += '\n📍 Contact: ' + contact;
+
+    window.open('https://wa.me/33769516191?text=' + encodeURIComponent(msg), '_blank');
+  });
 })();
 
 // === Interactive Topics ===
@@ -865,12 +1530,10 @@
 
     const topic = pill.dataset.topic;
 
-    // Free trial = 1 topic only
     if (selected.has(topic)) {
       selected.delete(topic);
       pill.classList.remove('selected');
     } else {
-      // Deselect previous
       selected.forEach(function(t) {
         grid.querySelector('[data-topic="' + t + '"]').classList.remove('selected');
       });
@@ -884,6 +1547,10 @@
       label.textContent = '→ ' + t;
       waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Hey AntBot, I want a daily podcast about: ' + t);
       cta.classList.add('visible');
+
+      // Also fill the form topic
+      var formTopic = document.getElementById('form-topic');
+      if (formTopic) formTopic.value = t;
     } else {
       cta.classList.remove('visible');
     }
@@ -893,10 +1560,10 @@
 // === Scroll Reveal ===
 (function() {
   const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-  reveals.forEach(el => observer.observe(el));
+  reveals.forEach(function(el) { observer.observe(el); });
 })();
 </script>
 
