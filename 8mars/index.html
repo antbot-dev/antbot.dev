@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Femmes dans les archives françaises — 8 mars 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Spectral:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #f4ede0;
+    --cream-dark: #e8dece;
+    --ink: #1c1814;
+    --ink-light: #3d3529;
+    --rouge: #b5182b;
+    --rouge-light: #d4294040;
+    --warm-gray: #8a7d6d;
+    --rule: #c9bba8;
+    --page-width: 720px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'EB Garamond', Georgia, serif;
+    color: var(--ink);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  .page {
+    background: var(--cream);
+    width: var(--page-width);
+    position: relative;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15);
+  }
+
+  /* Grain texture overlay */
+  .page::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 10;
+    mix-blend-mode: multiply;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    padding: 20px 48px 0;
+    border-bottom: none;
+  }
+
+  .header-top {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding-bottom: 8px;
+    border-bottom: 2.5px solid var(--ink);
+    margin-bottom: 0;
+  }
+
+  .publication-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rouge);
+  }
+
+  .publication-date {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--warm-gray);
+    font-style: italic;
+  }
+
+  .header-main {
+    padding: 12px 0 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .eyebrow {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rouge);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 34px;
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+
+  h1 em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .deck {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--ink-light);
+    max-width: 520px;
+    font-style: italic;
+  }
+
+  /* ─── DATA STRIP ─── */
+  .data-strip {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr 1px 1fr;
+    border-top: 2.5px solid var(--ink);
+    border-bottom: 1px solid var(--rule);
+    margin: 0 48px;
+  }
+
+  .data-strip-divider {
+    background: var(--rule);
+  }
+
+  .stat-block {
+    padding: 12px 20px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 38px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--ink);
+    display: block;
+  }
+
+  .stat-num sup {
+    font-size: 20px;
+    vertical-align: super;
+  }
+
+  .stat-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    line-height: 1.35;
+    color: var(--warm-gray);
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    display: block;
+  }
+
+  /* ─── SECTIONS ─── */
+  .sections {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    margin: 0 48px;
+    gap: 0;
+  }
+
+  .section-divider {
+    background: var(--rule);
+  }
+
+  .section {
+    padding: 16px 0;
+  }
+
+  .section:first-child { padding-right: 28px; }
+  .section:last-child { padding-left: 28px; }
+
+  .section-header {
+    margin-bottom: 22px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section-number {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rouge);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  h2 em { font-style: italic; }
+
+  .section-period {
+    font-family: 'EB Garamond', serif;
+    font-size: 12px;
+    color: var(--warm-gray);
+    letter-spacing: 0.08em;
+    margin-top: 5px;
+    display: block;
+  }
+
+  .body-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-light);
+    margin-bottom: 12px;
+  }
+
+  .pull-quote {
+    border-left: 3px solid var(--rouge);
+    padding: 6px 0 6px 14px;
+    margin: 10px 0;
+    background: linear-gradient(to right, rgba(181,24,43,0.04), transparent);
+  }
+
+  .pull-quote-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1;
+    display: block;
+  }
+
+  .pull-quote-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--warm-gray);
+    line-height: 1.4;
+    margin-top: 3px;
+    display: block;
+  }
+
+  /* ─── BAR CHART — LIBRAIRES ─── */
+  .chart {
+    margin: 20px 0;
+  }
+
+  .chart-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 7px;
+    gap: 8px;
+  }
+
+  .bar-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 12px;
+    color: var(--ink-light);
+    width: 48px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 14px;
+    background: var(--cream-dark);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--ink);
+    position: absolute;
+    left: 0;
+    top: 0;
+    transition: width 0.8s ease;
+  }
+
+  .bar-fill.rouge { background: var(--rouge); }
+  .bar-fill.mid { background: var(--ink-light); }
+
+  .bar-value {
+    font-family: 'EB Garamond', serif;
+    font-size: 12px;
+    color: var(--warm-gray);
+    width: 32px;
+    flex-shrink: 0;
+    font-style: italic;
+  }
+
+  /* ─── TIMELINE — PRÉFÈTES ─── */
+  .timeline {
+    margin: 20px 0;
+    position: relative;
+  }
+
+  .timeline-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  /* ligne verticale centrée sur la colonne dot (col 2 = 48px..68px → centre = 58px) */
+  .timeline-line {
+    position: absolute;
+    left: 58px;
+    top: 32px;
+    bottom: 16px;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  /* 3 colonnes : année | espace dot | contenu */
+  .tl-event {
+    display: grid;
+    grid-template-columns: 46px 24px 1fr;
+    gap: 0;
+    margin-bottom: 14px;
+    align-items: start;
+  }
+
+  .tl-year {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: right;
+    padding-top: 3px;
+    line-height: 1.2;
+    padding-right: 4px;
+  }
+
+  .tl-dot-col {
+    display: flex;
+    justify-content: center;
+    padding-top: 5px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .tl-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--ink);
+    flex-shrink: 0;
+  }
+
+  .tl-dot.first {
+    background: var(--rouge);
+    width: 9px;
+    height: 9px;
+    box-shadow: 0 0 0 2px var(--cream), 0 0 0 3.5px var(--rouge);
+    margin-top: -1px;
+  }
+
+  .tl-content {
+    padding-left: 6px;
+  }
+
+  .tl-name {
+    font-family: 'EB Garamond', serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+
+  .tl-name.first { color: var(--rouge); }
+
+  .tl-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 12px;
+    color: var(--warm-gray);
+    font-style: italic;
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  .tl-gap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0 4px 70px;
+  }
+
+  .tl-gap-line {
+    flex: 1;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .tl-gap-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    color: var(--rule);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .tl-count {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0;
+    margin-top: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .tl-count-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 300;
+    color: var(--ink);
+    text-align: right;
+    line-height: 1;
+    padding-right: 10px;
+    white-space: nowrap;
+  }
+
+  .tl-count-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 12px;
+    font-style: italic;
+    color: var(--warm-gray);
+    align-self: center;
+    padding-left: 8px;
+    line-height: 1.4;
+  }
+
+  /* ─── METHODOLOGY SCHEMA ─── */
+  .method-schema {
+    margin: 0 48px;
+    padding: 6px 0 4px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .schema-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .schema-flow {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    flex-wrap: nowrap;
+  }
+
+  .schema-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+  }
+
+  .schema-icon {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--cream-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+  }
+
+  .schema-icon.highlight {
+    border-color: var(--warm-gray);
+    background: var(--cream);
+  }
+
+  .schema-node-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    color: var(--ink-light);
+    text-align: center;
+    line-height: 1.3;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .schema-node-sub {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    color: var(--warm-gray);
+    text-align: center;
+    font-style: italic;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .schema-arrow {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 0 4px;
+    min-width: 40px;
+  }
+
+  .schema-arrow-line {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 0;
+  }
+
+  .schema-arrow-line::before {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .schema-arrow-line::after {
+    content: '▶';
+    font-size: 7px;
+    color: var(--rule);
+    line-height: 1;
+  }
+
+  .schema-arrow-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    color: var(--warm-gray);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  /* ─── METHODOLOGY NOTE ─── */
+  .method-band {
+    margin: 0 48px;
+    padding: 6px 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  .method-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    color: var(--warm-gray);
+    line-height: 1.45;
+    font-style: italic;
+    columns: 1;
+  }
+
+  .method-text strong {
+    font-style: normal;
+    color: var(--ink-light);
+    font-weight: 500;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    border-top: 2.5px solid var(--ink);
+    margin: 0 48px;
+    padding: 10px 0 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .footer-source {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    color: var(--warm-gray);
+    letter-spacing: 0.05em;
+  }
+
+  .footer-source strong {
+    color: var(--ink-light);
+    font-weight: 600;
+  }
+
+  .footer-credit {
+    font-family: 'EB Garamond', serif;
+    font-size: 11px;
+    color: var(--warm-gray);
+    font-style: italic;
+  }
+
+  /* ─── DECORATIVE RULE ─── */
+  .ornamental-rule {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 48px;
+    padding: 2px 0;
+  }
+
+  .ornamental-rule::before,
+  .ornamental-rule::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .ornamental-rule span {
+    font-family: 'EB Garamond', serif;
+    font-size: 18px;
+    color: var(--rule);
+    line-height: 1;
+    font-style: italic;
+  }
+
+  /* ─── INTRO BAND ─── */
+  .intro-band {
+    margin: 0 48px;
+    padding: 10px 0 10px;
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+    gap: 28px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .intro-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-light);
+  }
+
+  .intro-text em {
+    font-style: italic;
+    color: var(--ink);
+  }
+
+  .intro-aside {
+    border-left: 1px solid var(--rule);
+    padding-left: 22px;
+  }
+
+  .aside-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--rouge);
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+  }
+
+  .aside-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--warm-gray);
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <span class="publication-name">Données ouvertes · data.gouv.fr</span>
+      <span class="publication-date">8 mars 2026 · Journée internationale des droits des femmes</span>
+    </div>
+    <div class="header-main">
+      <h1>Femmes dans<br>les archives <em>françaises</em></h1>
+      <p class="deck">Brevets du commerce du livre (1810–1881) · Corps préfectoral (1800–2024)<br>Deux jeux de données ouverts, Archives nationales.</p>
+    </div>
+  </div>
+
+  <!-- KEY STATS STRIP -->
+  <div class="data-strip">
+    <div class="stat-block">
+      <span class="stat-num">17 969</span>
+      <span class="stat-label">brevets de libraires,<br>imprimeurs & lithographes<br><em>recensés depuis 1810</em></span>
+    </div>
+    <div class="data-strip-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num">18<sup>%</sup></span>
+      <span class="stat-label">de ces brevets<br>attribués à des femmes<br><em>entre 1810 et 1881</em></span>
+    </div>
+    <div class="data-strip-divider"></div>
+    <div class="stat-block">
+      <span class="stat-num">181</span>
+      <span class="stat-label">années après 1800<br>avant la première<br><em>femme préfète de France</em></span>
+    </div>
+  </div>
+
+  <!-- INTRO BAND -->
+  <div class="intro-band">
+    <p class="intro-text">Les Archives nationales publient en licence ouverte sur <em>data.gouv.fr</em> deux jeux de données qui permettent de mesurer, chiffres à l'appui, la place des femmes dans la vie économique et administrative française depuis le début du XIX<sup>e</sup> siècle.</p>
+    <div class="intro-aside">
+      <span class="aside-label">Source</span>
+      <p class="aside-text">Fichiers CSV téléchargés depuis data.gouv.fr, analysés par traitement direct IA.</p>
+    </div>
+  </div>
+
+  <!-- TWO COLUMNS -->
+  <div class="sections">
+
+    <!-- SECTION 1 : LIBRAIRES -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">I · Le monde du livre</span>
+        <h2>Libraires, imprimeurs, <em>lithographes</em></h2>
+        <span class="section-period">France, 1810–1881 · Ministère de la Culture / AN</span>
+      </div>
+
+      <p class="body-text">Sur 17 969 brevets délivrés entre 1810 et 1881, <strong>3 261 l'ont été à des femmes</strong> — soit 18 %, près d'un sur cinq. À Paris, leur part atteint 19,2 %.</p>
+
+      <div class="pull-quote">
+        <span class="pull-quote-num">39 %</span>
+        <span class="pull-quote-text">des femmes brevetées exerçaient<br>sous le statut de « veuve »</span>
+      </div>
+
+      <p class="body-text">Leur accès au brevet était souvent conditionné au décès du mari : <strong>1 276 d'entre elles</strong> — près de quatre sur dix — exercent sous le titre de veuve, continuant le commerce familial après disparition de l'époux.</p>
+
+      <div class="chart">
+        <span class="chart-title">Brevetées par décennie · femmes uniquement</span>
+
+        <div class="bar-row">
+          <span class="bar-label">1810s</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 19.6%"></div></div>
+          <span class="bar-value">80</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1820s</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 50.6%"></div></div>
+          <span class="bar-value">207</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1830s</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 31.5%"></div></div>
+          <span class="bar-value">129</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1840s</span>
+          <div class="bar-track"><div class="bar-fill mid" style="width: 20.5%"></div></div>
+          <span class="bar-value">84</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1850s</span>
+          <div class="bar-track"><div class="bar-fill mid" style="width: 42.1%"></div></div>
+          <span class="bar-value">172</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1860s</span>
+          <div class="bar-track"><div class="bar-fill rouge" style="width: 100%"></div></div>
+          <span class="bar-value">409</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1870s</span>
+          <div class="bar-track"><div class="bar-fill" style="width: 27.4%"></div></div>
+          <span class="bar-value">112</span>
+        </div>
+      </div>
+
+      <p class="body-text" style="font-size:13px; color: var(--warm-gray); font-style: italic;">Le pic des années 1860 coïncide avec l'expansion de la presse et du roman-feuilleton. Les femmes tiennent librairies et cabinets de lecture dans les villes de province.</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- SECTION 2 : PRÉFÈTES -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-number">II · L'administration préfectorale</span>
+        <h2>Préfètes de la <em>République</em></h2>
+        <span class="section-period">France, 1800–2024 · AN / data.gouv.fr</span>
+      </div>
+
+      <p class="body-text">Le corps préfectoral est créé par Napoléon en 1800. Il faudra attendre <strong>181 ans</strong> pour qu'une femme en prenne la tête d'un département.</p>
+
+      <div class="pull-quote">
+        <span class="pull-quote-num">2,5 %</span>
+        <span class="pull-quote-text">des individus recensés depuis 1800 sont des femmes<br><strong style="font-style:normal; color: var(--ink-light);">99 préfètes sur 3 918 au total</strong></span>
+      </div>
+
+      <div class="timeline">
+        <span class="timeline-title">Chronologie des premières nominations</span>
+        <div class="timeline-line"></div>
+
+        <div class="tl-event">
+          <span class="tl-year">1981</span>
+          <div class="tl-dot-col"><div class="tl-dot first"></div></div>
+          <div class="tl-content">
+            <span class="tl-name first">Yvette Chassagne</span>
+            <span class="tl-detail">Loir-et-Cher · nommée par Gaston Defferre<br><em>Première femme préfète de France</em></span>
+          </div>
+        </div>
+
+        <div class="tl-gap">
+          <div class="tl-gap-line"></div>
+          <span class="tl-gap-label">3 ans plus tard</span>
+          <div class="tl-gap-line"></div>
+        </div>
+
+        <div class="tl-event">
+          <span class="tl-year">1984</span>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
+          <div class="tl-content">
+            <span class="tl-name">Hélène Blanc</span>
+            <span class="tl-detail">Cantal, puis Orne, puis Sarthe, puis Haut-Rhin</span>
+          </div>
+        </div>
+
+        <div class="tl-gap">
+          <div class="tl-gap-line"></div>
+          <span class="tl-gap-label">7 ans plus tard</span>
+          <div class="tl-gap-line"></div>
+        </div>
+
+        <div class="tl-event">
+          <span class="tl-year">1991</span>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
+          <div class="tl-content">
+            <span class="tl-name">Colette Horel · Bernadette Malgorn</span>
+            <span class="tl-detail">Meuse / Tarn-et-Garonne · 3<sup>e</sup> et 4<sup>e</sup> préfètes</span>
+          </div>
+        </div>
+
+        <div class="tl-gap">
+          <div class="tl-gap-line"></div>
+          <span class="tl-gap-label">accélération progressive</span>
+          <div class="tl-gap-line"></div>
+        </div>
+
+        <div class="tl-event">
+          <span class="tl-year">2024</span>
+          <div class="tl-dot-col"><div class="tl-dot"></div></div>
+          <div class="tl-content">
+            <span class="tl-name">Marie Aubert · Fanny Anor<br>Séguin, Camilleri…</span>
+            <span class="tl-detail">Dordogne, Aisne, Isère, Essonne —<br>nominations désormais régulières</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- METHODOLOGY SCHEMA -->
+  <div class="method-schema">
+    <span class="schema-title">Comment ces données ont été obtenues</span>
+    <div class="schema-flow">
+
+      <div class="schema-node">
+        <div class="schema-icon">🗄️</div>
+        <span class="schema-node-label">Archives nationales</span>
+      </div>
+
+      <div class="schema-arrow">
+        <div class="schema-arrow-line"></div>
+        <span class="schema-arrow-label">publient sur</span>
+      </div>
+
+      <div class="schema-node">
+        <div class="schema-icon highlight">🌐</div>
+        <span class="schema-node-label">data.gouv.fr</span>
+      </div>
+
+      <div class="schema-arrow">
+        <div class="schema-arrow-line"></div>
+        <span class="schema-arrow-label">API REST + CSV</span>
+      </div>
+
+      <div class="schema-node">
+        <div class="schema-icon highlight">🤖</div>
+        <span class="schema-node-label">antbot.dev</span>
+      </div>
+
+      <div class="schema-arrow">
+        <div class="schema-arrow-line"></div>
+        <span class="schema-arrow-label">produit</span>
+      </div>
+
+      <div class="schema-node">
+        <div class="schema-icon">📊</div>
+        <span class="schema-node-label">Infographie</span>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- METHOD NOTE -->
+  <div class="method-band">
+    <p class="method-text"><strong>Sources :</strong> « Imprimeurs, libraires et lithographes en France au XIX<sup>e</sup> siècle » (Ministère de la Culture / AN, 2025) · « Préfets et préfètes français depuis 1800 » (AN, 2025) · Licence ouverte v2.0, data.gouv.fr · <strong>Note :</strong> Yvette Chassagne figure dans le dataset (1981–1983, Loir-et-Cher).</p>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-source"><strong>data.gouv.fr</strong> · Archives nationales · Ministère de la Culture</span>
+    <span class="footer-credit">Réalisé avec <a href="https://antbot.dev" style="color: inherit; text-decoration: underline; text-underline-offset: 2px;">antbot.dev</a> · 8 mars 2026</span>
+  </div>
+
+</div>
+
+</body>
+</html>
