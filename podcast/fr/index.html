@@ -184,8 +184,12 @@
   .audio-player audio { width: 100%; height: 36px; outline: none; }
   .topic-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 2rem; }
   .topic-pill { padding: 10px 22px; border: 1px solid var(--border); border-radius: 100px; font-size: 0.82rem; color: var(--text-secondary); cursor: default; transition: all 0.25s; }
-  .topic-pill:hover { border-color: var(--border-hover); color: var(--text); }
+  .topic-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); cursor: pointer; }
   .topic-pill.featured { border-color: rgba(200, 255, 0, 0.2); color: var(--accent); background: var(--accent-dim); }
+  .topic-pill.selected { border-color: var(--accent); color: var(--bg); background: var(--accent); font-weight: 500; }
+  .topic-cta { margin-top: 2rem; text-align: center; opacity: 0; transform: translateY(10px); transition: all 0.4s ease; pointer-events: none; }
+  .topic-cta.visible { opacity: 1; transform: translateY(0); pointer-events: all; }
+  .topic-selected-label { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-secondary); margin-bottom: 0.75rem; letter-spacing: 0.05em; }
   .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
   .faq-q { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.75rem; }
@@ -278,9 +282,9 @@
     <div class="audio-header">
       <div class="audio-cover">🎙️</div>
       <div class="audio-info">
-        <h3>Veille Twitter/X — Tech & IA</h3>
-        <p>Karpathy autoresearch · OpenClaw × Codex · Pencil swarm</p>
-        <div class="meta">3:23 · Généré le 9 mars 2026 · Voix ElevenLabs</div>
+        <h3>Votre briefing IA du matin</h3>
+        <p>Le chercheur autonome de Karpathy · Collaboration multi-agents · Design en essaim</p>
+        <div class="meta">3:23 · Frais chaque matin · Voix IA</div>
       </div>
     </div>
     <audio controls preload="metadata">
@@ -293,19 +297,24 @@
 
 <section class="section reveal">
   <div class="section-label">Sujets</div>
-  <div class="topic-grid">
-    <div class="topic-pill featured">IA & Tech</div>
-    <div class="topic-pill">Crypto & Marchés</div>
-    <div class="topic-pill featured">Climat & Énergie</div>
-    <div class="topic-pill">Politique française</div>
-    <div class="topic-pill">Startups Europe</div>
-    <div class="topic-pill featured">Sport</div>
-    <div class="topic-pill">Science & Espace</div>
-    <div class="topic-pill">Économie mondiale</div>
-    <div class="topic-pill featured">Santé & Biotech</div>
-    <div class="topic-pill">Géopolitique</div>
-    <div class="topic-pill">Immobilier</div>
-    <div class="topic-pill featured">Votre sujet sur mesure</div>
+  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;">Choisissez les sujets qui vous intéressent. On s'occupe du reste.</p>
+  <div class="topic-grid" id="topic-grid">
+    <div class="topic-pill" data-topic="IA & Tech">IA & Tech</div>
+    <div class="topic-pill" data-topic="Crypto & Marchés">Crypto & Marchés</div>
+    <div class="topic-pill" data-topic="Climat & Énergie">Climat & Énergie</div>
+    <div class="topic-pill" data-topic="Politique française">Politique française</div>
+    <div class="topic-pill" data-topic="Startups Europe">Startups Europe</div>
+    <div class="topic-pill" data-topic="Sport">Sport</div>
+    <div class="topic-pill" data-topic="Science & Espace">Science & Espace</div>
+    <div class="topic-pill" data-topic="Économie mondiale">Économie mondiale</div>
+    <div class="topic-pill" data-topic="Santé & Biotech">Santé & Biotech</div>
+    <div class="topic-pill" data-topic="Géopolitique">Géopolitique</div>
+    <div class="topic-pill" data-topic="Immobilier">Immobilier</div>
+    <div class="topic-pill" data-topic="Sujet sur mesure">✨ Sujet sur mesure</div>
+  </div>
+  <div class="topic-cta" id="topic-cta">
+    <div class="topic-selected-label" id="topic-label"></div>
+    <a id="topic-wa-btn" href="#" class="btn-primary">🎙️ Recevoir mon épisode gratuit →</a>
   </div>
 </section>
 
@@ -326,8 +335,8 @@
     <div class="faq-a">De la recherche à l'audio fini en moins de 5 minutes. Généré frais chaque matin avec les dernières infos.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Je peux tester ?</div>
-    <div class="faq-a">Oui — écrivez-nous sur WhatsApp et on vous génère un épisode gratuit sur votre sujet en quelques minutes.</div>
+    <div class="faq-q">C'est gratuit ?</div>
+    <div class="faq-a">Votre premier épisode est entièrement gratuit — sans carte, sans engagement. Ensuite, c'est 4,99€/mois pour des épisodes quotidiens sur n'importe quel sujet. Résiliable à tout moment.</div>
   </div>
 </section>
 
@@ -436,6 +445,30 @@
     next();
   }
   setTimeout(playConvo, 1200);
+})();
+
+// === Interactive Topics ===
+(function() {
+  const grid = document.getElementById('topic-grid');
+  const cta = document.getElementById('topic-cta');
+  const label = document.getElementById('topic-label');
+  const waBtn = document.getElementById('topic-wa-btn');
+  const selected = new Set();
+
+  grid.addEventListener('click', function(e) {
+    const pill = e.target.closest('.topic-pill');
+    if (!pill) return;
+    const topic = pill.dataset.topic;
+    if (selected.has(topic)) { selected.delete(topic); pill.classList.remove('selected'); }
+    else { selected.add(topic); pill.classList.add('selected'); }
+
+    if (selected.size > 0) {
+      const topics = Array.from(selected).join(', ');
+      label.textContent = selected.size === 1 ? '1 sujet sélectionné' : selected.size + ' sujets sélectionnés';
+      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Salut AntBot, je veux un podcast quotidien sur : ' + topics);
+      cta.classList.add('visible');
+    } else { cta.classList.remove('visible'); }
+  });
 })();
 
 (function() {

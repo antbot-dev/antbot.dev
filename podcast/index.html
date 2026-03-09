@@ -469,13 +469,41 @@
     cursor: default;
   }
   .topic-pill:hover {
-    border-color: var(--border-hover);
-    color: var(--text);
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+    cursor: pointer;
   }
   .topic-pill.featured {
     border-color: rgba(200, 255, 0, 0.2);
     color: var(--accent);
     background: var(--accent-dim);
+  }
+  .topic-pill.selected {
+    border-color: var(--accent);
+    color: var(--bg);
+    background: var(--accent);
+    font-weight: 500;
+  }
+  .topic-cta {
+    margin-top: 2rem;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+    pointer-events: none;
+  }
+  .topic-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+  .topic-selected-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
   }
 
   /* FAQ */
@@ -638,13 +666,13 @@
     <div class="audio-header">
       <div class="audio-cover">🎙️</div>
       <div class="audio-info">
-        <h3>Twitter/X Feed — Tech & AI Veille</h3>
-        <p>Karpathy autoresearch · OpenClaw × Codex · Pencil swarm</p>
-        <div class="meta">3:23 · Generated March 9, 2026 · ElevenLabs voice</div>
+        <h3>Your Morning AI Briefing</h3>
+        <p>Karpathy's overnight AI researcher · Multi-agent collaboration · Design swarm mode</p>
+        <div class="meta">2:14 · Fresh every morning · AI voice</div>
       </div>
     </div>
     <audio controls preload="metadata">
-      <source src="sample-veille-twitter.mp3" type="audio/mpeg">
+      <source src="sample-briefing-en.mp3" type="audio/mpeg">
     </audio>
   </div>
 </section>
@@ -653,19 +681,24 @@
 
 <section class="section reveal">
   <div class="section-label">Topics</div>
-  <div class="topic-grid">
-    <div class="topic-pill featured">AI & Tech</div>
-    <div class="topic-pill">Crypto Markets</div>
-    <div class="topic-pill featured">Climate & Energy</div>
-    <div class="topic-pill">French Politics</div>
-    <div class="topic-pill">European Startups</div>
-    <div class="topic-pill featured">Sports</div>
-    <div class="topic-pill">Science & Space</div>
-    <div class="topic-pill">Global Economics</div>
-    <div class="topic-pill featured">Health & Biotech</div>
-    <div class="topic-pill">Geopolitics</div>
-    <div class="topic-pill">Real Estate</div>
-    <div class="topic-pill featured">Your Custom Topic</div>
+  <p style="text-align:center;color:var(--text-secondary);font-size:0.9rem;margin-bottom:2rem;">Pick the topics you care about. We'll handle the rest.</p>
+  <div class="topic-grid" id="topic-grid">
+    <div class="topic-pill" data-topic="AI & Tech">AI & Tech</div>
+    <div class="topic-pill" data-topic="Crypto Markets">Crypto Markets</div>
+    <div class="topic-pill" data-topic="Climate & Energy">Climate & Energy</div>
+    <div class="topic-pill" data-topic="French Politics">French Politics</div>
+    <div class="topic-pill" data-topic="European Startups">European Startups</div>
+    <div class="topic-pill" data-topic="Sports">Sports</div>
+    <div class="topic-pill" data-topic="Science & Space">Science & Space</div>
+    <div class="topic-pill" data-topic="Global Economics">Global Economics</div>
+    <div class="topic-pill" data-topic="Health & Biotech">Health & Biotech</div>
+    <div class="topic-pill" data-topic="Geopolitics">Geopolitics</div>
+    <div class="topic-pill" data-topic="Real Estate">Real Estate</div>
+    <div class="topic-pill" data-topic="Custom Topic">✨ Custom Topic</div>
+  </div>
+  <div class="topic-cta" id="topic-cta">
+    <div class="topic-selected-label" id="topic-label"></div>
+    <a id="topic-wa-btn" href="#" class="btn-primary">🎙️ Get my free episode →</a>
   </div>
 </section>
 
@@ -686,8 +719,8 @@
     <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Can I try it?</div>
-    <div class="faq-a">Yes — message us on WhatsApp and we'll generate a free sample episode on your topic within minutes.</div>
+    <div class="faq-q">Is it free?</div>
+    <div class="faq-a">Your first episode is completely free — no card, no commitment. After that, it's €4.99/month for daily episodes on any topic. Cancel anytime.</div>
   </div>
 </section>
 
@@ -816,6 +849,38 @@
   }
 
   setTimeout(playConvo, 1200);
+})();
+
+// === Interactive Topics ===
+(function() {
+  const grid = document.getElementById('topic-grid');
+  const cta = document.getElementById('topic-cta');
+  const label = document.getElementById('topic-label');
+  const waBtn = document.getElementById('topic-wa-btn');
+  const selected = new Set();
+
+  grid.addEventListener('click', function(e) {
+    const pill = e.target.closest('.topic-pill');
+    if (!pill) return;
+
+    const topic = pill.dataset.topic;
+    if (selected.has(topic)) {
+      selected.delete(topic);
+      pill.classList.remove('selected');
+    } else {
+      selected.add(topic);
+      pill.classList.add('selected');
+    }
+
+    if (selected.size > 0) {
+      const topics = Array.from(selected).join(', ');
+      label.textContent = selected.size === 1 ? '1 topic selected' : selected.size + ' topics selected';
+      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Hey AntBot, I want a daily podcast about: ' + topics);
+      cta.classList.add('visible');
+    } else {
+      cta.classList.remove('visible');
+    }
+  });
 })();
 
 // === Scroll Reveal ===
