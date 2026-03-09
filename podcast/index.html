@@ -914,28 +914,85 @@
     background: var(--accent-dim);
   }
 
+  /* Why Section */
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .why-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.75rem;
+    transition: all 0.3s;
+  }
+  .why-card:hover {
+    border-color: var(--border-hover);
+    transform: translateY(-2px);
+  }
+  .why-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .why-card h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+  }
+  .why-card p {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 640px) {
+    .why-grid { grid-template-columns: 1fr; }
+  }
+
   /* FAQ */
-  .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
+  .faq-item { border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
   .faq-q {
     font-size: 0.95rem;
     font-weight: 500;
-    margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
+    padding: 1.25rem 0;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
   }
+  .faq-q:hover { color: var(--accent); }
   .faq-q::before {
-    content: '→';
+    content: '+';
     color: var(--accent);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
+    font-size: 1rem;
+    font-weight: 300;
+    flex-shrink: 0;
+    width: 1rem;
+    text-align: center;
+    transition: transform 0.3s;
+  }
+  .faq-item.open .faq-q::before {
+    content: '−';
   }
   .faq-a {
     font-size: 0.82rem;
     color: var(--text-secondary);
     line-height: 1.7;
-    padding-left: 1.55rem;
+    padding-left: 1.75rem;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+    padding-bottom: 0;
+  }
+  .faq-item.open .faq-a {
+    max-height: 200px;
+    padding-bottom: 1.25rem;
   }
 
   /* CTA */
@@ -1070,7 +1127,7 @@
         <div class="dot-live"></div>
         <span>Already delivering daily podcasts to 50+ listeners</span>
       </div>
-      <div class="hero-label">Podcast as a Service</div>
+      <div class="hero-label">Your daily podcast, made overnight</div>
       <h1>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h1>
       <p class="hero-sub">Pick a topic. Every morning, a fresh AI podcast lands in your WhatsApp — researched, written, and produced while you slept.</p>
       <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fade-up 0.8s ease forwards 0.8s;">
@@ -1197,6 +1254,35 @@
       <div class="step-number">03</div>
       <h3>Press play on your commute</h3>
       <p>A fresh 3–15 min episode hits your WhatsApp every morning. Just press play.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ===== WHY ===== -->
+<section class="section reveal">
+  <div class="section-label">Why AntBot Podcast</div>
+  <div class="why-grid">
+    <div class="why-card">
+      <div class="why-icon">⏰</div>
+      <h3>Save 30+ minutes every morning</h3>
+      <p>Stop scrolling feeds and newsletters. Get everything you need in one audio briefing while you commute, shower, or make coffee.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🎙️</div>
+      <h3>Human-quality audio</h3>
+      <p>Not robotic text-to-speech. ElevenLabs latest models — natural intonation, proper pacing. Most listeners can't tell it's AI.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">📱</div>
+      <h3>No app to download</h3>
+      <p>Delivered straight to WhatsApp, Telegram, or email. Listen right in the chat — no extra apps, no podcast feeds to manage.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🧠</div>
+      <h3>Your topic, your depth</h3>
+      <p>Not a generic news roundup. Choose your niche and we go deep — with the latest sources, every single day.</p>
     </div>
   </div>
 </section>
@@ -1346,24 +1432,28 @@
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
-    <div class="faq-q">How good is the audio?</div>
-    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge yourself.</div>
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Is the first episode really free?</div>
+    <div class="faq-a">Yes. Pick a topic, tell us where to send it, and get a full episode tomorrow morning. No card required. If you love it, subscribe to keep them coming.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">What languages?</div>
-    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese. Written and spoken natively — not translated.</div>
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How good does the audio actually sound?</div>
+    <div class="faq-a">ElevenLabs latest models — natural intonation, conversational tone, proper pacing. Most listeners can't tell it's AI. Hit play above and judge for yourself.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">How fast?</div>
-    <div class="faq-a">Research to finished audio in under 5 minutes. Generated fresh every morning with the latest information.</div>
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">How long are the episodes?</div>
+    <div class="faq-a">Usually 3–10 minutes depending on the day's news. Short enough for your morning commute, deep enough to actually learn something.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Is it free to try?</div>
-    <div class="faq-a">Your first episode is completely free — no card, no commitment. Just tell us your topic and where to send it.</div>
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">Can I change my topic later?</div>
+    <div class="faq-a">Absolutely. Switch topics whenever you want, or upgrade to Pro for multiple daily episodes on different subjects.</div>
   </div>
   <div class="faq-item">
-    <div class="faq-q">Can I cancel anytime?</div>
-    <div class="faq-a">Yes. No lock-in, no tricks. Cancel with one click and your subscription ends at the end of the billing period.</div>
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What languages are supported?</div>
+    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese, and more. Written and spoken natively — not translated.</div>
+  </div>
+  <div class="faq-item">
+    <div class="faq-q" onclick="this.parentElement.classList.toggle('open')">What makes this different from other AI podcasts?</div>
+    <div class="faq-a">AntBot is personalized to your topic, delivered to your messaging app, on your schedule. It's not a generic feed — it's built for you, every single day.</div>
   </div>
 </section>
 
