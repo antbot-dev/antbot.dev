@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Podcast by AntBot | AntBot</title>
-<meta name="description" content="AI-generated podcasts delivered daily. Pick your topic, choose your voice, wake up to a fresh episode.">
+<title>Personalized Podcast by AntBot</title>
+<meta name="description" content="AI-generated podcasts delivered to your WhatsApp every morning. Pick your topic, wake up to a fresh episode.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
-<meta property="og:title" content="Podcast by AntBot">
+<meta property="og:title" content="Personalized Podcast by AntBot">
 <meta property="og:description" content="AI-generated daily podcasts. Pick your topic, wake up to a fresh episode.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antbot.dev/podcast">
@@ -50,24 +50,22 @@
     z-index: 9999;
   }
 
-  .ambient-line {
+  /* Ambient glow */
+  .ambient {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
-    animation: ambient-scan 8s ease-in-out infinite;
-    z-index: 101;
+    top: -30%;
+    left: -15%;
+    width: 60vw;
+    height: 60vw;
+    background: radial-gradient(circle, rgba(200, 255, 0, 0.035) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
   }
-  @keyframes ambient-scan { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
 
   /* Nav */
   nav {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    top: 0; left: 0; right: 0;
     padding: 1.25rem 2rem;
     display: flex;
     justify-content: space-between;
@@ -97,76 +95,15 @@
   }
   @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-  .nav-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--accent);
-    padding: 0.2rem 0.6rem;
-    border-radius: 3px;
-    font-weight: 500;
-  }
-
-  /* Hero */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 2rem 6rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .hero-label {
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
+  .lang-switch {
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.2s;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s;
   }
-
-  h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.4s;
-  }
-  h1 strong { font-weight: 700; }
-  h1 .gradient-text {
-    background: linear-gradient(135deg, var(--accent), #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  .hero-sub {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    max-width: 560px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.6s;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.8s;
-    flex-wrap: wrap;
-  }
+  .lang-switch:hover { color: var(--text); }
 
   .btn-primary {
     display: inline-flex;
@@ -210,14 +147,230 @@
     color: var(--accent);
   }
 
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8rem 2rem 4rem;
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+  }
+
+  .hero-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.2s;
+  }
+
+  h1 {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.4s;
+  }
+  h1 strong { font-weight: 700; }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text-secondary);
+    max-width: 520px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.6s;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 0.8s;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* WhatsApp Chat Simulation */
+  .wa-section {
+    max-width: 440px;
+    margin: 0 auto;
+    padding: 0 1.5rem 5rem;
+    position: relative;
+    z-index: 1;
+    opacity: 0;
+    animation: fade-up 0.8s ease forwards 1s;
+  }
+
+  .wa-chat {
+    background: #0b141a;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .wa-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.7rem 1rem;
+    background: #1f2c34;
+    border-bottom: 1px solid #2a3942;
+  }
+
+  .wa-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wa-avatar svg { width: 18px; height: 18px; fill: #fff; }
+
+  .wa-header-name { font-size: 0.8rem; font-weight: 500; color: #e9edef; }
+  .wa-header-status { font-size: 0.6rem; color: #8696a0; }
+
+  .wa-body {
+    padding: 0.75rem;
+    height: 280px;
+    overflow: hidden;
+    position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='%23060d11'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23ffffff' opacity='0.02'/%3E%3C/svg%3E");
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 0.35rem;
+  }
+
+  .wa-body::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: linear-gradient(#0b141a, transparent);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .wa-msg {
+    max-width: 88%;
+    padding: 0.5rem 0.65rem;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    line-height: 1.5;
+    opacity: 0;
+    animation: wa-pop 0.3s ease forwards;
+  }
+  @keyframes wa-pop {
+    from { opacity: 0; transform: translateY(6px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .wa-msg.bot {
+    background: #005c4b;
+    color: #e9edef;
+    align-self: flex-start;
+    border-bottom-left-radius: 2px;
+  }
+  .wa-msg.user {
+    background: #1f2c34;
+    color: #e9edef;
+    align-self: flex-end;
+    border-bottom-right-radius: 2px;
+  }
+  .wa-msg .wa-time {
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.4);
+    float: right;
+    margin-left: 0.5rem;
+    margin-top: 0.2rem;
+  }
+  .wa-msg .wa-sender {
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.15rem;
+  }
+
+  /* Audio message inside WA */
+  .wa-audio {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .wa-play-btn {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #25D366;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .wa-play-btn svg { width: 10px; height: 10px; fill: #fff; margin-left: 1px; }
+
+  .wa-waveform {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 1.5px;
+    height: 22px;
+  }
+  .wa-bar {
+    width: 2.5px;
+    border-radius: 1px;
+    background: rgba(255,255,255,0.3);
+    transition: all 0.4s;
+  }
+  .wa-bar.played {
+    background: #25D366;
+    opacity: 0.9;
+  }
+  .wa-duration {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.55rem;
+    color: rgba(255,255,255,0.5);
+    flex-shrink: 0;
+    min-width: 28px;
+  }
+
+  /* Divider */
+  .divider {
+    max-width: 900px;
+    margin: 0 auto;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border), transparent);
+  }
+
   /* Sections */
   .section {
-    padding: 6rem 2rem;
+    padding: 5rem 2rem;
     max-width: 900px;
     margin: 0 auto;
     position: relative;
@@ -235,35 +388,28 @@
     border-bottom: 1px solid var(--border);
   }
 
-  /* Steps */
-  .steps { display: grid; gap: 2rem; }
-  .step {
+  /* Steps - horizontal */
+  .steps {
     display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 1.5rem;
-    align-items: start;
-    padding: 2rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
   }
-  .step:hover { border-color: var(--border-hover); }
+  .step { text-align: center; }
   .step-number {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 2rem;
+    font-size: 2.5rem;
     font-weight: 600;
-    color: var(--accent);
-    opacity: 0.4;
+    color: var(--border);
     line-height: 1;
+    margin-bottom: 0.75rem;
   }
-  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
-  .step p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+  .step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
 
-  /* Audio Player */
+  /* Real audio player */
   .audio-section {
-    padding: 4rem 2rem;
-    max-width: 900px;
+    padding: 2rem 2rem 4rem;
+    max-width: 700px;
     margin: 0 auto;
     position: relative;
     z-index: 1;
@@ -273,73 +419,72 @@
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .audio-header {
     display: flex;
     align-items: center;
     gap: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
 
   .audio-cover {
-    width: 56px;
-    height: 56px;
+    width: 48px; height: 48px;
     background: linear-gradient(135deg, var(--accent), var(--purple));
     border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     flex-shrink: 0;
   }
 
-  .audio-info h3 { font-size: 0.9rem; font-weight: 500; }
-  .audio-info p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; }
+  .audio-info h3 { font-size: 0.85rem; font-weight: 500; }
+  .audio-info p { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem; }
   .audio-info .meta {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     color: var(--text-muted);
-    margin-top: 0.25rem;
+    margin-top: 0.2rem;
     letter-spacing: 0.05em;
   }
+  .audio-player audio { width: 100%; height: 36px; outline: none; }
 
-  .audio-player audio {
-    width: 100%;
-    height: 40px;
-    outline: none;
-    border-radius: 8px;
+  /* Topic pills */
+  .topic-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 2rem;
   }
-
-  /* Use cases - simplified */
-  .usecases-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1px;
-    background: var(--border);
+  .topic-pill {
+    padding: 10px 22px;
     border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
+    border-radius: 100px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    transition: all 0.25s;
+    cursor: default;
   }
-
-  .usecase {
-    background: var(--bg-card);
-    padding: 1.75rem;
-    transition: background 0.3s ease;
+  .topic-pill:hover {
+    border-color: var(--border-hover);
+    color: var(--text);
   }
-  .usecase:hover { background: var(--bg-elevated); }
-  .usecase-emoji { font-size: 1.5rem; margin-bottom: 0.6rem; }
-  .usecase h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
-  .usecase p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
+  .topic-pill.featured {
+    border-color: rgba(200, 255, 0, 0.2);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
 
   /* FAQ */
-  .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+  .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
   .faq-q {
     font-size: 0.95rem;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     display: flex;
     align-items: center;
     gap: 0.75rem;
@@ -351,7 +496,7 @@
     font-size: 0.8rem;
   }
   .faq-a {
-    font-size: 0.85rem;
+    font-size: 0.82rem;
     color: var(--text-secondary);
     line-height: 1.7;
     padding-left: 1.55rem;
@@ -359,9 +504,10 @@
 
   /* CTA */
   .cta-section {
-    padding: 8rem 2rem;
+    padding: 6rem 2rem;
     max-width: 900px;
     margin: 0 auto;
+    text-align: center;
     position: relative;
     z-index: 1;
   }
@@ -377,6 +523,8 @@
     font-size: 0.95rem;
     margin-bottom: 2.5rem;
     max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
     line-height: 1.7;
   }
 
@@ -408,123 +556,130 @@
 
   @media (max-width: 640px) {
     nav { padding: 1rem 1.25rem; }
-    .hero { padding: 7rem 1.25rem 4rem; }
-    .section { padding: 4rem 1.25rem; }
-    .audio-section { padding: 2rem 1.25rem; }
-    .cta-section { padding: 5rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .section { padding: 3.5rem 1.25rem; }
+    .audio-section { padding: 1.5rem 1.25rem 3rem; }
+    .cta-section { padding: 4rem 1.25rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
-    .step { grid-template-columns: 40px 1fr; padding: 1.5rem; }
+    .steps { grid-template-columns: 1fr; gap: 1.5rem; }
     .hero-cta { flex-direction: column; }
     .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .wa-section { padding: 0 1.25rem 4rem; }
+    .wa-body { height: 240px; }
   }
 </style>
 </head>
 <body>
 
-<div class="ambient-line"></div>
+<div class="ambient"></div>
 
 <nav>
   <a href="https://antbot.dev" class="logo">
     <div class="logo-dot"></div>
     ANTBOT
-    <span class="nav-badge">PODCAST</span>
   </a>
-  <div style="display:flex;align-items:center;">
-    <a href="fr/" style="font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:#4a4a55;text-decoration:none;margin-right:1rem;transition:color 0.2s;">FR</a>
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Podcast" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Try it free →</a>
+  <div class="nav-right">
+    <a href="fr/" class="lang-switch">FR</a>
+    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Try it free →</a>
   </div>
 </nav>
 
 <section class="hero">
   <div class="hero-label">Personalized Podcast</div>
   <h1><strong><span class="gradient-text">Your</span></strong> daily podcast.<br>Zero effort.</h1>
-  <p class="hero-sub">Pick a topic. Choose a voice. Wake up to a fresh podcast episode every morning. AI-generated, human-quality, fully autonomous.</p>
-
+  <p class="hero-sub">Pick a topic. Every morning, a fresh episode lands in your WhatsApp. Researched, written, and produced by AI while you slept.</p>
   <div class="hero-cta">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Podcast%20—%20free%20sample" class="btn-primary">🎙️ Try it on WhatsApp</a>
-    <a href="#listen" class="btn-secondary">Listen to an example ↓</a>
+    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast%20—%20free%20sample" class="btn-primary">🎙️ Try it on WhatsApp</a>
+    <a href="#listen" class="btn-secondary">Listen to a real episode ↓</a>
   </div>
 </section>
 
-<section class="section reveal" id="how">
+<!-- Live WhatsApp simulation -->
+<section class="wa-section">
+  <div class="wa-chat">
+    <div class="wa-header">
+      <div class="wa-avatar"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+      <div>
+        <div class="wa-header-name">AntBot</div>
+        <div class="wa-header-status">online</div>
+      </div>
+    </div>
+    <div class="wa-body" id="wa-body"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section reveal">
   <div class="section-label">How It Works</div>
   <div class="steps">
     <div class="step">
       <div class="step-number">01</div>
-      <div>
-        <h3>Tell us your topic</h3>
-        <p>AI news, crypto, climate, sports, French politics — anything. You define the scope and the angle.</p>
-      </div>
+      <h3>Pick your topic</h3>
+      <p>AI, crypto, climate, sports, politics — anything you want to stay sharp on.</p>
     </div>
     <div class="step">
       <div class="step-number">02</div>
-      <div>
-        <h3>We research, write, and produce</h3>
-        <p>Every day, our AI agent scours the web, writes a script, and generates a natural-sounding audio episode.</p>
-      </div>
+      <h3>We produce it overnight</h3>
+      <p>Every day, our AI scours the web, writes a script, and generates a natural-sounding audio episode.</p>
     </div>
     <div class="step">
       <div class="step-number">03</div>
-      <div>
-        <h3>Wake up to your podcast</h3>
-        <p>Delivered via WhatsApp, Telegram, or email. 3 to 15 minutes of curated intelligence, ready for your commute.</p>
-      </div>
+      <h3>Press play on your commute</h3>
+      <p>A fresh 3–15 min episode hits your WhatsApp every morning. Just press play.</p>
     </div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="audio-section reveal" id="listen">
   <div class="audio-player">
     <div class="audio-header">
       <div class="audio-cover">🎙️</div>
       <div class="audio-info">
-        <h3>Twitter/X Feed — Veille Tech & IA</h3>
-        <p>Karpathy AI researcher · OpenClaw × Codex · Pencil swarm design · Mark Cuban on AI</p>
+        <h3>Twitter/X Feed — Tech & AI Veille</h3>
+        <p>Karpathy autoresearch · OpenClaw × Codex · Pencil swarm</p>
         <div class="meta">3:23 · Generated March 9, 2026 · ElevenLabs voice</div>
       </div>
     </div>
-    <audio controls preload="metadata" style="width:100%;">
+    <audio controls preload="metadata">
       <source src="sample-veille-twitter.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
     </audio>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section class="section reveal">
-  <div class="section-label">Examples</div>
-  <div class="usecases-grid">
-    <div class="usecase">
-      <div class="usecase-emoji">🤖</div>
-      <h3>AI & Tech</h3>
-      <p>Breakthroughs, launches, funding, drama — your daily AI briefing.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">📈</div>
-      <h3>Markets</h3>
-      <p>Crypto, stocks, macro — morning briefing with key moves.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">🌍</div>
-      <h3>Industry Watch</h3>
-      <p>Climate, real estate, SaaS — specialized coverage for your sector.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">🎯</div>
-      <h3>Custom Topic</h3>
-      <p>Anything. If it's on the internet, we turn it into a daily podcast.</p>
-    </div>
+  <div class="section-label">Topics</div>
+  <div class="topic-grid">
+    <div class="topic-pill featured">AI & Tech</div>
+    <div class="topic-pill">Crypto Markets</div>
+    <div class="topic-pill featured">Climate & Energy</div>
+    <div class="topic-pill">French Politics</div>
+    <div class="topic-pill">European Startups</div>
+    <div class="topic-pill featured">Sports</div>
+    <div class="topic-pill">Science & Space</div>
+    <div class="topic-pill">Global Economics</div>
+    <div class="topic-pill featured">Health & Biotech</div>
+    <div class="topic-pill">Geopolitics</div>
+    <div class="topic-pill">Real Estate</div>
+    <div class="topic-pill featured">Your Custom Topic</div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
     <div class="faq-q">How good is the audio?</div>
-    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge for yourself.</div>
+    <div class="faq-a">ElevenLabs latest models. Natural intonation, proper pacing. Most listeners can't tell it's AI. Hit play above to judge yourself.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">What languages?</div>
-    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese, and more. Written and spoken natively — not translated.</div>
+    <div class="faq-a">20+ languages with native-quality voices. French, English, Spanish, German, Portuguese, Japanese. Written and spoken natively — not translated.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">How fast?</div>
@@ -536,12 +691,14 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section class="cta-section reveal">
-  <h2>Your topic.<br>Your schedule.<br><strong>Your podcast.</strong></h2>
-  <p>Stop scrolling through newsletters. Start listening to intelligence curated for you.</p>
-  <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20Podcast%20—%20free%20sample" class="btn-primary">🎙️ Get a Free Sample</a>
-    <a href="mailto:hello@antbot.dev?subject=Podcast%20Inquiry" class="btn-secondary">hello@antbot.dev →</a>
+  <h2>No feeds. No scrolling.<br><strong>Just press <span class="gradient-text">play</span>.</strong></h2>
+  <p>A voice in your pocket that knows exactly what you care about, ready the moment you wake up.</p>
+  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+    <a href="https://wa.me/33769516191?text=Hey%20AntBot%2C%20I%20want%20to%20try%20a%20personalized%20podcast%20—%20free%20sample" class="btn-primary">🎙️ Get a Free Sample</a>
+    <a href="mailto:hello@antbot.dev?subject=Personalized%20Podcast" class="btn-secondary">hello@antbot.dev →</a>
   </div>
 </section>
 
@@ -551,6 +708,117 @@
 </footer>
 
 <script>
+// === WhatsApp Chat Simulation ===
+(function() {
+  const body = document.getElementById('wa-body');
+  const maxVisible = 5;
+
+  const convos = [
+    [
+      { from: 'user', text: "I want a daily podcast about AI news" },
+      { from: 'bot', text: "Done 🎙️ You'll get a fresh AI briefing every morning at 7am on WhatsApp." },
+      { from: 'bot', text: "First episode generating now..." },
+      { from: 'bot', text: "", audio: true, title: "AI & Tech Briefing — March 9", duration: "5:32" },
+    ],
+    [
+      { from: 'user', text: "Can I get it in French?" },
+      { from: 'bot', text: "Bien sûr. Switching your podcast to French 🇫🇷" },
+      { from: 'bot', text: "Same depth, native voice. Here's a preview:" },
+      { from: 'bot', text: "", audio: true, title: "Veille IA & Tech — 9 mars", duration: "4:18" },
+    ],
+    [
+      { from: 'user', text: "I want crypto + AI in the same episode" },
+      { from: 'bot', text: "Mixed topic — nice. Your episode will cover both, with AI first then crypto market moves." },
+      { from: 'bot', text: "", audio: true, title: "AI × Crypto Daily — March 9", duration: "7:14" },
+    ],
+    [
+      { from: 'user', text: "This is insane. The voice sounds real" },
+      { from: 'bot', text: "ElevenLabs' latest model. Most people can't tell it's AI 🤫" },
+      { from: 'user', text: "Can I get a sports one too?" },
+      { from: 'bot', text: "Added. Ligue 1 recap every morning at 7:30 ⚽" },
+    ],
+    [
+      { from: 'user', text: "Do you cover European startups?" },
+      { from: 'bot', text: "Funding rounds, product launches, exits — across France, Germany, UK, Nordics. Delivered daily." },
+      { from: 'bot', text: "", audio: true, title: "EU Startup Watch — March 9", duration: "6:03" },
+    ],
+    [
+      { from: 'user', text: "Make me a podcast about climate policy" },
+      { from: 'bot', text: "On it. Sources: IPCC, Carbon Brief, national energy agencies, EU policy trackers." },
+      { from: 'bot', text: "First episode ready 👇" },
+      { from: 'bot', text: "", audio: true, title: "Climate & Energy Brief — March 9", duration: "5:47" },
+    ],
+    [
+      { from: 'user', text: "How much does it cost?" },
+      { from: 'bot', text: "Try it free first. Message me your topic and I'll generate a sample in minutes." },
+      { from: 'user', text: "OK let's do real estate in France" },
+      { from: 'bot', text: "Generating your custom episode now... ⏳" },
+    ],
+  ];
+
+  let convoIdx = 0;
+
+  function getTime() {
+    const now = new Date();
+    return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  }
+
+  function createAudioMsg(msg) {
+    const bars = 20;
+    let barsHtml = '';
+    const playedCount = Math.floor(bars * 0.45);
+    for (let i = 0; i < bars; i++) {
+      const h = Math.floor(Math.random() * 16) + 4;
+      barsHtml += '<div class="wa-bar' + (i < playedCount ? ' played' : '') + '" style="height:' + h + 'px"></div>';
+    }
+    return '<div class="wa-audio">' +
+      '<div class="wa-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>' +
+      '<div class="wa-waveform">' + barsHtml + '</div>' +
+      '<div class="wa-duration">' + msg.duration + '</div>' +
+      '</div>' +
+      '<div style="font-size:0.7rem;color:rgba(255,255,255,0.6);">' + msg.title + '</div>';
+  }
+
+  function addMsg(msg) {
+    const el = document.createElement('div');
+    el.className = 'wa-msg ' + msg.from;
+    let html = '';
+    if (msg.audio) {
+      html = createAudioMsg(msg);
+    } else {
+      html = msg.text;
+    }
+    html += '<span class="wa-time">' + getTime() + '</span>';
+    el.innerHTML = html;
+    body.appendChild(el);
+
+    while (body.children.length > maxVisible) {
+      body.removeChild(body.firstChild);
+    }
+  }
+
+  function playConvo() {
+    const convo = convos[convoIdx];
+    convoIdx = (convoIdx + 1) % convos.length;
+    let i = 0;
+
+    function next() {
+      if (i >= convo.length) {
+        setTimeout(playConvo, 5000 + Math.random() * 3000);
+        return;
+      }
+      addMsg(convo[i]);
+      i++;
+      const delay = convo[i - 1].from === 'bot' ? 1800 + Math.random() * 1200 : 1000 + Math.random() * 600;
+      setTimeout(next, delay);
+    }
+    next();
+  }
+
+  setTimeout(playConvo, 1200);
+})();
+
+// === Scroll Reveal ===
 (function() {
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {

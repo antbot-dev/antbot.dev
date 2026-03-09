@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Podcast par AntBot</title>
-<meta name="description" content="Podcasts générés par IA, livrés chaque matin. Choisissez votre sujet, réveillez-vous avec un épisode frais. Zéro effort.">
+<title>Podcast Personnalisé par AntBot</title>
+<meta name="description" content="Podcasts générés par IA, livrés sur votre WhatsApp chaque matin. Choisissez votre sujet, réveillez-vous avec un épisode frais.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎙️</text></svg>">
-<meta property="og:title" content="Podcast par AntBot">
+<meta property="og:title" content="Podcast Personnalisé par AntBot">
 <meta property="og:description" content="Podcasts IA quotidiens. Choisissez votre sujet, réveillez-vous avec un épisode frais.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://antbot.dev/podcast/fr">
@@ -31,7 +31,6 @@
   }
 
   html { scroll-behavior: smooth; }
-
   body {
     font-family: 'Inter', -apple-system, sans-serif;
     background: var(--bg);
@@ -40,7 +39,6 @@
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
   }
-
   body::before {
     content: '';
     position: fixed;
@@ -49,430 +47,231 @@
     pointer-events: none;
     z-index: 9999;
   }
-
-  .ambient-line {
+  .ambient {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--accent-glow), transparent);
-    animation: ambient-scan 8s ease-in-out infinite;
-    z-index: 101;
+    top: -30%; left: -15%;
+    width: 60vw; height: 60vw;
+    background: radial-gradient(circle, rgba(200, 255, 0, 0.035) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
   }
-  @keyframes ambient-scan { 0%, 100% { opacity: 0; } 50% { opacity: 1; } }
-
   nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
+    position: fixed; top: 0; left: 0; right: 0;
     padding: 1.25rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    display: flex; justify-content: space-between; align-items: center;
     z-index: 100;
     background: linear-gradient(to bottom, var(--bg) 60%, transparent);
   }
-
   .logo {
     font-family: 'JetBrains Mono', monospace;
-    font-weight: 500;
-    font-size: 0.9rem;
+    font-weight: 500; font-size: 0.9rem;
     letter-spacing: 0.05em;
     color: var(--text);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+    display: flex; align-items: center; gap: 0.5rem;
     text-decoration: none;
   }
-
   .logo-dot {
     width: 6px; height: 6px;
-    background: var(--accent);
-    border-radius: 50%;
+    background: var(--accent); border-radius: 50%;
     animation: pulse-dot 3s ease-in-out infinite;
     box-shadow: 0 0 8px var(--accent-glow);
   }
   @keyframes pulse-dot { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  .nav-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--bg);
-    background: var(--accent);
-    padding: 0.2rem 0.6rem;
-    border-radius: 3px;
-    font-weight: 500;
-  }
-
+  .nav-right { display: flex; align-items: center; gap: 1rem; }
   .lang-switch {
     font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    text-decoration: none;
-    margin-right: 1rem;
-    transition: color 0.2s;
+    font-size: 0.7rem; color: var(--text-muted);
+    text-decoration: none; transition: color 0.2s;
   }
   .lang-switch:hover { color: var(--text); }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    color: var(--bg); background: var(--accent);
+    text-decoration: none; padding: 0.9rem 2rem;
+    border-radius: 6px; transition: all 0.3s ease;
+    letter-spacing: 0.02em; font-weight: 500; border: none; cursor: pointer;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px var(--accent-glow); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.85rem;
+    color: var(--text); text-decoration: none; padding: 0.9rem 2rem;
+    border-radius: 6px; border: 1px solid var(--border); transition: all 0.3s ease; letter-spacing: 0.02em;
+  }
+  .btn-secondary:hover { border-color: var(--accent); background: var(--accent-dim); color: var(--accent); }
 
   .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 2rem 6rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: center;
+    padding: 8rem 2rem 4rem; max-width: 900px; margin: 0 auto;
+    position: relative; z-index: 1; text-align: center;
   }
-
   .hero-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.2s;
+    font-family: 'JetBrains Mono', monospace; font-size: 0.7rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent);
+    margin-bottom: 2rem; opacity: 0; animation: fade-up 0.8s ease forwards 0.2s;
   }
-
   h1 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 300;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.4s;
+    font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 300;
+    line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 1.5rem;
+    opacity: 0; animation: fade-up 0.8s ease forwards 0.4s;
   }
   h1 strong { font-weight: 700; }
-  h1 .gradient-text {
-    background: linear-gradient(135deg, var(--accent), #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+  .gradient-text {
+    background: linear-gradient(135deg, var(--accent), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
   }
-
   .hero-sub {
-    font-size: 1.15rem;
-    color: var(--text-secondary);
-    max-width: 560px;
-    line-height: 1.7;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.6s;
+    font-size: 1.15rem; color: var(--text-secondary); max-width: 520px;
+    line-height: 1.7; opacity: 0; animation: fade-up 0.8s ease forwards 0.6s;
   }
-
   .hero-cta {
-    display: flex;
-    gap: 1rem;
-    margin-top: 2.5rem;
-    opacity: 0;
-    animation: fade-up 0.8s ease forwards 0.8s;
-    flex-wrap: wrap;
+    display: flex; gap: 1rem; margin-top: 2.5rem;
+    opacity: 0; animation: fade-up 0.8s ease forwards 0.8s;
+    flex-wrap: wrap; justify-content: center;
   }
-
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--bg);
-    background: var(--accent);
-    text-decoration: none;
-    padding: 0.9rem 2rem;
-    border-radius: 6px;
-    transition: all 0.3s ease;
-    letter-spacing: 0.02em;
-    font-weight: 500;
-    border: none;
-    cursor: pointer;
-  }
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 30px var(--accent-glow);
-  }
-
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--text);
-    text-decoration: none;
-    padding: 0.9rem 2rem;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    transition: all 0.3s ease;
-    letter-spacing: 0.02em;
-  }
-  .btn-secondary:hover {
-    border-color: var(--accent);
-    background: var(--accent-dim);
-    color: var(--accent);
-  }
-
   @keyframes fade-up {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .section {
-    padding: 6rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
+  .wa-section {
+    max-width: 440px; margin: 0 auto; padding: 0 1.5rem 5rem;
+    position: relative; z-index: 1;
+    opacity: 0; animation: fade-up 0.8s ease forwards 1s;
   }
+  .wa-chat { background: #0b141a; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .wa-header { display: flex; align-items: center; gap: 0.6rem; padding: 0.7rem 1rem; background: #1f2c34; border-bottom: 1px solid #2a3942; }
+  .wa-avatar { width: 32px; height: 32px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; }
+  .wa-avatar svg { width: 18px; height: 18px; fill: #fff; }
+  .wa-header-name { font-size: 0.8rem; font-weight: 500; color: #e9edef; }
+  .wa-header-status { font-size: 0.6rem; color: #8696a0; }
+  .wa-body {
+    padding: 0.75rem; height: 280px; overflow: hidden; position: relative;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='%23060d11'/%3E%3Ccircle cx='30' cy='30' r='0.5' fill='%23ffffff' opacity='0.02'/%3E%3C/svg%3E");
+    display: flex; flex-direction: column; justify-content: flex-end; gap: 0.35rem;
+  }
+  .wa-body::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 40px; background: linear-gradient(#0b141a, transparent); pointer-events: none; z-index: 1; }
+  .wa-msg { max-width: 88%; padding: 0.5rem 0.65rem; border-radius: 8px; font-size: 0.78rem; line-height: 1.5; opacity: 0; animation: wa-pop 0.3s ease forwards; }
+  @keyframes wa-pop { from { opacity: 0; transform: translateY(6px) scale(0.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+  .wa-msg.bot { background: #005c4b; color: #e9edef; align-self: flex-start; border-bottom-left-radius: 2px; }
+  .wa-msg.user { background: #1f2c34; color: #e9edef; align-self: flex-end; border-bottom-right-radius: 2px; }
+  .wa-msg .wa-time { font-size: 0.55rem; color: rgba(255,255,255,0.4); float: right; margin-left: 0.5rem; margin-top: 0.2rem; }
+  .wa-audio { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .wa-play-btn { width: 28px; height: 28px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .wa-play-btn svg { width: 10px; height: 10px; fill: #fff; margin-left: 1px; }
+  .wa-waveform { flex: 1; display: flex; align-items: center; gap: 1.5px; height: 22px; }
+  .wa-bar { width: 2.5px; border-radius: 1px; background: rgba(255,255,255,0.3); }
+  .wa-bar.played { background: #25D366; opacity: 0.9; }
+  .wa-duration { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; color: rgba(255,255,255,0.5); flex-shrink: 0; min-width: 28px; }
 
-  .section-label {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 3rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .steps { display: grid; gap: 2rem; }
-  .step {
-    display: grid;
-    grid-template-columns: 60px 1fr;
-    gap: 1.5rem;
-    align-items: start;
-    padding: 2rem;
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    transition: border-color 0.3s ease;
-  }
-  .step:hover { border-color: var(--border-hover); }
-  .step-number {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--accent);
-    opacity: 0.4;
-    line-height: 1;
-  }
-  .step h3 { font-size: 1rem; font-weight: 500; margin-bottom: 0.5rem; }
-  .step p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
-
-  .audio-section {
-    padding: 4rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-
-  .audio-player {
-    background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 2rem;
-  }
-
-  .audio-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .audio-cover {
-    width: 56px;
-    height: 56px;
-    background: linear-gradient(135deg, var(--accent), var(--purple));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .audio-info h3 { font-size: 0.9rem; font-weight: 500; }
-  .audio-info p { font-size: 0.75rem; color: var(--text-secondary); margin-top: 0.15rem; }
-  .audio-info .meta {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--text-muted);
-    margin-top: 0.25rem;
-    letter-spacing: 0.05em;
-  }
-
-  .audio-player audio {
-    width: 100%;
-    height: 40px;
-    outline: none;
-    border-radius: 8px;
-  }
-
-  .usecases-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .usecase {
-    background: var(--bg-card);
-    padding: 1.75rem;
-    transition: background 0.3s ease;
-  }
-  .usecase:hover { background: var(--bg-elevated); }
-  .usecase-emoji { font-size: 1.5rem; margin-bottom: 0.6rem; }
-  .usecase h3 { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.3rem; }
-  .usecase p { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.5; }
-
-  .faq-item { padding: 1.5rem 0; border-bottom: 1px solid var(--border); }
+  .divider { max-width: 900px; margin: 0 auto; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+  .section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; position: relative; z-index: 1; }
+  .section-label { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 3rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .step { text-align: center; }
+  .step-number { font-family: 'JetBrains Mono', monospace; font-size: 2.5rem; font-weight: 600; color: var(--border); line-height: 1; margin-bottom: 0.75rem; }
+  .step h3 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; }
+  .step p { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.6; }
+  .audio-section { padding: 2rem 2rem 4rem; max-width: 700px; margin: 0 auto; position: relative; z-index: 1; }
+  .audio-player { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; }
+  .audio-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .audio-cover { width: 48px; height: 48px; background: linear-gradient(135deg, var(--accent), var(--purple)); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .audio-info h3 { font-size: 0.85rem; font-weight: 500; }
+  .audio-info p { font-size: 0.72rem; color: var(--text-secondary); margin-top: 0.1rem; }
+  .audio-info .meta { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-muted); margin-top: 0.2rem; letter-spacing: 0.05em; }
+  .audio-player audio { width: 100%; height: 36px; outline: none; }
+  .topic-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 2rem; }
+  .topic-pill { padding: 10px 22px; border: 1px solid var(--border); border-radius: 100px; font-size: 0.82rem; color: var(--text-secondary); cursor: default; transition: all 0.25s; }
+  .topic-pill:hover { border-color: var(--border-hover); color: var(--text); }
+  .topic-pill.featured { border-color: rgba(200, 255, 0, 0.2); color: var(--accent); background: var(--accent-dim); }
+  .faq-item { padding: 1.25rem 0; border-bottom: 1px solid var(--border); }
   .faq-item:last-child { border-bottom: none; }
-  .faq-q {
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-  .faq-q::before {
-    content: '→';
-    color: var(--accent);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.8rem;
-  }
-  .faq-a {
-    font-size: 0.85rem;
-    color: var(--text-secondary);
-    line-height: 1.7;
-    padding-left: 1.55rem;
-  }
-
-  .cta-section {
-    padding: 8rem 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 1;
-  }
-  .cta-section h2 {
-    font-size: clamp(1.8rem, 4vw, 2.8rem);
-    font-weight: 300;
-    letter-spacing: -0.02em;
-    margin-bottom: 1rem;
-    line-height: 1.2;
-  }
-  .cta-section p {
-    color: var(--text-secondary);
-    font-size: 0.95rem;
-    margin-bottom: 2.5rem;
-    max-width: 480px;
-    line-height: 1.7;
-  }
-
-  footer {
-    padding: 2rem;
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid var(--border);
-    font-size: 0.7rem;
-    color: var(--text-muted);
-    font-family: 'JetBrains Mono', monospace;
-    letter-spacing: 0.05em;
-    position: relative;
-    z-index: 1;
-  }
-  footer a { color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  footer a:hover { color: var(--text-secondary); }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
+  .faq-q { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.4rem; display: flex; align-items: center; gap: 0.75rem; }
+  .faq-q::before { content: '→'; color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 0.8rem; }
+  .faq-a { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7; padding-left: 1.55rem; }
+  .cta-section { padding: 6rem 2rem; max-width: 900px; margin: 0 auto; text-align: center; position: relative; z-index: 1; }
+  .cta-section h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 300; letter-spacing: -0.02em; margin-bottom: 1rem; line-height: 1.2; }
+  .cta-section p { color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 2.5rem; max-width: 480px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+  footer { padding: 2rem; max-width: 900px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.05em; position: relative; z-index: 1; }
+  footer a { color: var(--text-muted); text-decoration: none; }
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
   .reveal.visible { opacity: 1; transform: translateY(0); }
-
   @media (max-width: 640px) {
     nav { padding: 1rem 1.25rem; }
-    .hero { padding: 7rem 1.25rem 4rem; }
-    .section { padding: 4rem 1.25rem; }
-    .audio-section { padding: 2rem 1.25rem; }
-    .cta-section { padding: 5rem 1.25rem; }
+    .hero { padding: 7rem 1.25rem 3rem; }
+    .section { padding: 3.5rem 1.25rem; }
+    .audio-section { padding: 1.5rem 1.25rem 3rem; }
+    .cta-section { padding: 4rem 1.25rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; }
-    .step { grid-template-columns: 40px 1fr; padding: 1.5rem; }
+    .steps { grid-template-columns: 1fr; gap: 1.5rem; }
     .hero-cta { flex-direction: column; }
     .btn-primary, .btn-secondary { width: 100%; justify-content: center; }
+    .wa-section { padding: 0 1.25rem 4rem; }
+    .wa-body { height: 240px; }
   }
 </style>
 </head>
 <body>
 
-<div class="ambient-line"></div>
+<div class="ambient"></div>
 
 <nav>
-  <a href="https://antbot.dev" class="logo">
-    <div class="logo-dot"></div>
-    ANTBOT
-    <span class="nav-badge">PODCAST</span>
-  </a>
-  <div style="display:flex;align-items:center;">
+  <a href="https://antbot.dev" class="logo"><div class="logo-dot"></div>ANTBOT</a>
+  <div class="nav-right">
     <a href="../" class="lang-switch">EN</a>
-    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast" class="btn-secondary" style="padding:0.5rem 1.2rem;font-size:0.75rem;">Essayer gratuitement →</a>
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20podcast%20personnalis%C3%A9" class="btn-primary" style="padding:0.6rem 1.4rem;font-size:0.78rem;">Essayer gratuitement →</a>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="hero-label">Personalized Podcast</div>
+  <div class="hero-label">Podcast Personnalisé</div>
   <h1><strong><span class="gradient-text">Votre</span></strong> podcast quotidien.<br>Zéro effort.</h1>
-  <p class="hero-sub">Choisissez un sujet. Choisissez une voix. Réveillez-vous chaque matin avec un épisode frais. Généré par IA, qualité humaine, 100% autonome.</p>
-
+  <p class="hero-sub">Choisissez un sujet. Chaque matin, un épisode frais arrive dans votre WhatsApp. Recherché, rédigé et produit par IA pendant que vous dormiez.</p>
   <div class="hero-cta">
-    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast" class="btn-primary">🎙️ Essayer sur WhatsApp</a>
-    <a href="#listen" class="btn-secondary">Écouter un exemple ↓</a>
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20podcast%20personnalis%C3%A9" class="btn-primary">🎙️ Essayer sur WhatsApp</a>
+    <a href="#listen" class="btn-secondary">Écouter un vrai épisode ↓</a>
   </div>
 </section>
 
-<section class="section reveal" id="how">
+<section class="wa-section">
+  <div class="wa-chat">
+    <div class="wa-header">
+      <div class="wa-avatar"><svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></div>
+      <div>
+        <div class="wa-header-name">AntBot</div>
+        <div class="wa-header-status">en ligne</div>
+      </div>
+    </div>
+    <div class="wa-body" id="wa-body"></div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section class="section reveal">
   <div class="section-label">Comment ça marche</div>
   <div class="steps">
     <div class="step">
       <div class="step-number">01</div>
-      <div>
-        <h3>Choisissez votre sujet</h3>
-        <p>Actu IA, crypto, climat, sport, politique — n'importe quoi. Vous définissez le périmètre et l'angle.</p>
-      </div>
+      <h3>Choisissez votre sujet</h3>
+      <p>IA, crypto, climat, sport, politique — tout ce qui vous intéresse.</p>
     </div>
     <div class="step">
       <div class="step-number">02</div>
-      <div>
-        <h3>On recherche, rédige et produit</h3>
-        <p>Chaque jour, notre agent IA parcourt le web, écrit un script et génère un épisode audio avec des voix naturelles.</p>
-      </div>
+      <h3>On produit pendant la nuit</h3>
+      <p>Notre IA parcourt le web, rédige un script et génère un épisode audio naturel pendant que vous dormez.</p>
     </div>
     <div class="step">
       <div class="step-number">03</div>
-      <div>
-        <h3>Réveillez-vous avec votre podcast</h3>
-        <p>Livré via WhatsApp, Telegram ou email. 3 à 15 minutes d'intelligence, prêt pour votre trajet.</p>
-      </div>
+      <h3>Écoutez dans le métro</h3>
+      <p>Un épisode frais de 3 à 15 min arrive dans votre WhatsApp chaque matin. Appuyez sur play.</p>
     </div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="audio-section reveal" id="listen">
   <div class="audio-player">
@@ -480,48 +279,43 @@
       <div class="audio-cover">🎙️</div>
       <div class="audio-info">
         <h3>Veille Twitter/X — Tech & IA</h3>
-        <p>Karpathy AI researcher · OpenClaw × Codex · Pencil swarm design · Mark Cuban sur l'IA</p>
+        <p>Karpathy autoresearch · OpenClaw × Codex · Pencil swarm</p>
         <div class="meta">3:23 · Généré le 9 mars 2026 · Voix ElevenLabs</div>
       </div>
     </div>
-    <audio controls preload="metadata" style="width:100%;">
-      <source src="sample-veille-twitter.mp3" type="audio/mpeg">
-      Votre navigateur ne supporte pas l'élément audio.
+    <audio controls preload="metadata">
+      <source src="../sample-veille-twitter.mp3" type="audio/mpeg">
     </audio>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section class="section reveal">
-  <div class="section-label">Exemples</div>
-  <div class="usecases-grid">
-    <div class="usecase">
-      <div class="usecase-emoji">🤖</div>
-      <h3>IA & Tech</h3>
-      <p>Avancées, lancements, levées de fonds — votre briefing IA quotidien.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">📈</div>
-      <h3>Marchés</h3>
-      <p>Crypto, actions, macro — briefing matinal avec les mouvements clés.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">🌍</div>
-      <h3>Veille sectorielle</h3>
-      <p>Climat, immobilier, SaaS — couverture spécialisée pour votre secteur.</p>
-    </div>
-    <div class="usecase">
-      <div class="usecase-emoji">🎯</div>
-      <h3>Sujet sur mesure</h3>
-      <p>N'importe quoi. Si c'est sur internet, on en fait un podcast quotidien.</p>
-    </div>
+  <div class="section-label">Sujets</div>
+  <div class="topic-grid">
+    <div class="topic-pill featured">IA & Tech</div>
+    <div class="topic-pill">Crypto & Marchés</div>
+    <div class="topic-pill featured">Climat & Énergie</div>
+    <div class="topic-pill">Politique française</div>
+    <div class="topic-pill">Startups Europe</div>
+    <div class="topic-pill featured">Sport</div>
+    <div class="topic-pill">Science & Espace</div>
+    <div class="topic-pill">Économie mondiale</div>
+    <div class="topic-pill featured">Santé & Biotech</div>
+    <div class="topic-pill">Géopolitique</div>
+    <div class="topic-pill">Immobilier</div>
+    <div class="topic-pill featured">Votre sujet sur mesure</div>
   </div>
 </section>
+
+<div class="divider"></div>
 
 <section class="section reveal">
   <div class="section-label">FAQ</div>
   <div class="faq-item">
     <div class="faq-q">Quelle qualité audio ?</div>
-    <div class="faq-a">Derniers modèles ElevenLabs. Intonation naturelle, rythme humain. La plupart des auditeurs ne devinent pas que c'est de l'IA. Appuyez sur play ci-dessus pour juger.</div>
+    <div class="faq-a">Derniers modèles ElevenLabs. Intonation naturelle, rythme humain. La plupart des auditeurs ne devinent pas que c'est de l'IA.</div>
   </div>
   <div class="faq-item">
     <div class="faq-q">Quelles langues ?</div>
@@ -537,12 +331,14 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
 <section class="cta-section reveal">
-  <h2>Votre sujet.<br>Votre rythme.<br><strong>Votre podcast.</strong></h2>
-  <p>Arrêtez de scroller les newsletters. Écoutez une veille taillée pour vous, livrée comme vous voulez.</p>
-  <div style="display:flex;gap:1rem;flex-wrap:wrap;">
-    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20Podcast%20—%20%C3%A9chantillon%20gratuit" class="btn-primary">🎙️ Épisode gratuit</a>
-    <a href="mailto:hello@antbot.dev?subject=Podcast" class="btn-secondary">hello@antbot.dev →</a>
+  <h2>Pas de feed. Pas de scroll.<br><strong>Juste appuyer sur <span class="gradient-text">play</span>.</strong></h2>
+  <p>Une voix dans votre poche qui sait exactement ce qui vous intéresse, prête dès le réveil.</p>
+  <div style="display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;">
+    <a href="https://wa.me/33769516191?text=Salut%20AntBot%2C%20je%20veux%20tester%20le%20podcast%20personnalis%C3%A9%20—%20%C3%A9chantillon%20gratuit" class="btn-primary">🎙️ Épisode gratuit</a>
+    <a href="mailto:hello@antbot.dev?subject=Podcast%20Personnalis%C3%A9" class="btn-secondary">hello@antbot.dev →</a>
   </div>
 </section>
 
@@ -552,6 +348,96 @@
 </footer>
 
 <script>
+(function() {
+  const body = document.getElementById('wa-body');
+  const maxVisible = 5;
+
+  const convos = [
+    [
+      { from: 'user', text: "Je veux un podcast quotidien sur l'actu IA" },
+      { from: 'bot', text: "C'est parti 🎙️ Votre veille IA arrive chaque matin à 7h sur WhatsApp." },
+      { from: 'bot', text: "Premier épisode en cours de génération..." },
+      { from: 'bot', text: "", audio: true, title: "Veille IA & Tech — 9 mars", duration: "5:32" },
+    ],
+    [
+      { from: 'user', text: "Je peux aussi avoir du sport ?" },
+      { from: 'bot', text: "Ajouté. Récap Ligue 1 chaque matin à 7h30 ⚽" },
+      { from: 'bot', text: "", audio: true, title: "Ligue 1 Récap — 9 mars", duration: "3:45" },
+    ],
+    [
+      { from: 'user', text: "La voix est dingue, on dirait un vrai" },
+      { from: 'bot', text: "ElevenLabs dernier modèle. La plupart des gens ne devinent pas que c'est de l'IA 🤫" },
+      { from: 'user', text: "Mes collègues pensent que j'ai embauché un journaliste" },
+      { from: 'bot', text: "Techniquement... c'est pas faux 😄" },
+    ],
+    [
+      { from: 'user', text: "Tu peux mixer crypto + IA dans un seul épisode ?" },
+      { from: 'bot', text: "Multi-topic — bonne idée. IA en premier puis mouvements crypto. Voilà 👇" },
+      { from: 'bot', text: "", audio: true, title: "IA × Crypto — 9 mars", duration: "7:14" },
+    ],
+    [
+      { from: 'user', text: "Je veux une veille immobilier France" },
+      { from: 'bot', text: "Sources : INSEE, SeLoger data, lois fiscales, marché SCPI. Livré chaque matin." },
+      { from: 'bot', text: "Premier épisode prêt 👇" },
+      { from: 'bot', text: "", audio: true, title: "Immo France — 9 mars", duration: "4:52" },
+    ],
+    [
+      { from: 'user', text: "Ça coûte combien ?" },
+      { from: 'bot', text: "Testez d'abord gratuitement. Envoyez-moi votre sujet, je génère un épisode en quelques minutes." },
+      { from: 'user', text: "OK go, startups européennes" },
+      { from: 'bot', text: "Génération en cours... ⏳" },
+    ],
+  ];
+
+  let convoIdx = 0;
+
+  function getTime() {
+    const now = new Date();
+    return String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+  }
+
+  function createAudioMsg(msg) {
+    const bars = 20;
+    let barsHtml = '';
+    const playedCount = Math.floor(bars * 0.45);
+    for (let i = 0; i < bars; i++) {
+      const h = Math.floor(Math.random() * 16) + 4;
+      barsHtml += '<div class="wa-bar' + (i < playedCount ? ' played' : '') + '" style="height:' + h + 'px"></div>';
+    }
+    return '<div class="wa-audio">' +
+      '<div class="wa-play-btn"><svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg></div>' +
+      '<div class="wa-waveform">' + barsHtml + '</div>' +
+      '<div class="wa-duration">' + msg.duration + '</div>' +
+      '</div>' +
+      '<div style="font-size:0.7rem;color:rgba(255,255,255,0.6);">' + msg.title + '</div>';
+  }
+
+  function addMsg(msg) {
+    const el = document.createElement('div');
+    el.className = 'wa-msg ' + msg.from;
+    let html = msg.audio ? createAudioMsg(msg) : msg.text;
+    html += '<span class="wa-time">' + getTime() + '</span>';
+    el.innerHTML = html;
+    body.appendChild(el);
+    while (body.children.length > maxVisible) body.removeChild(body.firstChild);
+  }
+
+  function playConvo() {
+    const convo = convos[convoIdx];
+    convoIdx = (convoIdx + 1) % convos.length;
+    let i = 0;
+    function next() {
+      if (i >= convo.length) { setTimeout(playConvo, 5000 + Math.random() * 3000); return; }
+      addMsg(convo[i]);
+      i++;
+      const delay = convo[i - 1].from === 'bot' ? 1800 + Math.random() * 1200 : 1000 + Math.random() * 600;
+      setTimeout(next, delay);
+    }
+    next();
+  }
+  setTimeout(playConvo, 1200);
+})();
+
 (function() {
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
