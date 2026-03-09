@@ -668,7 +668,7 @@
       <div class="audio-info">
         <h3>Your Morning AI Briefing</h3>
         <p>Karpathy's overnight AI researcher · Multi-agent collaboration · Design swarm mode</p>
-        <div class="meta">2:14 · Fresh every morning · AI voice</div>
+        <div class="meta">3:07 · Fresh every morning · AI voice</div>
       </div>
     </div>
     <audio controls preload="metadata">
@@ -864,18 +864,25 @@
     if (!pill) return;
 
     const topic = pill.dataset.topic;
+
+    // Free trial = 1 topic only
     if (selected.has(topic)) {
       selected.delete(topic);
       pill.classList.remove('selected');
     } else {
+      // Deselect previous
+      selected.forEach(function(t) {
+        grid.querySelector('[data-topic="' + t + '"]').classList.remove('selected');
+      });
+      selected.clear();
       selected.add(topic);
       pill.classList.add('selected');
     }
 
     if (selected.size > 0) {
-      const topics = Array.from(selected).join(', ');
-      label.textContent = selected.size === 1 ? '1 topic selected' : selected.size + ' topics selected';
-      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Hey AntBot, I want a daily podcast about: ' + topics);
+      const t = Array.from(selected)[0];
+      label.textContent = '→ ' + t;
+      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Hey AntBot, I want a daily podcast about: ' + t);
       cta.classList.add('visible');
     } else {
       cta.classList.remove('visible');

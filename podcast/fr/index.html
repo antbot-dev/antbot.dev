@@ -460,12 +460,16 @@
     if (!pill) return;
     const topic = pill.dataset.topic;
     if (selected.has(topic)) { selected.delete(topic); pill.classList.remove('selected'); }
-    else { selected.add(topic); pill.classList.add('selected'); }
+    else {
+      selected.forEach(function(t) { grid.querySelector('[data-topic="' + t + '"]').classList.remove('selected'); });
+      selected.clear();
+      selected.add(topic); pill.classList.add('selected');
+    }
 
     if (selected.size > 0) {
-      const topics = Array.from(selected).join(', ');
-      label.textContent = selected.size === 1 ? '1 sujet sélectionné' : selected.size + ' sujets sélectionnés';
-      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Salut AntBot, je veux un podcast quotidien sur : ' + topics);
+      const t = Array.from(selected)[0];
+      label.textContent = '→ ' + t;
+      waBtn.href = 'https://wa.me/33769516191?text=' + encodeURIComponent('Salut AntBot, je veux un podcast quotidien sur : ' + t);
       cta.classList.add('visible');
     } else { cta.classList.remove('visible'); }
   });
