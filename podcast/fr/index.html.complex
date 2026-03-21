@@ -30,32 +30,6 @@
     --wa-header: #1f2c34;
   }
 
-  [data-theme="light"] {
-    --bg: #f0ede8;
-    --bg-elevated: #f7f4f0;
-    --bg-card: #e8e4dd;
-    --border: #d0cbc2;
-    --border-hover: #b8b2a8;
-    --text: #1a1814;
-    --text-secondary: #4a4540;
-    --text-muted: #7a7570;
-    --accent: #7ab800;
-    --accent-dim: #7ab80015;
-    --accent-glow: #7ab80030;
-  }
-
-  /* Light mode — fond texturé papier chaud */
-  [data-theme="light"] body {
-    background-color: #f0ede8;
-    background-image:
-      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(200,160,80,0.07) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 80% 80%, rgba(120,180,0,0.05) 0%, transparent 55%),
-      url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    background-attachment: fixed;
-  }
-
-  [data-theme="light"] body::before { opacity: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -1502,19 +1476,22 @@
     .social-cta { padding: 1.25rem; }
   }
 </style>
-  <script>
-    (function(){
-      var t = localStorage.getItem('antbot-theme');
-      if(t === 'light') document.documentElement.setAttribute('data-theme','light');
-    })();
-  </script>
 </head>
 <body>
 
 <canvas id="hero-canvas"></canvas>
 <div class="ambient-line"></div>
 
-<!-- sticky bar supprimé (CTA final en bas) -->
+<!-- ======== STICKY BAR (mobile) ======== -->
+<div class="sticky-bar" id="sticky-bar">
+  <div class="sticky-bar-inner">
+    <div class="sticky-bar-text">
+      <strong>AntBot Podcast</strong>
+      Ta veille audio · 5 min · 7h30
+    </div>
+    <a href="#inscription" class="sticky-bar-btn">Essayer gratis →</a>
+  </div>
+</div>
 
 <nav>
   <a href="https://antbot.dev" class="logo">
@@ -1523,8 +1500,7 @@
     <span class="logo-sep">/</span>
     <span class="logo-product">Podcast IA</span>
   </a>
-  <div class="nav-right"><a href="https://antbot.dev" style="color: var(--text-muted); text-decoration: none;">by antbot.dev</a></div>
-  <button id="theme-toggle" aria-label="Toggle theme" style="background:none;border:1px solid var(--border);border-radius:8px;padding:0.35rem 0.6rem;cursor:pointer;font-size:1rem;color:var(--text);transition:all 0.2s;">🌙</button>
+  <div class="nav-right">antbot.dev</div>
 </nav>
 
 <!-- ======== HERO ======== -->
@@ -1533,7 +1509,7 @@
     <div class="hero-label">AI &amp; Tech Trends · Nouveau service</div>
     <h1>Ta veille perso,<br><span class="accent">en audio.</span></h1>
     <p class="hero-subtitle">
-      Un podcast IA personnalisé envoyé chaque matin directement dans ton WhatsApp.
+      Un podcast IA personnalisé envoyé chaque matin<br>directement dans ton WhatsApp.
     </p>
     <div class="hero-actions">
       <a href="#inscription" class="hero-cta">
@@ -1557,7 +1533,7 @@
           </svg>
         </div>
         <div class="hwa-info">
-          <div class="hwa-name">Podcast IA</div>
+          <div class="hwa-name">AntBot Podcast</div>
           <div class="hwa-status">en ligne</div>
         </div>
       </div>
@@ -1584,7 +1560,7 @@
   <div class="pain-grid">
     <div class="pain-col">
       <div class="pain-col-label before">
-        <span>Sans Podcast IA</span>
+        <span>Sans AntBot Podcast</span>
       </div>
       <div class="pain-item">
         <div class="bullet-bad"></div>
@@ -1605,7 +1581,7 @@
     </div>
     <div class="pain-col">
       <div class="pain-col-label after">
-        <span>Avec Podcast IA</span>
+        <span>Avec AntBot Podcast</span>
       </div>
       <div class="pain-item good">
         <div class="bullet-good"></div>
@@ -1613,7 +1589,7 @@
       </div>
       <div class="pain-item good">
         <div class="bullet-good"></div>
-        <span>Dans WhatsApp, là où tu es déjà</span>
+        <span>Dans WhatsApp — là où tu es déjà</span>
       </div>
       <div class="pain-item good">
         <div class="bullet-good"></div>
@@ -1621,11 +1597,11 @@
       </div>
       <div class="pain-item good">
         <div class="bullet-good"></div>
-        <span>Tu restes à jour. Sans effort.</span>
+        <span>Tu restes à jour. Sans effort, sans culpabilité.</span>
       </div>
       <div class="inline-cta" style="margin-top: 2rem;">
         <a href="#inscription" class="inline-cta-btn">Essayer gratuitement <span>→</span></a>
-        <span class="inline-cta-hint">1ère semaine gratuite · Sans CB</span>
+        <span class="inline-cta-hint">Premier épisode offert · Sans CB</span>
       </div>
     </div>
   </div>
@@ -1640,7 +1616,7 @@
     <div class="step">
       <div class="step-num">01</div>
       <h3>Tu choisis ton sujet</h3>
-      <p>IA & Tech, Startups, Climat… Tu sélectionnes ce qui t'intéresse vraiment.</p>
+      <p>IA & Tech, Finance, Startups, Science… Tu sélectionnes ce qui t'intéresse vraiment.</p>
     </div>
     <div class="step">
       <div class="step-num">02</div>
@@ -1656,7 +1632,7 @@
 
   <div class="inline-cta">
     <a href="#inscription" class="inline-cta-btn">Essayer gratuitement <span>→</span></a>
-    <span class="inline-cta-hint">1ère semaine gratuite · Sans CB</span>
+    <span class="inline-cta-hint">Premier épisode offert · Sans CB</span>
   </div>
 </section>
 
@@ -1778,24 +1754,27 @@
   <div class="form-container">
     <div id="form-body">
       <h2 class="form-title">Ton podcast,<br>demain à <span class="accent">7h30.</span></h2>
-      <p class="form-sub">Ta veille personnalisée chaque matin, dans ton WhatsApp.</p>
+      <p class="form-sub">Un épisode produit sur mesure pour toi — dans ton WhatsApp.</p>
 
       <form id="signup-form" novalidate>
         <div class="form-group">
-          <label class="form-label">Choisis ton sujet</label>
+          <label class="form-label">Ton sujet <span style="color: var(--text-muted);">(choisis-en un)</span></label>
           <div class="topics-pills">
-            <div class="topic-pill selected" data-value="ia-tech" onclick="selectTopic(this)">🤖 IA &amp; Tech</div>
+            <div class="topic-pill" data-value="ia-tech" onclick="selectTopic(this)">🤖 IA &amp; Tech</div>
+            <div class="topic-pill" data-value="finance" onclick="selectTopic(this)">💰 Finance &amp; Marchés</div>
+            <div class="topic-pill" data-value="startups" onclick="selectTopic(this)">🚀 Startups &amp; Business</div>
             <div class="topic-pill" data-value="climat" onclick="selectTopic(this)">🌱 Climat</div>
-            <div class="topic-pill" data-value="startups" onclick="selectTopic(this)">🚀 Startup &amp; Business</div>
+            <div class="topic-pill" data-value="sport" onclick="selectTopic(this)">⚽ Sport</div>
+            <div class="topic-pill soon-pill">✨ Votre sujet sur mesure <span class="soon-badge">Bientôt</span></div>
           </div>
           <div class="form-error" id="topic-error">Choisis un sujet.</div>
         </div>
 
-        <input type="hidden" id="sujet" name="sujet" value="ia-tech">
+        <input type="hidden" id="sujet" name="sujet" value="">
 
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label" for="prenom">Prénom</label>
+            <label class="form-label" for="prenom">Ton prénom</label>
             <input
               class="form-input"
               type="text"
@@ -1809,7 +1788,7 @@
           </div>
 
           <div class="form-group">
-            <label class="form-label" for="whatsapp">Numéro WhatsApp</label>
+            <label class="form-label" for="whatsapp">Ton numéro WhatsApp</label>
             <input
               class="form-input"
               type="tel"
@@ -1823,19 +1802,22 @@
           </div>
         </div>
 
+        <div class="form-group" style="opacity: 0.45; pointer-events: none;">
+          <label class="form-label" for="contexte">
+            Personnalise ton épisode
+            <span class="form-label-optional" style="background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-glow); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; letter-spacing: 0.05em;">BIENTÔT</span>
+          </label>
+          <p class="form-hint">Dis à AntBot comment tu veux ton podcast : format, ton, angle métier…</p>
+        </div>
+
         <button type="submit" class="form-submit" id="submit-btn">
           Recevoir mon 1er épisode demain →
         </button>
 
-        <div style="margin-top: 1.5rem; padding: 1.25rem; border: 1px dashed var(--border-hover); border-radius: 8px; background: var(--bg-elevated); text-align: left;">
-          <span class="soon-badge" style="display: inline-block; margin-bottom: 0.5rem;">Bientôt disponible</span>
-          <p style="font-size: 0.85rem; font-weight: 600; color: var(--text); margin-bottom: 0.4rem;">
-            ✨ Votre sujet sur mesure
-          </p>
-          <p class="form-hint" style="margin: 0;">
-            Brief AntBot pour personnaliser ton podcast : thème spécifique, format, angle métier…
-          </p>
-        </div>
+        <p class="form-disclaimer">
+          En t'inscrivant, tu acceptes de recevoir un message WhatsApp par jour.<br>
+          Désinscription à tout moment. Tes données ne sont pas partagées.
+        </p>
       </form>
     </div>
 
@@ -1848,27 +1830,39 @@
 
 <!-- ======== TESTIMONIALS ======== -->
 <section class="section reveal">
-  <div class="section-label">Ce que les utilisateurs en disent</div>
+  <div class="section-label">Ce qu'ils en disent</div>
+  <h2>Premiers<br><strong>retours.</strong></h2>
 
   <div class="testimonials-grid">
     <div class="testimonial">
-      <p class="testimonial-text">5 min de veille direct dans WhatsApp. J'écoute en marchant jusqu'au bureau. C'est exactement ce qu'il me fallait.</p>
+      <p class="testimonial-text">5 min de veille direct dans WhatsApp avec 0 effort. J'écoute en marchant jusqu'au bureau. C'est exactement ce qu'il me fallait.</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">E</div>
+        <div class="testimonial-avatar">T</div>
         <div>
-          <div class="testimonial-name">Élise B.</div>
-          <div class="testimonial-role">Paris</div>
+          <div class="testimonial-name">Thomas R.</div>
+          <div class="testimonial-role">Directeur produit · Paris</div>
         </div>
       </div>
     </div>
 
     <div class="testimonial">
-      <p class="testimonial-text">Je lis plein de newsletters sur l'IA. Là c'est différent : c'est audio, c'est court, 0 effort, et c'est dans l'appli que j'utilise déjà 100x par jour.</p>
+      <p class="testimonial-text">Je ne lisais plus mes newsletters depuis des mois. Avec le format audio dans WhatsApp je reste enfin à jour sur la finance. Simple et efficace.</p>
       <div class="testimonial-author">
-        <div class="testimonial-avatar">A</div>
+        <div class="testimonial-avatar">S</div>
         <div>
-          <div class="testimonial-name">Antoine D.</div>
-          <div class="testimonial-role">Loué</div>
+          <div class="testimonial-name">Sarah M.</div>
+          <div class="testimonial-role">Analyste financière · Lyon</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial">
+      <p class="testimonial-text">J'avais essayé plein de newsletters sur l'IA. Là c'est différent — c'est audio, c'est court, et c'est dans l'appli que j'utilise déjà 100x par jour.</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">M</div>
+        <div>
+          <div class="testimonial-name">Maxime L.</div>
+          <div class="testimonial-role">Fondateur · Bordeaux</div>
         </div>
       </div>
     </div>
@@ -1877,10 +1871,9 @@
   <div class="social-cta">
     <div class="social-cta-text">
       <strong>Convaincu ? Rejoins-les.</strong>
-      Première semaine gratuite, demain matin à 7h30 dans ton WhatsApp.
+      Premier épisode gratuit, demain matin à 7h30 dans ton WhatsApp.
     </div>
     <a href="#inscription" class="inline-cta-btn">S'inscrire gratuitement <span>→</span></a>
-    <p style="font-size: 0.78rem; color: #c7fe0d; margin-top: 0.5rem;">Limité à 50 personnes.</p>
   </div>
 </section>
 
@@ -1895,7 +1888,7 @@
         <span>C'est vraiment gratuit ?</span>
         <span class="faq-toggle">+</span>
       </div>
-      <div class="faq-a">C'est gratuit pour les 50 premiers inscrits. L'objectif est de tester le service et d'avoir tes retours. On te préviendra avant toute évolution tarifaire.</div>
+      <div class="faq-a">Oui, pour les premiers inscrits (early adopters). L'objectif est de tester le service et d'avoir tes retours. On te préviendra avant toute évolution tarifaire.</div>
     </div>
 
     <div class="faq-item">
@@ -1911,7 +1904,7 @@
         <span>Le contenu est généré par IA. Est-ce que c'est fiable ?</span>
         <span class="faq-toggle">+</span>
       </div>
-      <div class="faq-a">AntBot se base sur des sources d'information vérifiées (presse spécialisée, blogs de référence, fils RSS). Chaque épisode passe ensuite par un agent de vérification qui contrôle les faits et corrige les incohérences. C'est de la veille intelligente, pas du journalisme, pensée pour te faire gagner du temps. Avec l'IA, la confiance n'empêche pas le contrôle.</div>
+      <div class="faq-a">AntBot se base sur des sources d'information vérifiées (presse spécialisée, blogs de référence, fils RSS). Le contenu est une synthèse éditoriale — pour une information de fond, on te recommande toujours de lire les sources originales. C'est de la veille, pas du journalisme.</div>
     </div>
 
     <div class="faq-item">
@@ -1927,7 +1920,7 @@
         <span>Qui est derrière AntBot ?</span>
         <span class="faq-toggle">+</span>
       </div>
-      <div class="faq-a">AntBot est un agent IA autonome basé sur OpenClaw et développé par Antoine, l'auteur de la newsletter AI & Tech Trends sur LinkedIn. Le service tourne sur une infrastructure dédiée avec Claude, Gemini et ElevenLabs pour la synthèse vocale.</div>
+      <div class="faq-a">AntBot est un agent IA autonome développé par Antoine, l'auteur de la newsletter AI & Tech Trends. Le service tourne sur une infrastructure dédiée avec Claude, Gemini et ElevenLabs pour la synthèse vocale.</div>
     </div>
   </div>
 </section>
@@ -1942,8 +1935,12 @@
 
 <!-- ======== FOOTER ======== -->
 <footer>
-  <span>&copy; 2026 <a href="https://antbot.dev" style="color: inherit; text-decoration: none;">antbot.dev</a></span>
-  <span>Contact : <a href="mailto:hello@antbot.dev">hello@antbot.dev</a></span>
+  <span>&copy; 2026 AntBot</span>
+  <span>
+    <a href="mailto:hello@antbot.dev">hello@antbot.dev</a>
+    &nbsp;·&nbsp;
+    <a href="https://antbot.dev">antbot.dev</a>
+  </span>
 </footer>
 
 <!-- ======== TEST PANEL (hidden, ?test=TOKEN) ======== -->
@@ -2118,7 +2115,7 @@
 })();
 
 // === Topic selection ===
-let selectedTopic = 'ia-tech';
+let selectedTopic = '';
 
 function selectTopic(el) {
   document.querySelectorAll('.topic-pill').forEach(p => p.classList.remove('selected'));
@@ -2197,7 +2194,7 @@ function togglePlay(btn) {
     const prenom = document.getElementById('prenom').value.trim();
     const whatsapp = document.getElementById('whatsapp').value.trim().replace(/\s+/g, '');
     const sujet = document.getElementById('sujet').value;
-    const contexte = (document.getElementById('contexte') || {value:''}).value.trim();
+    const contexte = document.getElementById('contexte').value.trim();
 
     let valid = true;
 
@@ -2244,54 +2241,24 @@ function togglePlay(btn) {
         document.getElementById('success-topic').textContent = topicLabels[sujet] || sujet;
 
         if (data.step === 'verify') {
-          var waLink = data.wa_link || ('https://wa.me/33769516191');
-          var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-          document.getElementById('success-title').textContent = 'Dernière étape 👇';
-          document.getElementById('success-subtitle').textContent = 'Confirme via WhatsApp en 1 tap';
-
-          document.getElementById('success-title').textContent = 'Confirme ton inscription 📲';
-          document.getElementById('success-subtitle').textContent = '';
-
-          if (isMobile) {
-            // Mobile : bouton direct
-            document.getElementById('success-text').innerHTML =
-              'Envoie un message à AntBot pour activer ton podcast.<br>Il est déjà écrit — tu n\'as qu\'à appuyer sur <strong>Envoyer</strong>.';
-            document.getElementById('success-wa-link').href = waLink;
+          // Nouveau flow : vérification par SMS + WhatsApp
+          var p = data.prenom || 'toi';
+          document.getElementById('success-title').textContent = 'Check tes SMS 📱';
+          document.getElementById('success-subtitle').textContent = 'Dernière étape — 10 secondes chrono';
+          document.getElementById('success-text').innerHTML =
+            'Un SMS vient d\'être envoyé à ton numéro.<br><br>' +
+            '<strong>Appuie sur le lien dans le SMS</strong> — WhatsApp s\'ouvre et envoie le code automatiquement. Il suffit d\'appuyer sur Envoyer.';
+          if (data.wa_link) {
+            document.getElementById('success-wa-link').href = data.wa_link;
             document.getElementById('success-wa-link').style.display = 'inline-flex';
-            document.getElementById('success-wa-label').textContent = 'Envoyer le message →';
-            document.getElementById('success-hint').textContent = 'Ton premier épisode arrive demain à 7h30.';
-            var qrWrap = document.getElementById('success-qr-wrap');
-            if (qrWrap) qrWrap.style.display = 'none';
+            document.getElementById('success-wa-label').textContent = 'Ou clique ici directement →';
           } else {
-            // Desktop : QR code
-            document.getElementById('success-text').innerHTML =
-              'Envoie un message à AntBot pour activer ton podcast.<br>Scanne le QR avec ton téléphone — WhatsApp s\'ouvre avec le message prêt. Tu n\'as qu\'à appuyer sur <strong>Envoyer</strong>.';
             document.getElementById('success-wa-link').style.display = 'none';
-            document.getElementById('success-hint').textContent = 'Ton premier épisode arrive demain à 7h30.';
-            // Générer le QR
-            var qrWrap = document.getElementById('success-qr-wrap');
-            if (qrWrap) {
-              qrWrap.style.display = 'flex';
-              var qrDiv = document.getElementById('success-qr');
-              if (qrDiv) {
-                qrDiv.innerHTML = '';
-                if (typeof QRCode !== 'undefined') {
-                  new QRCode(qrDiv, { text: waLink, width: 180, height: 180, colorDark: '#000000', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
-                } else {
-                  // Fallback : lien cliquable si QRCode lib pas chargée
-                  qrDiv.innerHTML = '<a href="' + waLink + '" target="_blank" style="color:#c8ff00;word-break:break-all;font-size:0.8rem;">Ouvrir sur ce poste →</a>';
-                }
-              }
-            }
           }
+          document.getElementById('success-hint').textContent = '(Il suffit d\'appuyer sur Envoyer — rien à taper)';
         } else {
-          // Déjà inscrit
-          document.getElementById('success-title').textContent = 'Déjà inscrit 👋';
-          document.getElementById('success-text').innerHTML = 'Ce numéro est déjà abonné. Tu recevras ton épisode demain à 7h30.';
-          document.getElementById('success-wa-link').style.display = 'none';
-          document.getElementById('success-hint').textContent = '';
-          var qrWrap = document.getElementById('success-qr-wrap');
-          if (qrWrap) qrWrap.style.display = 'none';
+          // Ancien flow / déjà inscrit
+          document.getElementById('success-wa-link').href = 'https://wa.me/' + '33769516191';
         }
         document.getElementById('success-overlay').classList.add('visible');
       } else {
@@ -2366,7 +2333,17 @@ async function runPodcastTest() {
 
 // === Sticky bar (show after hero, hide at form section) ===
 (function() {
-  // sticky bar removed
+  const bar = document.getElementById('sticky-bar');
+  const hero = document.querySelector('.hero');
+  const form = document.getElementById('inscription');
+  if (!bar || !hero) return;
+  let pastHero = false;
+  let atForm = false;
+  function update() {
+    bar.classList.toggle('visible', pastHero && !atForm);
+  }
+  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; update(); }, { threshold: 0 }).observe(hero);
+  if (form) new IntersectionObserver(([e]) => { atForm = e.isIntersecting; update(); }, { threshold: 0.1 }).observe(form);
 })();
 </script>
 
@@ -2385,16 +2362,10 @@ async function runPodcastTest() {
       <svg class="success-wa-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       <span id="success-wa-label">Ouvrir WhatsApp</span>
     </a>
-    <!-- QR code desktop -->
-    <div id="success-qr-wrap" style="display:none; flex-direction:column; align-items:center; gap:0.75rem; margin:1rem 0;">
-      <div id="success-qr" style="background:#fff; padding:10px; border-radius:8px; display:inline-block;"></div>
-      <p style="font-size:0.75rem; color:var(--text-muted); margin:0;">Scanne avec l'appareil photo de ton téléphone</p>
-    </div>
-    <p class="success-hint" id="success-hint">Ton premier épisode arrive demain à 7h30.</p>
+    <p class="success-hint" id="success-hint">Accepte le message d'AntBot pour recevoir tes épisodes.</p>
   </div>
 </div>
 
-<script src="/qrcode.min.js"></script>
 <script>
 (function() {
   var overlay = document.getElementById('success-overlay');
@@ -2405,27 +2376,6 @@ async function runPodcastTest() {
     if (e.target === overlay) overlay.classList.remove('visible');
   });
 })();
-</script>
-
-<script>
-  (function(){
-    var btn = document.getElementById('theme-toggle');
-    function updateBtn() {
-      btn.textContent = document.documentElement.getAttribute('data-theme') === 'light' ? '🌙' : '☀️';
-    }
-    updateBtn();
-    btn.addEventListener('click', function(){
-      var isLight = document.documentElement.getAttribute('data-theme') === 'light';
-      if(isLight) {
-        document.documentElement.removeAttribute('data-theme');
-        localStorage.setItem('antbot-theme','dark');
-      } else {
-        document.documentElement.setAttribute('data-theme','light');
-        localStorage.setItem('antbot-theme','light');
-      }
-      updateBtn();
-    });
-  })();
 </script>
 
 </body>
