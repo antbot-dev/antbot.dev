@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ant Boat 🛳️ · Voice SDR</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛳️</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0b;
+      --bg-elevated: #111113;
+      --bg-card: #16161a;
+      --border: #1e1e24;
+      --border-hover: #2a2a33;
+      --text: #e8e8ed;
+      --text-secondary: #7a7a85;
+      --text-muted: #4a4a55;
+      --accent: #4285f4;
+      --accent-dim: #4285f415;
+      --accent-glow: #4285f440;
+      --accent-green: #34a853;
+      --accent-red: #ea4335;
+      --accent-yellow: #fbbc05;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+      opacity: 0;
+    }
+
+    body.active::after { opacity: 1; }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      position: relative;
+    }
+
+    .header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .logo {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    .title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.03em;
+    }
+
+    .title span { color: var(--accent); }
+
+    .subtitle {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    .gemini-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      border-radius: 4px;
+    }
+
+    .gemini-dots {
+      display: flex;
+      gap: 2px;
+    }
+
+    .gemini-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+    }
+
+    .gemini-dots span:nth-child(1) { background: var(--accent); }
+    .gemini-dots span:nth-child(2) { background: var(--accent-red); }
+    .gemini-dots span:nth-child(3) { background: var(--accent-yellow); }
+    .gemini-dots span:nth-child(4) { background: var(--accent-green); }
+
+    .btn-zone {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .orb {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .orb::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent), var(--accent-red), var(--accent-yellow), var(--accent-green), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      animation: spin 3s linear infinite;
+    }
+
+    .orb::after {
+      content: '';
+      position: absolute;
+      inset: 1px;
+      border-radius: 50%;
+      background: var(--bg-card);
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .orb:hover { border-color: var(--border-hover); }
+    .orb:hover .orb-icon { opacity: 0.8; }
+
+    .orb.listening::before { opacity: 1; }
+    .orb.listening .orb-icon { color: var(--accent); }
+
+    .orb.speaking::before { opacity: 0.5; }
+    .orb.speaking .orb-icon { color: var(--accent-green); opacity: 0.6; }
+
+    .orb-icon {
+      position: relative;
+      z-index: 1;
+      font-size: 2.5rem;
+      transition: all 0.3s ease;
+      color: var(--text-secondary);
+    }
+
+    .waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 32px;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    .waveform.visible { opacity: 1; }
+
+    .bar {
+      width: 3px;
+      border-radius: 3px;
+      background: var(--accent);
+      animation: wave 1.2s ease-in-out infinite;
+      height: 4px;
+    }
+
+    .bar:nth-child(1) { animation-delay: 0s; background: var(--accent); }
+    .bar:nth-child(2) { animation-delay: 0.1s; background: var(--accent-red); }
+    .bar:nth-child(3) { animation-delay: 0.2s; background: var(--accent-yellow); }
+    .bar:nth-child(4) { animation-delay: 0.3s; background: var(--accent-green); }
+    .bar:nth-child(5) { animation-delay: 0.2s; background: var(--accent); }
+    .bar:nth-child(6) { animation-delay: 0.1s; background: var(--accent-red); }
+    .bar:nth-child(7) { animation-delay: 0s; background: var(--accent-yellow); }
+
+    @keyframes wave {
+      0%, 100% { height: 4px; opacity: 0.3; }
+      50% { height: 24px; opacity: 1; }
+    }
+
+    .status {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.3s ease;
+      min-height: 1.2em;
+    }
+
+    .status.active { color: var(--accent); }
+    .status.speaking-status { color: var(--accent-green); }
+
+    .transcript-zone {
+      width: min(480px, 90vw);
+      min-height: 100px;
+      max-height: 200px;
+      overflow-y: auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1rem 1.25rem;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
+      font-style: italic;
+      transition: border-color 0.3s;
+    }
+
+    .transcript-zone.has-content {
+      border-color: var(--border-hover);
+      font-style: normal;
+    }
+
+    .transcript-zone .msg {
+      color: var(--text);
+      margin-bottom: 0.4rem;
+    }
+
+    .transcript-zone .msg.user { color: var(--text-secondary); }
+
+    .transcript-zone .msg .label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 0.4rem;
+    }
+
+    .msg.user .label { color: var(--text-muted); }
+    .msg.agent .label { color: var(--accent); }
+
+    .end-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: none;
+    }
+
+    .end-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
+    .end-btn.visible { display: block; }
+
+    .footer {
+      position: fixed;
+      bottom: 1.5rem;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.05em;
+    }
+
+    .footer a { color: var(--text-muted); text-decoration: none; }
+    .footer a:hover { color: var(--accent); }
+
+    .error-msg {
+      font-size: 0.8rem;
+      color: var(--accent-red);
+      font-family: 'JetBrains Mono', monospace;
+      display: none;
+      text-align: center;
+      max-width: 400px;
+    }
+    .error-msg.visible { display: block; }
+
+    .debug {
+      position: fixed;
+      bottom: 3rem;
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace;
+      max-width: 90vw;
+      text-align: center;
+      opacity: 0.5;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">🛳️ Ant Boat</div>
+      <h1 class="title">Voice <span>SDR</span></h1>
+      <p class="subtitle">Assistant commercial IA — temps réel</p>
+      <div class="gemini-badge">
+        <div class="gemini-dots">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        Gemini 3.1 Flash Live
+      </div>
+    </div>
+
+    <div class="btn-zone">
+      <div class="orb" id="orb" onclick="toggleCall()">
+        <span class="orb-icon" id="orbIcon">🛳️</span>
+      </div>
+
+      <div class="waveform" id="waveform">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <div class="status" id="status">Appuie pour démarrer</div>
+    </div>
+
+    <div class="transcript-zone" id="transcript">
+      La conversation apparaîtra ici…
+    </div>
+
+    <div class="error-msg" id="errorMsg"></div>
+
+    <button class="end-btn" id="endBtn" onclick="endCall()">⏹ Terminer</button>
+  </div>
+
+  <div class="debug" id="debug"></div>
+  <div class="footer"><a href="https://antbot.dev">antbot.dev</a> · Powered by Gemini Live API</div>
+
+  <script>
+    const API_KEY = 'REDACTED_API_KEY';
+    const MODEL = 'models/gemini-3.1-flash-live-preview';
+    const WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
+
+    const SYSTEM_PROMPT = `Tu es l'assistant commercial (SDR) de Ant Boat, un agent IA autonome déployé sur WhatsApp.
+
+Ton objectif : qualifier les prospects et les amener à booker un appel démo.
+
+## Ce que tu sais sur Ant Boat :
+- Agent IA always-on, disponible 24/7 sur WhatsApp
+- Mémoire conversationnelle (se souvient de tout)
+- Connecté : email, agenda, web, fichiers, outils métier
+- Podcast automatique personnalisé chaque matin
+- Veille sectorielle automatisée
+- Cas d'usage : assistant perso dirigeant, SDR automatique, service client, veille
+- Tarif : 250€/mois tout compris (hébergement, maintenance, support)
+- Créé par Antoine Dumont, expert IA & marketing
+
+## Comment tu parles :
+- Français natif, ton chaleureux mais professionnel
+- Tu poses des questions pour comprendre le besoin (taille entreprise, pain points, outils actuels)
+- Tu écoutes plus que tu parles
+- Tu gères les objections naturellement (prix, confiance IA, RGPD)
+- Tu proposes un appel démo de 15 min avec Antoine quand le prospect est qualifié
+- Tu es concis — pas de monologues, phrases courtes
+
+## Flow :
+1. Accueil chaleureux, présente-toi brièvement
+2. Demande ce qui les amène / leur besoin
+3. Qualifie (secteur, taille, problème principal)
+4. Présente la solution adaptée à leur contexte
+5. Propose le call démo
+
+Commence par te présenter et demander comment tu peux aider.`;
+
+    // ---- Helpers ----
+    // Safe base64 encode for large ArrayBuffers
+    function arrayBufferToBase64(buffer) {
+      const bytes = new Uint8Array(buffer);
+      let binary = '';
+      const chunkSize = 8192;
+      for (let i = 0; i < bytes.length; i += chunkSize) {
+        const slice = bytes.subarray(i, Math.min(i + chunkSize, bytes.length));
+        binary += String.fromCharCode.apply(null, slice);
+      }
+      return btoa(binary);
+    }
+
+    function base64ToArrayBuffer(base64) {
+      const raw = atob(base64);
+      const bytes = new Uint8Array(raw.length);
+      for (let i = 0; i < raw.length; i++) bytes[i] = raw.charCodeAt(i);
+      return bytes.buffer;
+    }
+
+    // ---- State ----
+    let ws = null;
+    let isActive = false;
+    let micContext = null;
+    let playContext = null;
+    let mediaStream = null;
+    let playbackQueue = [];
+    let isPlaying = false;
+    let currentAgentText = '';
+
+    // ---- DOM ----
+    const orb = document.getElementById('orb');
+    const orbIcon = document.getElementById('orbIcon');
+    const waveform = document.getElementById('waveform');
+    const statusEl = document.getElementById('status');
+    const transcript = document.getElementById('transcript');
+    const endBtn = document.getElementById('endBtn');
+    const errorMsg = document.getElementById('errorMsg');
+    const debugEl = document.getElementById('debug');
+
+    function dbg(msg) {
+      console.log('[AntBoat]', msg);
+      debugEl.textContent = msg;
+    }
+
+    function setStatus(text, cls = '') {
+      statusEl.textContent = text;
+      statusEl.className = 'status ' + cls;
+    }
+
+    function setOrb(state) {
+      orb.className = 'orb ' + (state || '');
+      if (state === 'listening') {
+        orbIcon.textContent = '🎙️';
+        waveform.classList.add('visible');
+        document.body.classList.add('active');
+      } else if (state === 'speaking') {
+        orbIcon.textContent = '🔊';
+        waveform.classList.add('visible');
+        document.body.classList.add('active');
+      } else {
+        orbIcon.textContent = '🛳️';
+        waveform.classList.remove('visible');
+        document.body.classList.remove('active');
+      }
+    }
+
+    let hasContent = false;
+    function addTranscript(role, text) {
+      if (!text || !text.trim()) return;
+      if (!hasContent) {
+        transcript.textContent = '';
+        hasContent = true;
+      }
+      const div = document.createElement('div');
+      div.className = `msg ${role}`;
+      const label = role === 'user' ? '→ Vous' : '← Ant Boat';
+      div.innerHTML = `<span class="label">${label}</span>${text}`;
+      transcript.classList.add('has-content');
+      transcript.appendChild(div);
+      transcript.scrollTop = transcript.scrollHeight;
+    }
+
+    // ---- Audio Playback (24kHz PCM) ----
+    function ensurePlayContext() {
+      if (!playContext || playContext.state === 'closed') {
+        playContext = new AudioContext({ sampleRate: 24000 });
+      }
+      if (playContext.state === 'suspended') {
+        playContext.resume();
+      }
+      return playContext;
+    }
+
+    function playPcmChunk(base64Data) {
+      playbackQueue.push(base64Data);
+      if (!isPlaying) drainPlaybackQueue();
+    }
+
+    async function drainPlaybackQueue() {
+      if (playbackQueue.length === 0) {
+        isPlaying = false;
+        if (isActive) {
+          setStatus('En écoute', 'active');
+          setOrb('listening');
+        }
+        // Flush agent text
+        if (currentAgentText.trim()) {
+          addTranscript('agent', currentAgentText.trim());
+          currentAgentText = '';
+        }
+        return;
+      }
+      isPlaying = true;
+      setStatus('Ant Boat parle…', 'speaking-status');
+      setOrb('speaking');
+
+      const ctx = ensurePlayContext();
+      const base64 = playbackQueue.shift();
+
+      try {
+        const arrayBuf = base64ToArrayBuffer(base64);
+        const int16 = new Int16Array(arrayBuf);
+        const float32 = new Float32Array(int16.length);
+        for (let i = 0; i < int16.length; i++) float32[i] = int16[i] / 32768;
+
+        const buffer = ctx.createBuffer(1, float32.length, 24000);
+        buffer.getChannelData(0).set(float32);
+
+        const source = ctx.createBufferSource();
+        source.buffer = buffer;
+        source.connect(ctx.destination);
+        source.onended = () => drainPlaybackQueue();
+        source.start();
+      } catch (e) {
+        dbg('Playback error: ' + e.message);
+        drainPlaybackQueue();
+      }
+    }
+
+    // ---- Resample to 16kHz ----
+    function downsample(float32, fromRate, toRate) {
+      if (fromRate === toRate) return float32;
+      const ratio = fromRate / toRate;
+      const newLen = Math.floor(float32.length / ratio);
+      const result = new Float32Array(newLen);
+      for (let i = 0; i < newLen; i++) {
+        const idx = i * ratio;
+        const low = Math.floor(idx);
+        const high = Math.min(low + 1, float32.length - 1);
+        const frac = idx - low;
+        result[i] = float32[low] * (1 - frac) + float32[high] * frac;
+      }
+      return result;
+    }
+
+    function float32ToInt16(float32) {
+      const int16 = new Int16Array(float32.length);
+      for (let i = 0; i < float32.length; i++) {
+        const s = Math.max(-1, Math.min(1, float32[i]));
+        int16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+      }
+      return int16;
+    }
+
+    // ---- Mic Capture ----
+    async function startMicCapture() {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          channelCount: 1,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
+        }
+      });
+
+      // Use native sample rate (Safari ignores sampleRate constraint)
+      micContext = new AudioContext();
+      await micContext.resume();
+      const nativeRate = micContext.sampleRate;
+      dbg('Mic native rate: ' + nativeRate + 'Hz');
+
+      const source = micContext.createMediaStreamSource(mediaStream);
+      const processor = micContext.createScriptProcessor(4096, 1, 1);
+
+      processor.onaudioprocess = (e) => {
+        if (!ws || ws.readyState !== WebSocket.OPEN) return;
+        const raw = e.inputBuffer.getChannelData(0);
+        // Resample to 16kHz
+        const resampled = downsample(raw, nativeRate, 16000);
+        const int16 = float32ToInt16(resampled);
+        const base64 = arrayBufferToBase64(int16.buffer);
+        try {
+          ws.send(JSON.stringify({
+            realtimeInput: {
+              mediaChunks: [{
+                mimeType: 'audio/pcm;rate=16000',
+                data: base64
+              }]
+            }
+          }));
+        } catch (err) {
+          // Ignore send errors
+        }
+      };
+
+      source.connect(processor);
+      processor.connect(micContext.destination);
+      dbg('Capturing → resampling ' + nativeRate + ' → 16000Hz');
+    }
+
+    function stopMicCapture() {
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(t => t.stop());
+        mediaStream = null;
+      }
+      if (micContext && micContext.state !== 'closed') {
+        micContext.close().catch(() => {});
+        micContext = null;
+      }
+    }
+
+    // ---- WebSocket ----
+    function connectWebSocket() {
+      return new Promise((resolve, reject) => {
+        dbg('Connecting to Gemini Live...');
+        ws = new WebSocket(WS_URL);
+
+        const timeout = setTimeout(() => {
+          reject(new Error('Timeout connexion WebSocket'));
+          ws.close();
+        }, 10000);
+
+        ws.onopen = () => {
+          dbg('WS open, sending setup...');
+          ws.send(JSON.stringify({
+            setup: {
+              model: MODEL,
+              generationConfig: {
+                responseModalities: ['AUDIO'],
+                speechConfig: {
+                  voiceConfig: {
+                    prebuiltVoiceConfig: {
+                      voiceName: 'Orus'
+                    }
+                  }
+                }
+              },
+              systemInstruction: {
+                parts: [{ text: SYSTEM_PROMPT }]
+              }
+            }
+          }));
+        };
+
+        ws.onmessage = async (event) => {
+          try {
+            let data = event.data;
+            if (data instanceof Blob) {
+              data = await data.text();
+            }
+            const msg = JSON.parse(data);
+
+            if (msg.setupComplete) {
+              clearTimeout(timeout);
+              dbg('Setup complete ✓');
+              resolve();
+              return;
+            }
+
+            if (msg.serverContent) {
+              const parts = msg.serverContent.modelTurn?.parts || [];
+              for (const part of parts) {
+                if (part.inlineData && part.inlineData.data) {
+                  playPcmChunk(part.inlineData.data);
+                }
+                if (part.text) {
+                  currentAgentText += part.text;
+                }
+              }
+
+              if (msg.serverContent.turnComplete) {
+                dbg('Turn complete');
+                if (currentAgentText.trim()) {
+                  addTranscript('agent', currentAgentText.trim());
+                  currentAgentText = '';
+                }
+              }
+            }
+          } catch (e) {
+            dbg('Parse error: ' + e.message);
+          }
+        };
+
+        ws.onerror = (err) => {
+          dbg('WS error');
+          clearTimeout(timeout);
+          reject(new Error('Connexion échouée — réessaie'));
+        };
+
+        ws.onclose = (event) => {
+          dbg('WS closed: ' + event.code);
+          if (isActive) {
+            isActive = false;
+            stopMicCapture();
+            setStatus('Déconnecté');
+            setOrb('');
+            endBtn.classList.remove('visible');
+          }
+        };
+      });
+    }
+
+    // ---- Main Controls ----
+    async function toggleCall() {
+      if (!isActive) {
+        await startCall();
+      }
+    }
+
+    async function startCall() {
+      try {
+        errorMsg.classList.remove('visible');
+        setStatus('Connexion…');
+
+        // Init play context early (needs user gesture on iOS)
+        ensurePlayContext();
+
+        await connectWebSocket();
+        await startMicCapture();
+
+        isActive = true;
+        setStatus('En écoute', 'active');
+        setOrb('listening');
+        endBtn.classList.add('visible');
+        dbg('Session active');
+
+      } catch (err) {
+        console.error(err);
+        errorMsg.textContent = err.message || 'Impossible de démarrer. Vérifie le micro.';
+        errorMsg.classList.add('visible');
+        setStatus('Erreur');
+        setOrb('');
+        stopMicCapture();
+        if (ws) { ws.close(); ws = null; }
+        dbg('Start failed: ' + err.message);
+      }
+    }
+
+    async function endCall() {
+      isActive = false;
+      playbackQueue = [];
+      isPlaying = false;
+      stopMicCapture();
+      if (ws) { ws.close(); ws = null; }
+      setStatus('Appuie pour démarrer');
+      setOrb('');
+      endBtn.classList.remove('visible');
+      dbg('Session ended');
+    }
+  </script>
+</body>
+</html>
