@@ -60,6 +60,9 @@
     .msg .label { font-family: 'JetBrains Mono', monospace; font-size: .65rem; text-transform: uppercase; letter-spacing: .05em; margin-right: .4rem; }
     .msg.user .label { color: var(--text-muted); }
     .msg.agent .label { color: var(--accent); }
+    .voice-select { font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .05em; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: .4rem .6rem; border-radius: 6px; cursor: pointer; appearance: none; -webkit-appearance: none; text-align: center; }
+    .voice-select:hover { border-color: var(--border-hover); color: var(--text); }
+    .voice-select option { background: var(--bg-card); color: var(--text); }
     .end-btn { font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: .5rem 1.25rem; border-radius: 6px; cursor: pointer; transition: all .2s; display: none; }
     .end-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
     .end-btn.visible { display: block; }
@@ -85,15 +88,25 @@
       <div class="status" id="status">Appuie pour démarrer</div>
     </div>
     <div class="transcript-zone" id="transcript">La conversation apparaîtra ici…</div>
+    <select class="voice-select" id="voiceSelect"></select>
     <button class="end-btn" id="endBtn" onclick="endCall()">⏹ Terminer</button>
   </div>
   <div class="debug" id="debug"></div>
   <div class="footer"><a href="https://antbot.dev">antbot.dev</a> · Gemini Live API</div>
 
 <script>
-const API_KEY = 'REDACTED_API_KEY';
 const MODEL = 'models/gemini-3.1-flash-live-preview';
-const WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
+
+// Voice from URL param ?voice=xxx (default: Orus)
+const VOICES = ['Puck','Charon','Kore','Fenrir','Aoede','Orus','Leda','Perseus'];
+const VOICE = new URLSearchParams(location.search).get('voice') || 'Orus';
+
+// Key fetched from server — never in source code or URL
+let API_KEY = null, WS_URL = null;
+fetch('/voice-goog/config.json').then(r => r.json()).then(c => {
+  API_KEY = c.key;
+  WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
+}).catch(() => { document.getElementById('status').textContent = 'Erreur config'; });
 
 const SYSTEM_PROMPT = `Tu es Sophie, SDR IA chez Go One (prononcé "Go Ouane"). Tu appelles des prospects.
 
@@ -146,6 +159,20 @@ let playCtx = null, playWorklet = null, playGain = null;
 let playbackInitialized = false;
 
 const $ = id => document.getElementById(id);
+
+// Populate voice selector
+const sel = $('voiceSelect');
+VOICES.forEach(v => {
+  const o = document.createElement('option');
+  o.value = v; o.textContent = v;
+  if (v === VOICE) o.selected = true;
+  sel.appendChild(o);
+});
+sel.onchange = () => {
+  const u = new URL(location);
+  u.searchParams.set('voice', sel.value);
+  location.href = u.toString();
+};
 
 function dbg(s) { console.log('[AB]', s); $('debug').textContent = s; }
 function setStatus(t, c='') { $('status').textContent = t; $('status').className = 'status ' + c; }
@@ -324,7 +351,7 @@ function connect() {
           model: MODEL,
           generationConfig: {
             responseModalities: ['AUDIO'],
-            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Orus' } } }
+            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: VOICE } } }
           },
           systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
           inputAudioTranscription: {},
@@ -388,6 +415,7 @@ function connect() {
 // --- Controls ---
 $('orb').onclick = async () => {
   if (isActive) return;
+  if (!API_KEY) { setStatus('Clé manquante — ajoute ?key=xxx'); return; }
   try {
     setStatus('Connexion…');
     // Init playback FIRST (needs user gesture on iOS)
