@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ant Boat 🛳️ · Voice SDR</title>
+  <title>AntBot Phone 🎙️</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛳️</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -12,7 +12,8 @@
     :root {
       --bg: #0a0a0b; --bg-card: #16161a; --border: #1e1e24; --border-hover: #2a2a33;
       --text: #e8e8ed; --text-secondary: #7a7a85; --text-muted: #4a4a55;
-      --accent: #4285f4; --accent-glow: #4285f440;
+      --accent: #ff6b35; --accent-glow: #ff6b3540;
+      --accent-teal: #00b4b4;
       --accent-green: #34a853; --accent-red: #ea4335; --accent-yellow: #fbbc05;
     }
     html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; }
@@ -21,8 +22,8 @@
     .container { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
     .header { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
     .logo { font-family: 'JetBrains Mono', monospace; font-size: .75rem; font-weight: 500; color: var(--text-muted); letter-spacing: .15em; text-transform: uppercase; }
-    .title { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; letter-spacing: -.03em; }
-    .title span { color: var(--accent); }
+    .title { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; letter-spacing: -.03em; background: linear-gradient(135deg, #ff6b35 0%, #00b4b4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .title span { color: var(--accent); -webkit-text-fill-color: unset; }
     .subtitle { font-size: .875rem; color: var(--text-secondary); font-weight: 300; }
     .gemini-badge { display: inline-flex; align-items: center; gap: .35rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; background: var(--bg-card); border: 1px solid var(--border); padding: .25rem .6rem; border-radius: 4px; margin-top: .25rem; }
     .gemini-dots { display: flex; gap: 2px; }
@@ -32,7 +33,7 @@
     .gemini-dots span:nth-child(3) { background: var(--accent-yellow); }
     .gemini-dots span:nth-child(4) { background: var(--accent-green); }
     .orb { position: relative; width: 140px; height: 140px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; -webkit-tap-highlight-color: transparent; user-select: none; }
-    .orb::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; background: conic-gradient(from 0deg, var(--accent), var(--accent-red), var(--accent-yellow), var(--accent-green), var(--accent)); opacity: 0; transition: opacity .3s; animation: spin 3s linear infinite; }
+    .orb::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; background: conic-gradient(from 0deg, #ff6b35, #00b4b4, #ff6b35, #00b4b4, #ff6b35); opacity: 0; transition: opacity .3s; animation: spin 3s linear infinite; }
     .orb::after { content: ''; position: absolute; inset: 1px; border-radius: 50%; background: var(--bg-card); }
     @keyframes spin { to { transform: rotate(360deg); } }
     .orb:hover { border-color: var(--border-hover); }
@@ -74,8 +75,8 @@
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">🛳️ Ant Boat</div>
-      <h1 class="title">Voice <span>SDR</span></h1>
+      <div class="logo">🛳️ AntBoat</div>
+      <h1 class="title">AntBot Phone</h1>
       <p class="subtitle">SDR IA · Go1 — Appel de prospection</p>
       <div class="gemini-badge">
         <div class="gemini-dots"><span></span><span></span><span></span><span></span></div>
@@ -83,7 +84,7 @@
       </div>
     </div>
     <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem">
-      <div class="orb" id="orb"><span class="orb-icon" id="orbIcon">🛳️</span></div>
+      <div class="orb" id="orb"><span class="orb-icon" id="orbIcon">🎙️</span></div>
       <div class="waveform" id="waveform"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
       <div class="status" id="status">Appuie pour démarrer</div>
     </div>
@@ -235,7 +236,7 @@ function setStatus(t, c='') { $('status').textContent = t; $('status').className
 
 function setOrb(state) {
   $('orb').className = 'orb ' + (state||'');
-  $('orbIcon').textContent = state === 'listening' ? '🎙️' : state === 'speaking' ? '🔊' : '🛳️';
+  $('orbIcon').textContent = state === 'speaking' ? '🔊' : '🎙️';
   $('waveform').classList.toggle('visible', !!state);
   document.body.classList.toggle('active', !!state);
 }
