@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hindsight — Hindsight — See your patterns. Stop your mistakes. Scale what works.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #090909;
+    --off-black: #111111;
+    --surface: #161616;
+    --border: #242424;
+    --muted: #444444;
+    --text-dim: #888888;
+    --text: #d4d0c8;
+    --white: #f2ede4;
+    --accent: #c8a96e;
+    --accent-dim: #7a6440;
+    --danger: #c86e6e;
+    --green: #6ec8a0;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    transform: translate(-50%, -50%);
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.4s ease, width 0.3s, height 0.3s, opacity 0.3s;
+    transform: translate(-50%, -50%);
+  }
+
+  /* Noise texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled {
+    border-color: var(--border);
+    background: rgba(9,9,9,0.92);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.02em;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-cta {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid var(--accent-dim);
+    padding: 10px 24px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--black); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 140px 48px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg-line {
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, var(--border) 20%, var(--border) 80%, transparent);
+    opacity: 0.6;
+  }
+  .hero-bg-line:nth-child(1) { left: 33.33%; }
+  .hero-bg-line:nth-child(2) { left: 66.66%; }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 8vw, 120px);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    color: var(--white);
+    margin-bottom: 40px;
+    max-width: 900px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 300;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 56px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.6s;
+  }
+
+  .hero-actions {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.8s;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 18px 40px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(200,169,110,0.3);
+  }
+
+  .hero-note {
+    font-size: 13px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+  }
+  .hero-scroll::after {
+    content: '';
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: var(--muted);
+  }
+
+  /* MIRROR SECTION — live stats demo */
+  .mirror-demo {
+    padding: 120px 48px;
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .section-desc {
+    font-size: 16px;
+    color: var(--text-dim);
+    max-width: 480px;
+    line-height: 1.8;
+    margin-bottom: 64px;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    max-width: 900px;
+  }
+
+  .stat-card {
+    background: var(--surface);
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+  .stat-card:hover { background: #1a1a1a; }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--danger);
+  }
+  .stat-card.positive::before { background: var(--green); }
+  .stat-card.neutral::before { background: var(--accent); }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .stat-card.negative .stat-number { color: var(--danger); }
+
+  .stat-label {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .stat-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 12px;
+    letter-spacing: 0.05em;
+  }
+
+  /* THREE PHASES */
+  .phases {
+    padding: 140px 48px;
+  }
+
+  .phases-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 80px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .phases-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .phase {
+    padding: 56px 48px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s;
+  }
+  .phase:last-child { border-right: none; }
+  .phase:hover { background: var(--surface); }
+
+  .phase-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 120px;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--border);
+    position: absolute;
+    top: 24px; right: -10px;
+    transition: color 0.4s;
+    user-select: none;
+  }
+  .phase:hover .phase-num { color: #2a2a2a; }
+
+  .phase-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: inline-block;
+  }
+  .phase-tag.free { color: var(--green); border: 1px solid rgba(110,200,160,0.3); padding: 4px 12px; }
+  .phase-tag.saas { color: var(--accent); border: 1px solid rgba(200,169,110,0.3); padding: 4px 12px; }
+  .phase-tag.turbo { color: #a0a0ff; border: 1px solid rgba(160,160,255,0.3); padding: 4px 12px; }
+
+  .phase-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 20px;
+    letter-spacing: -0.02em;
+    position: relative;
+    z-index: 1;
+  }
+
+  .phase-desc {
+    font-size: 15px;
+    color: var(--text-dim);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+    margin-bottom: 32px;
+  }
+
+  .phase-example {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.6;
+    border-left: 2px solid var(--border);
+    padding-left: 16px;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* PRICING */
+  .pricing {
+    padding: 140px 48px;
+    background: var(--off-black);
+    border-top: 1px solid var(--border);
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 72px;
+    border: 1px solid var(--border);
+  }
+
+  .pricing-card {
+    padding: 56px 40px;
+    border-right: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .pricing-card:last-child { border-right: none; }
+  .pricing-card.featured {
+    background: var(--surface);
+  }
+  .pricing-card.featured::before {
+    content: 'Most Popular';
+    position: absolute;
+    top: -1px; left: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--black);
+    background: var(--accent);
+    padding: 4px 16px;
+  }
+
+  .pricing-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+
+  .pricing-tagline {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 40px;
+    font-style: italic;
+  }
+
+  .pricing-price {
+    margin-bottom: 40px;
+  }
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 56px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+  }
+  .price-period {
+    font-size: 14px;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+  }
+
+  .pricing-features {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+  .pricing-features li {
+    font-size: 14px;
+    color: var(--text-dim);
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .pricing-features li::before {
+    content: '—';
+    color: var(--accent);
+    font-family: 'DM Mono', monospace;
+    flex-shrink: 0;
+  }
+
+  .btn-outline {
+    display: block;
+    text-align: center;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    width: 100%;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-outline.accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--black);
+  }
+  .btn-outline.accent:hover {
+    background: transparent;
+    color: var(--accent);
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    padding: 160px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: 'HINDSIGHT';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(80px, 15vw, 220px);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,169,110,0.06);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -0.05em;
+  }
+
+  .final-cta .section-label { justify-content: center; display: flex; }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .cta-title em { color: var(--accent); font-style: italic; }
+
+  .cta-sub {
+    font-size: 16px;
+    color: var(--text-dim);
+    margin-bottom: 56px;
+    font-family: 'DM Mono', monospace;
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 40px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  footer .nav-logo { font-size: 16px; }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Ticker */
+  .ticker {
+    overflow: hidden;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+    white-space: nowrap;
+    background: var(--off-black);
+  }
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 25s linear infinite;
+    gap: 0;
+  }
+  .ticker-item {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 48px;
+  }
+  .ticker-item span { color: var(--accent); }
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .hero { padding: 120px 24px 80px; }
+    .mirror-demo, .phases, .pricing, .final-cta { padding: 80px 24px; }
+    footer { padding: 32px 24px; }
+    .phases-grid, .pricing-grid { grid-template-columns: 1fr; }
+    .phase, .pricing-card { border-right: none; border-bottom: 1px solid var(--border); }
+    .phase:last-child, .pricing-card:last-child { border-bottom: none; }
+    .stats-grid { grid-template-columns: 1fr; }
+    .phases-header { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Hind<span>sight</span></div>
+  <a href="#waitlist" class="nav-cta">Get Early Access</a>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker" style="margin-top: 0; position: fixed; top: 73px; left: 0; right: 0; z-index: 99;">
+  <div class="ticker-inner">
+    <span class="ticker-item">Mirror <span>→</span> Brake <span>→</span> Turbo</span>
+    <span class="ticker-item">Zero amnesia</span>
+    <span class="ticker-item">Never crash twice</span>
+    <span class="ticker-item">Memory as moat</span>
+    <span class="ticker-item">Mirror <span>→</span> Brake <span>→</span> Turbo</span>
+    <span class="ticker-item">Zero amnesia</span>
+    <span class="ticker-item">Never crash twice</span>
+    <span class="ticker-item">Memory as moat</span>
+    <span class="ticker-item">Mirror <span>→</span> Brake <span>→</span> Turbo</span>
+    <span class="ticker-item">Zero amnesia</span>
+    <span class="ticker-item">Never crash twice</span>
+    <span class="ticker-item">Memory as moat</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-line"></div>
+  <div class="hero-bg-line"></div>
+
+  <div class="hero-eyebrow">hindsight.app — Early Access 2026</div>
+  <h1 class="hero-title">
+    See your patterns.<br>Stop your mistakes.<br><em>Scale what works.</em>
+  </h1>
+  <p class="hero-sub">
+    The agent that makes you 10× sharper —<br>
+    by showing you exactly what's holding you back.
+  </p>
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-primary">Join the Waitlist →</a>
+    <span class="hero-note">First 50 users get free access.</span>
+  </div>
+
+  <div class="hero-scroll">Scroll</div>
+</section>
+
+<!-- MIRROR DEMO -->
+<section class="mirror-demo">
+  <div class="section-label reveal">Phase 0 — Mirror</div>
+  <h2 class="section-title reveal">Your blind spots<br>are costing you.</h2>
+  <p class="section-desc reveal">Hindsight connects to your email and calendar. In 24 hours, it shows you a mirror. No judgment. Just facts. You do the rest.</p>
+
+  <div class="stats-grid reveal">
+    <div class="stat-card negative">
+      <div class="stat-number">47</div>
+      <div class="stat-label">emails sent after 11pm this month</div>
+      <div class="stat-meta">↑ 34% vs last month</div>
+    </div>
+    <div class="stat-card negative">
+      <div class="stat-number">4×</div>
+      <div class="stat-label">you followed up on a client who ghosted you — again</div>
+      <div class="stat-meta">Last follow-up: this morning</div>
+    </div>
+    <div class="stat-card neutral">
+      <div class="stat-number">3</div>
+      <div class="stat-label">contradictory deadlines accepted in the same week</div>
+      <div class="stat-meta">All three are next Tuesday</div>
+    </div>
+    <div class="stat-card negative">
+      <div class="stat-number">12k€</div>
+      <div class="stat-label">estimated cost of the last time you made this exact move</div>
+      <div class="stat-meta">3 weeks of fire-fighting. Q3 2024.</div>
+    </div>
+  </div>
+</section>
+
+<!-- THREE PHASES -->
+<section class="phases">
+  <div class="phases-header">
+    <div>
+      <div class="section-label reveal">The Framework</div>
+      <h2 class="section-title reveal">Mirror.<br>Brake.<br>Turbo.</h2>
+    </div>
+    <p class="section-desc reveal" style="margin-bottom:0;">Three phases. One agent. Compounding value with every month you stay.</p>
+  </div>
+
+  <div class="phases-grid reveal">
+    <div class="phase">
+      <div class="phase-num">1</div>
+      <div class="phase-tag free">Free</div>
+      <h3 class="phase-name">Mirror</h3>
+      <p class="phase-desc">Hindsight reads your patterns. Email, calendar, Slack. It shows you what you do — not what you think you do. The discomfort is the product.</p>
+      <div class="phase-example">"You've sent 47 emails after 11pm this month. Last time you did this, a project crashed."</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">2</div>
+      <div class="phase-tag saas">79€ / month</div>
+      <h3 class="phase-name">Brake</h3>
+      <p class="phase-desc">Before you send that email at 2am. Before you say yes to three things that can't all be true. Hindsight inserts friction at the exact right moment.</p>
+      <div class="phase-example">"You're about to follow up for the 5th time. This client hasn't responded in 3 weeks. Are you sure?"</div>
+    </div>
+    <div class="phase">
+      <div class="phase-num">3</div>
+      <div class="phase-tag turbo">Variable on value</div>
+      <h3 class="phase-name">Turbo</h3>
+      <p class="phase-desc">Once it knows what works, it amplifies it. Distribution timing. Content patterns. The plays that actually closed deals — repeated intelligently.</p>
+      <div class="phase-example">"That post performed 4× better on Tuesday morning. Want me to draft a follow-up for next week?"</div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="start">
+  <div class="section-label reveal">Pricing</div>
+  <h2 class="section-title reveal">Subscription to memory,<br>not to features.</h2>
+  <p class="section-desc reveal">The longer you stay, the more Hindsight knows you. The more it knows you, the more painful the churn. That's the point.</p>
+
+  <div class="pricing-grid reveal">
+    <div class="pricing-card">
+      <div class="pricing-name">Mirror</div>
+      <div class="pricing-tagline">See yourself clearly.</div>
+      <div class="pricing-price">
+        <div class="price-amount">Free</div>
+        <div class="price-period">forever</div>
+      </div>
+      <ul class="pricing-features">
+        <li>Email pattern analysis</li>
+        <li>Calendar contradiction detection</li>
+        <li>Weekly report card</li>
+        <li>30-day memory</li>
+        <li>1 integration</li>
+      </ul>
+      <a href="#start" class="btn-outline">Join Waitlist</a>
+    </div>
+    <div class="pricing-card featured">
+      <div class="pricing-name">Brake</div>
+      <div class="pricing-tagline">Stop before the crash.</div>
+      <div class="pricing-price">
+        <div class="price-amount">79€</div>
+        <div class="price-period">/ month</div>
+      </div>
+      <ul class="pricing-features">
+        <li>Everything in Mirror</li>
+        <li>Real-time friction alerts</li>
+        <li>Commitment tracking</li>
+        <li>Pattern memory — unlimited</li>
+        <li>Up to 5 integrations</li>
+        <li>Post-mortem intelligence</li>
+      </ul>
+      <a href="#start" class="btn-outline accent">Get Early Access</a>
+    </div>
+    <div class="pricing-card">
+      <div class="pricing-name">Turbo</div>
+      <div class="pricing-tagline">Scale what already works.</div>
+      <div class="pricing-price">
+        <div class="price-amount">%</div>
+        <div class="price-period">of documented value</div>
+      </div>
+      <ul class="pricing-features">
+        <li>Everything in Brake</li>
+        <li>Distribution intelligence</li>
+        <li>Winning playbook detection</li>
+        <li>Automated amplification</li>
+        <li>Unlimited integrations</li>
+        <li>Dedicated memory audit</li>
+      </ul>
+      <a href="#start" class="btn-outline">Contact Us</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta" id="waitlist">
+  <div class="section-label">The decision</div>
+  <h2 class="cta-title reveal">Become<br><em>10× sharper.</em></h2>
+  <p class="cta-sub reveal">Start with the Mirror. It's free. It will show you what's holding you back.<br>That's where the 10× begins.</p>
+  <div class="cta-actions reveal">
+    <form id="waitlist-form" style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center;">
+      <input type="email" id="waitlist-email" placeholder="your@email.com" required
+        style="background:#161616;border:1px solid #444;color:#f2ede4;font-family:'DM Mono',monospace;font-size:14px;padding:16px 24px;outline:none;min-width:280px;letter-spacing:0.03em;"
+        onfocus="this.style.borderColor='#c8a96e'" onblur="this.style.borderColor='#444'">
+      <button type="submit" id="waitlist-btn" class="btn-primary" style="border:none;cursor:pointer;">Get Early Access →</button>
+    </form>
+    <p id="form-success" style="display:none;color:#6ec8a0;font-family:'DM Mono',monospace;font-size:16px;margin-top:24px;letter-spacing:0.05em;padding:20px 32px;border:1px solid rgba(110,200,160,0.3);background:rgba(110,200,160,0.05);">✓ You're on the list. We'll be in touch soon.</p>
+    <p id="form-error" style="display:none;color:#c86e6e;font-family:'DM Mono',monospace;font-size:13px;margin-top:16px;">Something went wrong. Try again.</p>
+  </div>
+  <script>
+    const waitlistForm = document.getElementById('waitlist-form');
+    if (waitlistForm) {
+      waitlistForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const email = document.getElementById('waitlist-email').value;
+        const btn = document.getElementById('waitlist-btn');
+        btn.textContent = 'Joining...';
+        btn.disabled = true;
+        const today = new Date().toISOString().split('T')[0];
+        try {
+          const res = await fetch('https://my-super-todo.vercel.app/api/mcp', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              jsonrpc: '2.0',
+              method: 'tools/call',
+              params: {
+                name: 'add_todos',
+                arguments: {
+                  list_id: '5a5bb9b9-3906-4b05-bb33-3c73a4ab42a3',
+                  todos: [{ text: '📧 ' + email + ' — Signed up [' + today + ']' }]
+                }
+              },
+              id: Date.now()
+            })
+          });
+          if (res.ok) {
+            waitlistForm.style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+            document.getElementById('form-success').scrollIntoView({behavior:'smooth', block:'center'});
+          } else { throw new Error(); }
+        } catch(err) {
+          btn.textContent = 'Get Early Access →';
+          btn.disabled = false;
+          document.getElementById('form-error').style.display = 'block';
+        }
+      });
+    }
+  </script>
+</section>
+
+<footer>
+  <div class="nav-logo">Hind<span>sight</span></div>
+  <div class="footer-copy">hindsight.app — 2026 — Early Access</div>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+      ring.style.width = '56px'; ring.style.height = '56px';
+      ring.style.opacity = '0.3';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.width = '32px'; ring.style.height = '32px';
+      ring.style.opacity = '1';
+    });
+  });
+
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
