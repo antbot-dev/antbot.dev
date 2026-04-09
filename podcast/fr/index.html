@@ -1035,6 +1035,142 @@
     line-height: 1.5;
   }
 
+  .join-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .join-copy {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .join-points {
+    display: grid;
+    gap: 0.7rem;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  .join-point {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .join-point strong {
+    color: var(--text);
+  }
+
+  .join-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--accent);
+    margin-top: 0.45rem;
+    flex: 0 0 auto;
+    box-shadow: 0 0 14px var(--accent-glow);
+  }
+
+  .join-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    align-items: center;
+  }
+
+  .join-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    min-height: 52px;
+    padding: 0.95rem 1.35rem;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #0a0a0b;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+
+  .join-btn:hover {
+    background: #d4ff20;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px #c8ff0030;
+  }
+
+  .join-note {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+    line-height: 1.55;
+  }
+
+  .join-note-mobile,
+  .join-note-desktop {
+    display: none;
+  }
+
+  .qr-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.15rem;
+    text-align: center;
+  }
+
+  .qr-frame {
+    background: #fff;
+    border-radius: 12px;
+    padding: 0.9rem;
+    width: min(100%, 220px);
+    margin: 0 auto 0.9rem;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+  }
+
+  .qr-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .qr-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+
+  .qr-sub {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  html[data-device="mobile"] .qr-card,
+  html[data-device="mobile"] .join-note-desktop {
+    display: none;
+  }
+
+  html[data-device="mobile"] .join-note-mobile {
+    display: block;
+  }
+
+  html[data-device="desktop"] .join-actions,
+  html[data-device="desktop"] .join-note-mobile {
+    display: none;
+  }
+
+  html[data-device="desktop"] .join-note-desktop {
+    display: block;
+  }
+
   /* Success modal overlay */
   .success-overlay {
     display: none;
@@ -1324,6 +1460,9 @@
     .episode-card { padding: 1rem; }
     .testimonials-grid { gap: 0.75rem; }
     footer { padding: 1.5rem 1.25rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    .join-layout { grid-template-columns: 1fr; }
+    .join-actions { flex-direction: column; align-items: stretch; }
+    .join-btn { width: 100%; }
   }
 
   /* ============ INLINE CTAs ============ */
@@ -1746,81 +1885,41 @@
 </section>
 
 
-<!-- ======== SIGNUP FORM ======== -->
+<!-- ======== JOIN CTA ======== -->
 <section class="form-section reveal" id="inscription">
   <div class="form-container">
-    <div id="form-body">
-      <h2 class="form-title">Ton podcast,<br>demain à <span class="accent">7h30.</span></h2>
-      <p class="form-sub">Un épisode produit sur mesure pour toi — dans ton WhatsApp.</p>
+    <div class="join-layout">
+      <div class="join-copy">
+        <div class="form-badge">Podcast IA &amp; Veille</div>
+        <h2 class="form-title">Rejoins le groupe,<br>reçois le podcast <span class="accent">direct.</span></h2>
+        <p class="form-sub">On a viré le formulaire. Le plus simple maintenant : tu rejoins directement le groupe WhatsApp et tu reçois les épisodes là-bas.</p>
 
-      <form id="signup-form" novalidate>
-        <div class="form-group">
-          <label class="form-label">Ton sujet <span style="color: var(--text-muted);">(choisis-en un)</span></label>
-          <div class="topics-pills">
-            <div class="topic-pill" data-value="ia-tech" onclick="selectTopic(this)">🤖 IA &amp; Tech</div>
-            <div class="topic-pill" data-value="finance" onclick="selectTopic(this)">💰 Finance &amp; Marchés</div>
-            <div class="topic-pill" data-value="startups" onclick="selectTopic(this)">🚀 Startups &amp; Business</div>
-            <div class="topic-pill" data-value="climat" onclick="selectTopic(this)">🌱 Climat</div>
-            <div class="topic-pill" data-value="sport" onclick="selectTopic(this)">⚽ Sport</div>
-            <div class="topic-pill soon-pill">✨ Votre sujet sur mesure <span class="soon-badge">Bientôt</span></div>
-          </div>
-          <div class="form-error" id="topic-error">Choisis un sujet.</div>
+        <div class="join-points">
+          <div class="join-point"><span class="join-dot"></span><span><strong>1 message par jour</strong>, envoyé le matin avec le bon épisode.</span></div>
+          <div class="join-point"><span class="join-dot"></span><span><strong>Format ultra simple</strong> : audio + résumé texte, dans WhatsApp.</span></div>
+          <div class="join-point"><span class="join-dot"></span><span><strong>Zéro friction</strong> : un clic ou un scan, et c’est bon.</span></div>
         </div>
 
-        <input type="hidden" id="sujet" name="sujet" value="">
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="prenom">Ton prénom</label>
-            <input
-              class="form-input"
-              type="text"
-              id="prenom"
-              name="prenom"
-              placeholder="Antoine"
-              autocomplete="given-name"
-              required
-            >
-            <div class="form-error" id="prenom-error">Entre ton prénom.</div>
-          </div>
-
-          <div class="form-group">
-            <label class="form-label" for="whatsapp">Ton numéro WhatsApp</label>
-            <input
-              class="form-input"
-              type="tel"
-              id="whatsapp"
-              name="whatsapp"
-              placeholder="06 12 34 56 78"
-              autocomplete="tel"
-              required
-            >
-            <div class="form-error" id="whatsapp-error">Entre un numéro valide (ex: 06 12 34 56 78).</div>
-          </div>
+        <div class="join-actions" id="join-actions">
+          <a class="join-btn" id="join-btn" href="https://chat.whatsapp.com/D6MGzrIxaif4aSBNbdf2fk?mode=gi_t" target="_blank" rel="noopener">
+            Ouvrir le groupe WhatsApp →
+          </a>
         </div>
 
-        <div class="form-group" style="opacity: 0.45; pointer-events: none;">
-          <label class="form-label" for="contexte">
-            Personnalise ton épisode
-            <span class="form-label-optional" style="background: var(--accent-dim); color: var(--accent); border: 1px solid var(--accent-glow); padding: 0.1rem 0.4rem; border-radius: 3px; font-size: 0.7rem; letter-spacing: 0.05em;">BIENTÔT</span>
-          </label>
-          <p class="form-hint">Dis à AntBot comment tu veux ton podcast : format, ton, angle métier…</p>
+        <p class="join-note join-note-mobile">Tu es sur mobile : clique et WhatsApp ouvre directement le groupe.</p>
+        <p class="join-note join-note-desktop">Tu es sur desktop : scanne le QR code avec WhatsApp pour rejoindre le groupe en un shot.</p>
+      </div>
+
+      <div class="qr-card" id="qr-card">
+        <div class="qr-frame">
+          <img
+            src="https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FD6MGzrIxaif4aSBNbdf2fk%3Fmode%3Dgi_t&size=220"
+            alt="QR code pour rejoindre le groupe Podcast IA et Veille"
+          >
         </div>
-
-        <button type="submit" class="form-submit" id="submit-btn">
-          Recevoir mon 1er épisode demain →
-        </button>
-
-        <p class="form-disclaimer">
-          En t'inscrivant, tu acceptes de recevoir un message WhatsApp par jour.<br>
-          Désinscription à tout moment. Tes données ne sont pas partagées.
-        </p>
-      </form>
-    </div>
-
-    <div class="form-success" id="form-success" style="display:none;text-align:center;padding:2rem 0;">
-      <div class="success-icon">✓</div>
-      <h3 class="success-title">Inscription confirmée !</h3>
+        <div class="qr-title">Scanner pour rejoindre</div>
+        <div class="qr-sub">Le même lien d’invitation, en version QR, pour ouvrir directement le groupe Podcast IA &amp; Veille.</div>
+      </div>
     </div>
   </div>
 </section>
@@ -2183,6 +2282,7 @@ function togglePlay(btn) {
 // === Form validation & submit ===
 (function() {
   const form = document.getElementById('signup-form');
+  if (!form) return;
   const submitBtn = document.getElementById('submit-btn');
 
   form.addEventListener('submit', async function(e) {
@@ -2320,6 +2420,17 @@ async function runPodcastTest() {
   }
   new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; update(); }, { threshold: 0 }).observe(hero);
   if (form) new IntersectionObserver(([e]) => { atForm = e.isIntersecting; update(); }, { threshold: 0.1 }).observe(form);
+})();
+
+// === Device-adaptive join CTA ===
+(function() {
+  const root = document.documentElement;
+  const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  const narrow = window.matchMedia && window.matchMedia('(max-width: 820px)').matches;
+  const ua = navigator.userAgent || '';
+  const mobileUa = /Android|iPhone|iPad|iPod|Mobile/i.test(ua);
+  const isMobile = coarse || narrow || mobileUa;
+  root.setAttribute('data-device', isMobile ? 'mobile' : 'desktop');
 })();
 </script>
 
