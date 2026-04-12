@@ -102,12 +102,9 @@ const MODEL = 'models/gemini-3.1-flash-live-preview';
 const VOICES = ['Puck','Charon','Kore','Fenrir','Aoede','Orus','Leda','Perseus'];
 const VOICE = new URLSearchParams(location.search).get('voice') || 'Aoede';
 
-// Key fetched from server — never in source code or URL
-let API_KEY = null, WS_URL = null;
-fetch('/voice-goog/config.json').then(r => r.json()).then(c => {
-  API_KEY = c.key;
-  WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1alpha.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
-}).catch(() => { document.getElementById('status').textContent = 'Erreur config'; });
+// Server-side WS proxy keeps the Google API key off the browser.
+let API_KEY = null;
+const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/voice-goog/ws`;
 
 const SYSTEM_PROMPT = `Tu es Sophie, SDR chez Go One (prononcé "Go Ouane"). Tu appelles des prospects par téléphone.
 

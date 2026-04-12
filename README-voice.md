@@ -42,8 +42,8 @@ Pour changer l'agent ou le persona → modifier l'ID sur la console ElevenLabs.
 
 ### Comment ça marche
 
-1. La page charge la clé API depuis `/voice-goog/config.json` (jamais dans le source)
-2. WebSocket ouvert vers `wss://generativelanguage.googleapis.com/ws/...`
+1. La page publique passe désormais par un proxy WebSocket serveur `/api/voice-goog/ws`
+2. Le navigateur ne reçoit jamais la clé API Google
 3. Setup envoyé : modèle + voix + system prompt Sophie
 4. Le micro est capturé, resample 48kHz → 16kHz, envoyé en `audio/pcm` via `realtimeInput.audio`
 5. L'audio reçu (24kHz PCM) est décodé et joué via `AudioContext + BufferSource`
@@ -55,14 +55,12 @@ Pour changer l'agent ou le persona → modifier l'ID sur la console ElevenLabs.
 Changer via URL param : `?voice=Kore`
 
 ### Config clé API
-La clé Google est servie par Caddy depuis la config Caddy :
-```
-handle /voice-goog/config.json {
-    header Content-Type application/json
-    respond `{"key":"AIzaSy..."}` 200
-}
-```
-→ Pour changer la clé : modifier le Caddyfile sur le VPS.
+Ancienne approche supprimée : servir une clé Google via `/voice-goog/config.json` exposait le secret publiquement.
+
+Approche actuelle :
+- proxy WebSocket serveur sur `127.0.0.1:8423`
+- exposé publiquement via Caddy sous `/api/voice-goog/ws`
+- la clé Google reste uniquement côté serveur dans `GOOGLE_API_KEY`
 
 ### Fixes techniques importants (à conserver)
 | Problème | Fix |
@@ -89,8 +87,7 @@ System prompt complet dans le HTML. Points clés :
 ├── voice/
 │   └── index.html          # ElevenLabs stack
 └── voice-goog/
-    ├── index.html          # Gemini Live stack (Sophie SDR)
-    └── config.json         # Clé API Google (servie par Caddy, jamais commitée)
+    └── index.html          # Gemini Live stack (Sophie SDR) connectée au proxy serveur sécurisé
 ```
 
 ---
