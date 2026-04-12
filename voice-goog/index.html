@@ -139,8 +139,7 @@
   <div class="footer"><a href="https://antbot.dev" target="_blank" rel="noreferrer">antbot.dev</a></div>
 
   <script>
-    const API_KEY = 'AIzaSyA6xp67Mn7wZeRzfkynemiy5RyioaYHjdw';
-    const WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
+    const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/voice-goog/ws`;
     const MODEL = 'models/gemini-3.1-flash-live-preview';
     const INPUT_SAMPLE_RATE = 16000;
     const OUTPUT_SAMPLE_RATE = 24000;
