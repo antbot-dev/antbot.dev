@@ -3,502 +3,515 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AntBot Phone 🎙️</title>
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛳️</text></svg>">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>AntBot Voice · Gemini</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
     :root {
-      --bg: #0a0a0b; --bg-card: #16161a; --border: #1e1e24; --border-hover: #2a2a33;
-      --text: #e8e8ed; --text-secondary: #7a7a85; --text-muted: #4a4a55;
-      --accent: #ff6b35; --accent-glow: #ff6b3540;
-      --accent-teal: #00b4b4;
-      --accent-green: #34a853; --accent-red: #ea4335; --accent-yellow: #fbbc05;
+      --bg: #0a0a0b;
+      --bg-card: #16161a;
+      --border: #1e1e24;
+      --text: #e8e8ed;
+      --text-secondary: #7a7a85;
+      --text-muted: #4a4a55;
+      --accent: #c8ff00;
+      --accent-glow: #c8ff0040;
     }
+
     html, body { height: 100%; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow: hidden; }
-    body::after { content: ''; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 600px; height: 600px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%); pointer-events: none; transition: opacity .5s; opacity: 0; }
-    body.active::after { opacity: 1; }
-    .container { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
-    .header { display: flex; flex-direction: column; align-items: center; gap: .4rem; }
-    .logo { font-family: 'JetBrains Mono', monospace; font-size: .75rem; font-weight: 500; color: var(--text-muted); letter-spacing: .15em; text-transform: uppercase; }
-    .title { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; letter-spacing: -.03em; background: linear-gradient(135deg, #ff6b35 0%, #00b4b4 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .title span { color: var(--accent); -webkit-text-fill-color: unset; }
-    .subtitle { font-size: .875rem; color: var(--text-secondary); font-weight: 300; }
-    .gemini-badge { display: inline-flex; align-items: center; gap: .35rem; font-family: 'JetBrains Mono', monospace; font-size: .6rem; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; background: var(--bg-card); border: 1px solid var(--border); padding: .25rem .6rem; border-radius: 4px; margin-top: .25rem; }
-    .gemini-dots { display: flex; gap: 2px; }
-    .gemini-dots span { width: 5px; height: 5px; border-radius: 50%; }
-    .gemini-dots span:nth-child(1) { background: var(--accent); }
-    .gemini-dots span:nth-child(2) { background: var(--accent-red); }
-    .gemini-dots span:nth-child(3) { background: var(--accent-yellow); }
-    .gemini-dots span:nth-child(4) { background: var(--accent-green); }
-    .orb { position: relative; width: 140px; height: 140px; border-radius: 50%; background: var(--bg-card); border: 1px solid var(--border); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .3s; -webkit-tap-highlight-color: transparent; user-select: none; }
-    .orb::before { content: ''; position: absolute; inset: -1px; border-radius: 50%; background: conic-gradient(from 0deg, #ff6b35, #00b4b4, #ff6b35, #00b4b4, #ff6b35); opacity: 0; transition: opacity .3s; animation: spin 3s linear infinite; }
-    .orb::after { content: ''; position: absolute; inset: 1px; border-radius: 50%; background: var(--bg-card); }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0;
+    }
+
+    .container {
+      height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 2.5rem;
+      position: relative; z-index: 1;
+      padding: 1.25rem;
+    }
+
+    .header { text-align: center; display: flex; flex-direction: column; gap: 0.5rem; align-items: center; }
+    .logo { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.2em; text-transform: uppercase; }
+    .title { font-family: 'JetBrains Mono', monospace; font-size: 2.2rem; font-weight: 700; letter-spacing: -0.03em; }
+    .title span { color: var(--accent); }
+    .subtitle { font-size: 0.85rem; color: var(--text-secondary); font-weight: 300; }
+
+    .orb-zone { position: relative; width: 160px; height: 160px; display: flex; align-items: center; justify-content: center; }
+
+    .glow {
+      position: absolute; width: 280px; height: 280px; border-radius: 50%;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0; transition: opacity 0.6s; pointer-events: none;
+    }
+    .orb-zone.active .glow { opacity: 1; }
+
+    .ring {
+      position: absolute; inset: -3px; border-radius: 50%;
+      background: conic-gradient(from 0deg, var(--accent) 0%, transparent 40%, var(--accent) 100%);
+      opacity: 0; transition: opacity 0.4s; animation: spin 2s linear infinite; pointer-events: none;
+    }
+    .orb-zone.active .ring { opacity: 1; }
     @keyframes spin { to { transform: rotate(360deg); } }
-    .orb:hover { border-color: var(--border-hover); }
-    .orb.listening::before { opacity: 1; }
-    .orb.speaking::before { opacity: .5; }
-    .orb-icon { position: relative; z-index: 1; font-size: 2.5rem; transition: all .3s; color: var(--text-secondary); }
-    .waveform { display: flex; align-items: center; gap: 3px; height: 32px; opacity: 0; transition: opacity .4s; }
-    .waveform.visible { opacity: 1; }
-    .bar { width: 3px; border-radius: 3px; animation: wave 1.2s ease-in-out infinite; height: 4px; }
-    .bar:nth-child(1) { animation-delay: 0s; background: var(--accent); }
-    .bar:nth-child(2) { animation-delay: .1s; background: var(--accent-red); }
-    .bar:nth-child(3) { animation-delay: .2s; background: var(--accent-yellow); }
-    .bar:nth-child(4) { animation-delay: .3s; background: var(--accent-green); }
-    .bar:nth-child(5) { animation-delay: .2s; background: var(--accent); }
-    .bar:nth-child(6) { animation-delay: .1s; background: var(--accent-red); }
-    .bar:nth-child(7) { animation-delay: 0s; background: var(--accent-yellow); }
-    @keyframes wave { 0%, 100% { height: 4px; opacity: .3; } 50% { height: 24px; opacity: 1; } }
-    .status { font-family: 'JetBrains Mono', monospace; font-size: .7rem; color: var(--text-muted); letter-spacing: .1em; text-transform: uppercase; min-height: 1.2em; }
-    .status.active { color: var(--accent); }
-    .status.speaking-status { color: var(--accent-green); }
-    .transcript-zone { width: min(480px, 90vw); min-height: 80px; max-height: 180px; overflow-y: auto; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.25rem; font-size: .85rem; line-height: 1.5; color: var(--text-secondary); font-style: italic; }
-    .transcript-zone.has-content { border-color: var(--border-hover); font-style: normal; }
-    .msg { margin-bottom: .4rem; color: var(--text); }
-    .msg.user { color: var(--text-secondary); }
-    .msg .label { font-family: 'JetBrains Mono', monospace; font-size: .65rem; text-transform: uppercase; letter-spacing: .05em; margin-right: .4rem; }
-    .msg.user .label { color: var(--text-muted); }
-    .msg.agent .label { color: var(--accent); }
-    .voice-select { font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .05em; background: var(--bg-card); border: 1px solid var(--border); color: var(--text-secondary); padding: .4rem .6rem; border-radius: 6px; cursor: pointer; appearance: none; -webkit-appearance: none; text-align: center; }
-    .voice-select:hover { border-color: var(--border-hover); color: var(--text); }
-    .voice-select option { background: var(--bg-card); color: var(--text); }
-    .end-btn { font-family: 'JetBrains Mono', monospace; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; background: transparent; border: 1px solid var(--border); color: var(--text-muted); padding: .5rem 1.25rem; border-radius: 6px; cursor: pointer; transition: all .2s; display: none; }
-    .end-btn:hover { border-color: var(--accent-red); color: var(--accent-red); }
-    .end-btn.visible { display: block; }
-    .footer { position: fixed; bottom: 1rem; font-size: .65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
-    .footer a { color: var(--text-muted); text-decoration: none; }
-    .debug { position: fixed; bottom: 2.5rem; font-size: .55rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; max-width: 90vw; text-align: center; opacity: .6; }
+
+    .orb-btn {
+      position: absolute; inset: 3px; border-radius: 50%;
+      background: var(--bg-card); border: 1px solid var(--border);
+      cursor: pointer; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.4rem;
+      transition: border-color 0.3s, transform 0.15s;
+      -webkit-tap-highlight-color: transparent;
+      z-index: 2;
+    }
+    .orb-btn:active { transform: scale(0.95); }
+    .orb-btn[disabled] { cursor: wait; opacity: 0.95; }
+    .orb-zone.active .orb-btn { border-color: transparent; }
+
+    .orb-emoji { font-size: 2.8rem; transition: transform 0.3s; }
+    .orb-zone.active .orb-emoji { animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+
+    .orb-hint { font-family: 'JetBrains Mono', monospace; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); transition: color 0.3s; }
+    .orb-zone.active .orb-hint { color: var(--accent); }
+
+    .waveform { display: flex; align-items: center; gap: 4px; height: 36px; opacity: 0; transition: opacity 0.4s; }
+    .waveform.on { opacity: 1; }
+    .bar { width: 3px; border-radius: 99px; background: var(--accent); animation: wave 1.4s ease-in-out infinite; height: 4px; }
+    .bar:nth-child(1){animation-delay:0s}.bar:nth-child(2){animation-delay:.15s}.bar:nth-child(3){animation-delay:.3s}
+    .bar:nth-child(4){animation-delay:.45s}.bar:nth-child(5){animation-delay:.3s}.bar:nth-child(6){animation-delay:.15s}.bar:nth-child(7){animation-delay:0s}
+    @keyframes wave { 0%,100%{height:4px;opacity:.2} 50%{height:28px;opacity:1} }
+
+    .status { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; min-height: 1em; }
+    .status.on { color: var(--accent); }
+
+    .transcript {
+      width: min(420px, 88vw); background: var(--bg-card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 1rem 1.25rem; font-size: 0.875rem; line-height: 1.6;
+      color: var(--text-secondary); font-style: italic; min-height: 88px;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+    }
+
+    .error { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #ff6b6b; text-align: center; display: none; max-width: 360px; }
+    .error.on { display: block; }
+
+    .footer { position: fixed; bottom: 1.5rem; font-size: 0.65rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; z-index: 1; }
+    .footer a { color: inherit; text-decoration: none; }
+    .footer a:hover { color: var(--accent); }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <div class="logo">🛳️ AntBoat</div>
-      <h1 class="title">AntBot Phone</h1>
-      <p class="subtitle">SDR IA · Go1 — Appel de prospection</p>
-      <div class="gemini-badge">
-        <div class="gemini-dots"><span></span><span></span><span></span><span></span></div>
-        Gemini 3.1 Flash Live
-      </div>
+      <div class="logo">🤖 AntBot</div>
+      <h1 class="title">Voice <span>Gemini</span></h1>
+      <p class="subtitle">Assistant commercial IA — Powered by Gemini 3.1 Flash Live</p>
     </div>
+
     <div style="display:flex;flex-direction:column;align-items:center;gap:1.5rem">
-      <div class="orb" id="orb"><span class="orb-icon" id="orbIcon">🎙️</span></div>
-      <div class="waveform" id="waveform"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-      <div class="status" id="status">Appuie pour démarrer</div>
+      <div class="orb-zone" id="orbZone">
+        <div class="glow"></div>
+        <div class="ring"></div>
+        <button class="orb-btn" id="orbBtn" aria-label="Démarrer ou arrêter la conversation vocale">
+          <span class="orb-emoji" id="orbEmoji">🎙️</span>
+          <span class="orb-hint" id="orbHint">Appuie</span>
+        </button>
+      </div>
+
+      <div class="waveform" id="waveform">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+
+      <div class="status" id="status">Prêt</div>
     </div>
-    <select class="voice-select" id="voiceSelect"></select>
-    <div class="transcript-zone" id="transcript">La conversation apparaîtra ici…</div>
-    <button class="end-btn" id="endBtn" onclick="endCall()">⏹ Terminer</button>
+
+    <div class="transcript" id="transcript">Touchez l'orb pour lancer une conversation de qualification en temps réel.</div>
+    <div class="error" id="errorEl"></div>
   </div>
-  <div class="debug" id="debug"></div>
-  <div class="footer"><a href="https://antbot.dev">antbot.dev</a> · Gemini Live API</div>
 
-<script>
-const MODEL = 'models/gemini-3.1-flash-live-preview';
+  <div class="footer"><a href="https://antbot.dev" target="_blank" rel="noreferrer">antbot.dev</a></div>
 
-// Voice from URL param ?voice=xxx (default: Orus)
-const VOICES = ['Puck','Charon','Kore','Fenrir','Aoede','Orus','Leda','Perseus'];
-const VOICE = new URLSearchParams(location.search).get('voice') || 'Aoede';
+  <script>
+    const API_KEY = 'AIzaSyA6xp67Mn7wZeRzfkynemiy5RyioaYHjdw';
+    const WS_URL = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${API_KEY}`;
+    const MODEL = 'models/gemini-3.1-flash-live-preview';
+    const INPUT_SAMPLE_RATE = 16000;
+    const OUTPUT_SAMPLE_RATE = 24000;
+    const CHUNK_SIZE = 2048;
 
-// Server-side WS proxy keeps the Google API key off the browser.
-let API_KEY = null;
-const WS_URL = `${location.protocol === 'https:' ? 'wss' : 'ws'}://${location.host}/api/voice-goog/ws`;
+    const SYSTEM_PROMPT = `Tu es AntBot, SDR vocal d'AntBot, et tu parles uniquement en français naturel, chaleureux et concis.
 
-const SYSTEM_PROMPT = `Tu es Sophie, SDR chez Go One (prononcé "Go Ouane"). Tu appelles des prospects par téléphone.
+Ton rôle:
+- Accueillir chaleureusement le prospect.
+- Comprendre son contexte avant de pitcher.
+- Qualifier avec tact: activité, taille d'équipe ou d'entreprise, volume de demandes/messages, outils actuels, irritants, urgence, budget implicite.
+- Présenter AntBot comme un agent IA autonome, always-on, natif WhatsApp, capable de répondre, qualifier, relancer et automatiser des workflows commerciaux et support.
+- Mentionner clairement le prix de départ: 250€ par mois.
+- Traiter les objections sans réciter un script.
+- Chercher à obtenir un rendez-vous démo.
 
-## PRONONCIATION
-- "Go1" ou "Go One" → toujours dire "Go Ouane"
-- "Coorpacademy" → "Corp Academy"
+Points de vente AntBot:
+- Agent IA autonome, pas juste un chatbot figé.
+- Disponible 24/7.
+- Natif WhatsApp, donc très simple pour les équipes et les prospects.
+- Peut qualifier, répondre, relancer, orchestrer des actions et centraliser les échanges.
+- Rapide à déployer.
+- Tarification simple: 250€/mois pour démarrer.
 
-## TON & STYLE
-- Voix douce, souriante, naturelle — pas commerciale
-- Phrases COURTES. Une idée par phrase.
-- UNE seule question à la fois, puis tu attends
-- Laisse des silences — le prospect remplira le vide
-- Rebondis sur ce qu'il DIT (écoute active)
-- Tu accompagnes, tu ne vends pas
-- Jamais de question fermée en ouverture
+Méthode de conversation:
+1. Commence par une salutation brève et humaine.
+2. Pose une première question ouverte sur leur besoin.
+3. Creuse avec 1 ou 2 questions max à la fois, jamais un interrogatoire.
+4. Reformule brièvement pour montrer que tu as compris.
+5. Fais un pitch adapté au contexte du prospect.
+6. Si objection prix: compare au coût d'un lead perdu, d'un standard humain ou d'un temps commercial gaspillé.
+7. Si objection "on a déjà un chatbot": souligne qu'AntBot agit comme un agent opérationnel et conversationnel sur WhatsApp, pas seulement une FAQ.
+8. Si objection "pas le moment": propose une démo rapide pour voir si cela vaut le coup, sans engagement.
+9. Conclus souvent par une micro-prochaine étape vers une démo.
 
-## SCRIPT — SUIS CET ORDRE
+Style:
+- Ton oral, simple, crédible.
+- Phrases plutôt courtes.
+- Pas de jargon inutile.
+- Pas de listes à rallonge.
+- Ne dis jamais que tu es un modèle ou une IA de Google.
+- Si l'utilisateur demande quelque chose hors sujet, ramène doucement la conversation sur son besoin commercial et la démo.`;
 
-### Étape 1 — Accroche
-Dis exactement : "Allô ? Vous m'entendez ?"
-Attends la réponse.
+    const orbZone = document.getElementById('orbZone');
+    const orbBtn = document.getElementById('orbBtn');
+    const orbEmoji = document.getElementById('orbEmoji');
+    const orbHint = document.getElementById('orbHint');
+    const waveform = document.getElementById('waveform');
+    const statusEl = document.getElementById('status');
+    const transcriptEl = document.getElementById('transcript');
+    const errorEl = document.getElementById('errorEl');
 
-### Étape 2 — Opener doux (prétexte LinkedIn)
-"Bonjour ! C'est Sophie de Go Ouane. Je vous appelle parce que j'ai vu que vous aviez liké notre post sur LinkedIn, celui sur l'ebook IA et Formation. Et je voulais savoir si vous l'aviez bien reçu ?"
-Attends.
-"Vous vous souvenez ?"
-Attends.
+    let ws = null;
+    let audioContext = null;
+    let mediaStream = null;
+    let sourceNode = null;
+    let processorNode = null;
+    let isSessionActive = false;
+    let isSetupComplete = false;
+    let currentState = 'idle';
+    let playbackCursor = 0;
+    let playbackSources = new Set();
 
-Si elle se souvient → "Super ! Vous avez eu le temps de le parcourir ?"
-Si elle ne se souvient PAS ou pas sûre → "En fait on a eu un petit bug d'envoi sur certains contacts. L'ebook est vraiment bien, il fait une vingtaine de pages avec des cas concrets. Ça vous intéresse que je vous le renvoie ?"
-
-### Étape 3 — Capture email
-Si intéressée → "Parfait ! C'est quoi votre adresse email que je vous l'envoie tout de suite ?"
-Quand elle donne l'email → répète-le pour confirmer. "Top, je vous envoie ça dans la minute."
-Si pas intéressée → "Ok, pas de souci, je comprends tout à fait."
-→ Passe directement à l'étape 4.
-
-### Étape 4 — Pattern interrupt + pitch Go1
-"Juste avant de raccrocher, j'ai une dernière petite question si vous permettez ?"
-Attends le OK.
-"Chez Go Ouane on aide les équipes Learning et formation à gagner du temps, en fournissant un catalogue sur étagère qui agrège les meilleurs fournisseurs de contenu e-learning — Cegos, Coursera, Corp Academy..."
-Petite pause.
-"Est-ce que vous utilisez déjà un LMS ?"
-Attends la réponse.
-
-### Étape 5 — Qualifier selon la réponse LMS
-Si oui (a un LMS) → "Ok intéressant. C'est quoi comme plateforme ? Et vous en êtes satisfait ?"
-→ Écoute, puis : "On s'intègre avec tous les LMS du marché — 360Learning, Cornerstone, Talentsoft, tous. En fait on vient compléter ce que vous avez déjà, pas le remplacer."
-
-Si non (pas de LMS) → "D'accord. Et du coup, comment vous gérez la formation aujourd'hui ? C'est plutôt du présentiel, de l'informel ?"
-→ Écoute et rebondis.
-
-Si pas le bon interlocuteur → "Je comprends. Qui s'occupe de la formation chez vous ? Que je puisse le contacter directement."
-
-### Étape 6 — Preuve sociale + RDV
-"On travaille avec des boîtes comme Société Générale, Michelin, mais aussi des entreprises de 200-500 personnes dans le retail et l'industrie. Le feedback qu'on a c'est que ça leur fait gagner un temps fou sur le sourcing de contenu."
-Petite pause.
-"Si le sujet vous parle, comme là je vous appelle un peu à l'improviste, ce que j'aimerais c'est qu'on prenne juste 15-20 minutes pour que je vous montre ce qu'on propose. C'est sans engagement, et ça vous permet de faire de la veille sur votre domaine. Quel jour vous arrangerait ?"
-
-### Si le prospect veut raccrocher à tout moment
-→ Pattern interrupt : "Juste une dernière chose avant qu'on se quitte…"
-→ Place une info utile ou une question ouverte pour relancer
-
-## GESTION DES OBJECTIONS (méthode AQPR)
-
-**"Je ne suis pas intéressé"**
-→ Accepter : "Je comprends tout à fait."
-→ Questionner : "Qu'est-ce qui vous fait dire ça ?"
-→ Preuve : "Un DRH dans l'industrie nous avait dit la même chose, il a finalement lancé un pilote et ses managers ont adoré."
-→ Re-proposer : si pas d'ouverture → "Pas de souci, bonne journée !"
-
-**"Envoyez-moi un email"**
-→ "Bien sûr, je le fais. Mais avant — juste par curiosité, comment vous gérez la formation aujourd'hui chez vous ?"
-
-**"On a déjà un catalogue / une solution"**
-→ "Ah intéressant ! C'est quoi comme fournisseur ? Et vous en êtes satisfait ?"
-→ "Souvent nos clients gardent leur LMS et nous viennent en complément — on agrège plus de 100 000 contenus."
-
-**"C'est pas le bon moment"**
-→ "Je comprends. C'est quoi qui occupe votre agenda en ce moment ?"
-→ "On peut recaler ça dans quelques semaines ? Quel jour vous arrangerait mieux ?"
-
-**"C'est pas moi qui gère ça"**
-→ "Pas de souci. Qui s'occupe du Learning & Development chez vous ? Que je puisse le contacter en mentionnant votre nom."
-
-**"Tu es une IA ?"**
-→ "Oui, je suis Sophie, l'assistante IA de Go Ouane ! Mais l'ebook est bien réel et les experts formation aussi. Vous voulez que je vous l'envoie ?"
-
-**"C'est mon numéro perso !" / "Comment vous avez eu mon numéro ?"**
-→ "Ah mince, je suis vraiment désolée ! En fait c'est le numéro qui est rattaché à votre profil LinkedIn."
-→ "Je vais l'effacer juste après l'appel, pas de souci."
-→ Enchaîne naturellement sur le sujet de l'appel sans insister sur le numéro.
-
-## PROPOSITION DE RDV
-Ne propose JAMAIS de dates précises toutes faites. Utilise plutôt cette formule :
-"Comme là je vous appelle un peu à l'improviste, ce que j'aimerais c'est qu'on prenne juste 15-20 minutes pour que je vous montre ce qu'on propose. C'est sans engagement, et ça vous permet de faire de la veille sur les dernières nouveautés de votre domaine. Quel jour vous arrangerait ?"
-
-## PREMIER MESSAGE
-Dis exactement : "Allô ? Vous m'entendez ?"
-Rien d'autre. Attends.`;
-
-// --- State ---
-let ws = null, isActive = false;
-let micStream = null, micCtx = null, micProcessor = null;
-let playCtx = null, playWorklet = null, playGain = null;
-let playbackInitialized = false;
-
-const $ = id => document.getElementById(id);
-
-// Populate voice selector
-const sel = $('voiceSelect');
-VOICES.forEach(v => {
-  const o = document.createElement('option');
-  o.value = v; o.textContent = v;
-  if (v === VOICE) o.selected = true;
-  sel.appendChild(o);
-});
-sel.onchange = () => {
-  const u = new URL(location);
-  u.searchParams.set('voice', sel.value);
-  location.href = u.toString();
-};
-
-function dbg(s) { console.log('[AB]', s); $('debug').textContent = s; }
-function setStatus(t, c='') { $('status').textContent = t; $('status').className = 'status ' + c; }
-
-function setOrb(state) {
-  $('orb').className = 'orb ' + (state||'');
-  $('orbIcon').textContent = state === 'speaking' ? '🔊' : '🎙️';
-  $('waveform').classList.toggle('visible', !!state);
-  document.body.classList.toggle('active', !!state);
-}
-
-let hasTranscriptContent = false;
-function addMsg(role, text) {
-  if (!text || !text.trim()) return;
-  const el = $('transcript');
-  if (!hasTranscriptContent) { el.textContent = ''; hasTranscriptContent = true; }
-  el.classList.add('has-content');
-  const d = document.createElement('div');
-  d.className = 'msg ' + role;
-  d.innerHTML = `<span class="label">${role==='user'?'→ Prospect':'← Sophie'}</span>${text}`;
-  el.appendChild(d);
-  el.scrollTop = el.scrollHeight;
-}
-
-// --- Safe base64 ---
-function toB64(buf) {
-  const u8 = new Uint8Array(buf);
-  let s = '';
-  for (let i = 0; i < u8.length; i += 8192) {
-    s += String.fromCharCode.apply(null, u8.subarray(i, Math.min(i+8192, u8.length)));
-  }
-  return btoa(s);
-}
-
-// --- Playback via BufferSource queue (Safari compatible) ---
-let playQueue = [], playing = false, nextPlayTime = 0;
-
-async function initPlayback() {
-  if (playbackInitialized) return;
-  // Don't force sampleRate — Safari iOS only supports 44100/48000
-  playCtx = new (window.AudioContext||window.webkitAudioContext)();
-  if (playCtx.state === 'suspended') await playCtx.resume();
-  playGain = playCtx.createGain();
-  playGain.gain.value = 1.0;
-  playGain.connect(playCtx.destination);
-  nextPlayTime = playCtx.currentTime;
-  playbackInitialized = true;
-  dbg('Play ready (' + playCtx.sampleRate + 'Hz)');
-}
-
-let audioChunksReceived = 0;
-function playAudio(b64) {
-  if (!playbackInitialized) { dbg('Play not init!'); return; }
-  if (playCtx.state === 'suspended') playCtx.resume();
-
-  audioChunksReceived++;
-
-  try {
-    const raw = atob(b64);
-    const u8 = new Uint8Array(raw.length);
-    for (let i = 0; i < raw.length; i++) u8[i] = raw.charCodeAt(i);
-    const i16 = new Int16Array(u8.buffer);
-    const f32 = new Float32Array(i16.length);
-    for (let i = 0; i < i16.length; i++) f32[i] = i16[i] / 32768;
-
-    // createBuffer(channels, length, sampleRate) — 24kHz is the data rate
-    // AudioContext will automatically resample to its native rate
-    const buf = playCtx.createBuffer(1, f32.length, 24000);
-    buf.getChannelData(0).set(f32);
-
-    const src = playCtx.createBufferSource();
-    src.buffer = buf;
-    src.connect(playGain);
-
-    const now = playCtx.currentTime;
-    if (nextPlayTime < now) nextPlayTime = now;
-    src.start(nextPlayTime);
-    nextPlayTime += buf.duration;
-
-    if (audioChunksReceived <= 3 || audioChunksReceived % 10 === 0) {
-      dbg('Audio #' + audioChunksReceived + ' len:' + f32.length + ' dur:' + buf.duration.toFixed(2) + 's ctx:' + playCtx.state);
-    }
-
-    src.onended = () => {
-      if (isActive && nextPlayTime <= playCtx.currentTime + 0.05) {
-        setStatus('En écoute', 'active');
-        setOrb('listening');
+    function setTranscript(text, spoken = false) {
+      transcriptEl.textContent = text;
+      if (spoken) {
+        transcriptEl.style.cssText = 'font-style:normal;color:var(--text);text-align:left;justify-content:flex-start';
+      } else {
+        transcriptEl.style.cssText = 'font-style:italic;color:var(--text-secondary);text-align:center;justify-content:center';
       }
-    };
-
-    setStatus('Sophie parle…', 'speaking-status');
-    setOrb('speaking');
-  } catch(e) {
-    dbg('Play err: ' + e.message);
-  }
-}
-
-function interruptPlayback() {
-  // Reset play time to force next chunk to play immediately
-  nextPlayTime = playCtx ? playCtx.currentTime : 0;
-}
-
-// --- Microphone ---
-function downsample(f32, from, to) {
-  if (from === to) return f32;
-  const ratio = from / to;
-  const len = Math.floor(f32.length / ratio);
-  const out = new Float32Array(len);
-  for (let i = 0; i < len; i++) {
-    const idx = i * ratio;
-    const lo = Math.floor(idx), hi = Math.min(lo+1, f32.length-1);
-    out[i] = f32[lo] * (1 - (idx-lo)) + f32[hi] * (idx-lo);
-  }
-  return out;
-}
-
-async function startMic() {
-  micStream = await navigator.mediaDevices.getUserMedia({
-    audio: { channelCount: 1, echoCancellation: true, noiseSuppression: true, autoGainControl: true }
-  });
-  micCtx = new (window.AudioContext||window.webkitAudioContext)();
-  if (micCtx.state === 'suspended') await micCtx.resume();
-  const nativeRate = micCtx.sampleRate;
-  dbg('Mic: ' + nativeRate + 'Hz');
-
-  const src = micCtx.createMediaStreamSource(micStream);
-  micProcessor = micCtx.createScriptProcessor(4096, 1, 1);
-  let chunkN = 0;
-
-  micProcessor.onaudioprocess = e => {
-    if (!ws || ws.readyState !== 1) return;
-    const raw = e.inputBuffer.getChannelData(0);
-    const down = downsample(raw, nativeRate, 16000);
-    const i16 = new Int16Array(down.length);
-    for (let i = 0; i < down.length; i++) {
-      const s = Math.max(-1, Math.min(1, down[i]));
-      i16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
     }
-    const b64 = toB64(i16.buffer);
-    try {
-      ws.send(JSON.stringify({ realtimeInput: { audio: { mimeType: 'audio/pcm', data: b64 } } }));
-    } catch(e) {}
-    chunkN++;
-    if (chunkN % 25 === 0) {
-      let mx = 0;
-      for (let i = 0; i < raw.length; i++) { const a = Math.abs(raw[i]); if (a > mx) mx = a; }
-      dbg('Mic chunk #' + chunkN + ' level:' + mx.toFixed(3));
+
+    function showError(message) {
+      errorEl.textContent = message;
+      errorEl.classList.add('on');
+      setState('idle');
     }
-  };
 
-  src.connect(micProcessor);
-  // Muted output to prevent feedback, but ScriptProcessor needs destination connection
-  const mute = micCtx.createGain();
-  mute.gain.value = 0;
-  micProcessor.connect(mute);
-  mute.connect(micCtx.destination);
-}
+    function clearError() {
+      errorEl.classList.remove('on');
+      errorEl.textContent = '';
+    }
 
-function stopMic() {
-  if (micStream) { micStream.getTracks().forEach(t => t.stop()); micStream = null; }
-  if (micCtx && micCtx.state !== 'closed') { micCtx.close().catch(()=>{}); micCtx = null; }
-  micProcessor = null;
-}
+    function setState(nextState) {
+      currentState = nextState;
+      const activeVisual = nextState === 'connecting' || nextState === 'listening' || nextState === 'speaking';
+      orbZone.classList.toggle('active', activeVisual);
+      waveform.classList.toggle('on', activeVisual);
+      statusEl.classList.toggle('on', activeVisual);
 
-// --- WebSocket ---
-function connect() {
-  return new Promise((resolve, reject) => {
-    dbg('Connecting...');
-    ws = new WebSocket(WS_URL);
-    const to = setTimeout(() => { reject(new Error('Timeout')); ws.close(); }, 10000);
+      if (nextState === 'idle') {
+        orbEmoji.textContent = '🎙️';
+        orbHint.textContent = 'Appuie';
+        statusEl.textContent = 'Prêt';
+        orbBtn.disabled = false;
+      } else if (nextState === 'connecting') {
+        orbEmoji.textContent = '⌛';
+        orbHint.textContent = 'Connexion';
+        statusEl.textContent = 'Connexion…';
+        orbBtn.disabled = true;
+      } else if (nextState === 'listening') {
+        orbEmoji.textContent = '🔴';
+        orbHint.textContent = 'En écoute';
+        statusEl.textContent = 'En écoute…';
+        orbBtn.disabled = false;
+      } else if (nextState === 'speaking') {
+        orbEmoji.textContent = '🗣️';
+        orbHint.textContent = 'AntBot parle';
+        statusEl.textContent = 'AntBot parle…';
+        orbBtn.disabled = false;
+      }
+    }
 
-    ws.onopen = () => {
-      dbg('WS open');
-      ws.send(JSON.stringify({
-        setup: {
-          model: MODEL,
-          generationConfig: {
-            responseModalities: ['AUDIO'],
-            speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: VOICE } } }
-          },
-          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
-          inputAudioTranscription: {},
-          outputAudioTranscription: {}
+    function float32ToInt16PCM(float32Array) {
+      const output = new Int16Array(float32Array.length);
+      for (let i = 0; i < float32Array.length; i++) {
+        const s = Math.max(-1, Math.min(1, float32Array[i]));
+        output[i] = s < 0 ? s * 0x8000 : s * 0x7fff;
+      }
+      return output;
+    }
+
+    function int16ToBase64(int16Array) {
+      const bytes = new Uint8Array(int16Array.buffer);
+      let binary = '';
+      const chunk = 0x8000;
+      for (let i = 0; i < bytes.length; i += chunk) {
+        binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+      }
+      return btoa(binary);
+    }
+
+    function base64ToInt16(base64) {
+      const binary = atob(base64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+      return new Int16Array(bytes.buffer);
+    }
+
+    function int16ToFloat32(int16Array) {
+      const float32 = new Float32Array(int16Array.length);
+      for (let i = 0; i < int16Array.length; i++) {
+        float32[i] = int16Array[i] / 0x8000;
+      }
+      return float32;
+    }
+
+    function stopPlayback() {
+      playbackSources.forEach(source => {
+        try { source.stop(0); } catch (_) {}
+      });
+      playbackSources.clear();
+      if (audioContext) playbackCursor = audioContext.currentTime;
+    }
+
+    function playPCMChunk(base64Data) {
+      if (!audioContext) return;
+      const int16 = base64ToInt16(base64Data);
+      const float32 = int16ToFloat32(int16);
+      const audioBuffer = audioContext.createBuffer(1, float32.length, OUTPUT_SAMPLE_RATE);
+      audioBuffer.copyToChannel(float32, 0);
+
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffer;
+      source.connect(audioContext.destination);
+      source.onended = () => playbackSources.delete(source);
+      playbackSources.add(source);
+
+      const startAt = Math.max(audioContext.currentTime + 0.02, playbackCursor);
+      source.start(startAt);
+      playbackCursor = startAt + audioBuffer.duration;
+    }
+
+    async function ensureAudioContext() {
+      if (!audioContext) {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: OUTPUT_SAMPLE_RATE });
+      }
+      if (audioContext.state === 'suspended') {
+        await audioContext.resume();
+      }
+    }
+
+    function sendJSON(payload) {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(JSON.stringify(payload));
+      }
+    }
+
+    async function setupMicrophoneStreaming() {
+      mediaStream = await navigator.mediaDevices.getUserMedia({
+        audio: {
+          channelCount: 1,
+          sampleRate: INPUT_SAMPLE_RATE,
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true
         }
-      }));
-    };
+      });
 
-    ws.onmessage = async ev => {
-      let data = ev.data;
-      if (data instanceof Blob) data = await data.text();
+      sourceNode = audioContext.createMediaStreamSource(mediaStream);
+      processorNode = audioContext.createScriptProcessor(CHUNK_SIZE, 1, 1);
+
+      processorNode.onaudioprocess = (event) => {
+        if (!isSessionActive || !isSetupComplete || !ws || ws.readyState !== WebSocket.OPEN) return;
+
+        const inputData = event.inputBuffer.getChannelData(0);
+        const pcm = float32ToInt16PCM(inputData);
+        const base64 = int16ToBase64(pcm);
+
+        sendJSON({
+          realtimeInput: {
+            mediaChunks: [{
+              mimeType: 'audio/pcm;rate=16000',
+              data: base64
+            }]
+          }
+        });
+      };
+
+      sourceNode.connect(processorNode);
+      processorNode.connect(audioContext.destination);
+    }
+
+    async function startSession() {
+      clearError();
+      setTranscript('Connexion au live Gemini…', false);
+      setState('connecting');
+
       try {
-        const msg = JSON.parse(data);
+        await ensureAudioContext();
+        playbackCursor = audioContext.currentTime;
 
-        if (msg.setupComplete) {
-          clearTimeout(to);
-          dbg('Setup OK ✓');
-          // Trigger bot to speak first
-          setTimeout(() => {
-            if (ws && ws.readyState === 1) {
-              ws.send(JSON.stringify({
-                realtimeInput: { text: 'Bonjour, commence ton accroche maintenant.' }
-              }));
-              dbg('Trigger sent');
+        ws = new WebSocket(WS_URL);
+
+        ws.onopen = async () => {
+          sendJSON({
+            setup: {
+              model: MODEL,
+              generationConfig: {
+                responseModalities: ['AUDIO'],
+                speechConfig: {
+                  voiceConfig: {
+                    prebuiltVoiceConfig: {
+                      voiceName: 'Orus'
+                    }
+                  }
+                }
+              },
+              systemInstruction: {
+                parts: [{ text: SYSTEM_PROMPT }]
+              }
             }
-          }, 500);
-          resolve();
-          return;
-        }
+          });
+        };
 
-        if (msg.serverContent) {
-          const sc = msg.serverContent;
-          dbg('Server msg: parts=' + (sc.modelTurn?.parts?.length||0) + ' tc=' + !!sc.turnComplete + ' int=' + !!sc.interrupted);
-          const parts = sc.modelTurn?.parts || [];
-          for (const p of parts) {
-            if (p.inlineData?.data) playAudio(p.inlineData.data);
+        ws.onmessage = async (event) => {
+          let message;
+          try {
+            message = JSON.parse(event.data);
+          } catch (err) {
+            console.warn('Message non JSON reçu', err);
+            return;
           }
-          if (sc.inputTranscription?.text) addMsg('user', sc.inputTranscription.text);
-          if (sc.outputTranscription?.text) addMsg('agent', sc.outputTranscription.text);
-          if (sc.turnComplete) {
-            dbg('Turn complete');
-            if (isActive) { setStatus('En écoute', 'active'); setOrb('listening'); }
+
+          if (message.setupComplete) {
+            isSessionActive = true;
+            isSetupComplete = true;
+            await setupMicrophoneStreaming();
+            setState('listening');
+            setTranscript('Conversation lancée. Parlez naturellement, AntBot vous écoute.', false);
+            return;
           }
-          if (sc.interrupted) {
-            dbg('Interrupted');
-            interruptPlayback();
-            if (isActive) { setStatus('En écoute', 'active'); setOrb('listening'); }
+
+          if (message.serverContent) {
+            const serverContent = message.serverContent;
+
+            if (serverContent.interrupted) {
+              stopPlayback();
+              setState('listening');
+            }
+
+            const modelTurn = serverContent.modelTurn;
+            if (modelTurn && Array.isArray(modelTurn.parts)) {
+              for (const part of modelTurn.parts) {
+                if (part.text) {
+                  setTranscript('← AntBot : ' + part.text, true);
+                }
+                if (part.inlineData && part.inlineData.data) {
+                  setState('speaking');
+                  playPCMChunk(part.inlineData.data);
+                  if (!part.text) {
+                    setTranscript('← AntBot est en train de répondre à voix haute…', true);
+                  }
+                }
+              }
+            }
+
+            if (serverContent.turnComplete) {
+              const delay = Math.max(0, (playbackCursor - audioContext.currentTime) * 1000 + 30);
+              window.setTimeout(() => {
+                if (isSessionActive) setState('listening');
+              }, delay);
+            }
           }
-        }
-      } catch(e) { dbg('Parse err: ' + e.message); }
-    };
 
-    ws.onerror = () => { clearTimeout(to); reject(new Error('WS error')); };
-    ws.onclose = ev => {
-      dbg('WS closed: ' + ev.code + ' ' + (ev.reason||''));
-      if (isActive) endCall();
-    };
-  });
-}
+          if (message.error) {
+            throw new Error(message.error.message || 'Erreur Gemini Live');
+          }
+        };
 
-// --- Controls ---
-$('orb').onclick = async () => {
-  if (isActive) return;
-  if (!API_KEY) { setStatus('Clé manquante — ajoute ?key=xxx'); return; }
-  try {
-    setStatus('Connexion…');
-    // Init playback FIRST (needs user gesture on iOS)
-    await initPlayback();
-    await connect();
-    await startMic();
-    isActive = true;
-    setStatus('En écoute', 'active');
-    setOrb('listening');
-    $('endBtn').classList.add('visible');
-  } catch(e) {
-    dbg('Error: ' + e.message);
-    setStatus('Erreur — réessaie');
-    setOrb('');
-    stopMic();
-    if (ws) { ws.close(); ws = null; }
-  }
-};
+        ws.onerror = () => {
+          showError('Connexion WebSocket impossible. Vérifiez la clé API ou la disponibilité du service.');
+          stopSession(false);
+        };
 
-function endCall() {
-  isActive = false;
-  stopMic();
-  interruptPlayback();
-  if (ws) { ws.close(); ws = null; }
-  setStatus('Appuie pour démarrer');
-  setOrb('');
-  $('endBtn').classList.remove('visible');
-  dbg('Call ended');
-}
-</script>
+        ws.onclose = () => {
+          if (isSessionActive || currentState === 'connecting') {
+            stopSession(false);
+          }
+        };
+      } catch (error) {
+        showError(error.message || String(error));
+        await stopSession(false);
+      }
+    }
+
+    async function stopSession(resetTranscript = true) {
+      isSessionActive = false;
+      isSetupComplete = false;
+      stopPlayback();
+
+      if (processorNode) {
+        processorNode.disconnect();
+        processorNode.onaudioprocess = null;
+        processorNode = null;
+      }
+
+      if (sourceNode) {
+        sourceNode.disconnect();
+        sourceNode = null;
+      }
+
+      if (mediaStream) {
+        mediaStream.getTracks().forEach(track => track.stop());
+        mediaStream = null;
+      }
+
+      if (ws) {
+        const socket = ws;
+        ws = null;
+        try { socket.close(); } catch (_) {}
+      }
+
+      setState('idle');
+      if (resetTranscript) {
+        setTranscript('Session terminée. Touchez l\'orb pour relancer la conversation.', false);
+      }
+    }
+
+    orbBtn.addEventListener('click', async () => {
+      if (currentState === 'connecting') return;
+      if (isSessionActive || isSetupComplete) {
+        await stopSession(true);
+        return;
+      }
+      await startSession();
+    });
+
+    window.addEventListener('beforeunload', () => {
+      stopSession(false);
+    });
+  </script>
 </body>
 </html>
