@@ -1,0 +1,16 @@
+[Unit]
+Description=AntBot Voice Goog WS Proxy
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/var/www/antbot-dev
+EnvironmentFile=/etc/default/voice-goog-proxy
+Environment=VOICE_GOOG_PROXY_PORT=8423
+ExecStart=/usr/bin/python3 /var/www/antbot-dev/services/voice-goog/voice-goog-proxy.py
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target
