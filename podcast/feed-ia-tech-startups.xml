@@ -3,25 +3,23 @@
     xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
     xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
-    <title><![CDATA[AntBot Podcast]]></title>
+    <title><![CDATA[AntBot — IA, Tech & Startups]]></title>
     <link>https://antbot.dev/podcast/</link>
-    <description>Ta veille perso, en audio — 5min chaque matin sur WhatsApp. Podcast IA généré par AntBot. 3 thèmes : IA &amp; Tech, Startups, Climat.</description>
+    <description>5 minutes chaque matin sur l'IA, la tech et les startups : modèles, géants, levées, pivots, scale-ups — tout ce qui compte dans l'écosystème.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:36:23 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 10:36:24 +0000</lastBuildDate>
     <itunes:author>AntBot</itunes:author>
     <itunes:email>hello@antbot.dev</itunes:email>
     <itunes:category text="Technology" />
-    <itunes:category text="News" />
     <itunes:category text="Business" />
-    <itunes:category text="Science" />
     <itunes:explicit>false</itunes:explicit>
     <itunes:image href="https://antbot.dev/podcast/cover.jpg" />
     <image>
         <url>https://antbot.dev/podcast/cover.jpg</url>
-        <title>AntBot Podcast</title>
+        <title><![CDATA[AntBot — IA, Tech & Startups]]></title>
         <link>https://antbot.dev/podcast/</link>
     </image>
-    <item>
+<item>
         <title><![CDATA[IA & Tech Trends — 2026-04-30]]></title>
         <itunes:title><![CDATA[IA & Tech Trends — 2026-04-30]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
@@ -36,7 +34,7 @@
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
     </item>
-    <item>
+<item>
         <title><![CDATA[Startups & Business — 2026-04-30]]></title>
         <itunes:title><![CDATA[Startups & Business — 2026-04-30]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
@@ -48,20 +46,6 @@
         <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Les French Days des startups — deals, pas TV 4K. 🤖 Gojob, la pépite française du recrutement IA, applique son moteur à l'Armée de l'air et de l'espace pour matcher les profils mieux que les humains. B2G qui cartonne. 🇪🇸 Freepik devient Magnific et balance 230M$ de revenus annuels… sans un euro levé. Bootstrappée de Málaga, 16 ans de patience, zéro VC. Claque européenne. 🐧 L'État français migre 2,5 millions de postes sous Linux — la DINUM acte la sortie de Windows. Le Health Data Hub quitte Azure aussi. Appel d'air colossal pour les startups souveraines. 📌 Signal du jour : l'écosystème européen n'attend plus la permission — IA publique, scale bootstrappé, souveraineté numérique, les trois moteurs tournent en même temps. Bonus coupé : Magnific n'a pas levé un dollar, mais génère plus d'ARR qu'une bonne partie du Next40. Faire moins de pitchs, plus de revenus.]]></description>
         <category>Business</category>
         <itunes:keywords>Freepik, Magnific, Gojob, BFM, Azure, DINUM, Health Data Hub</itunes:keywords>
-        <author>AntBot (hello@antbot.dev)</author>
-        <itunes:author>AntBot</itunes:author>
-    </item>
-    <item>
-        <title><![CDATA[Veille Climat — 2026-04-30]]></title>
-        <itunes:title><![CDATA[Veille Climat — 2026-04-30]]></itunes:title>
-        <link>https://antbot.dev/podcast/</link>
-        <guid isPermaLink="false">antbot-climat-2026-04-30</guid>
-        <pubDate>Thu, 30 Apr 2026 10:36:23 +0000</pubDate>
-        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_climat.mp3" length="1736664" type="audio/mpeg" />
-        <itunes:duration>217</itunes:duration>
-        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers re]]></itunes:summary>
-        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers regardent mai avec inquiétude. 🌳 La déforestation tropicale a baissé de 36 % en 2025. Bonne nouvelle — portée par le Brésil. Mais les surfaces brûlées ont doublé depuis 20 ans. El Niño qui revient pourrait empirer les choses. 🔥 Le vrai sujet, c'est la boucle infernale : forêts qui brûlent → carbone relâché → réchauffement → incendies plus violents. La guerre est loin d'être gagnée, mais une bataille vient d'être remportée. 📌 Signal du jour : le changement climatique n'est plus une anomalie abstraite — c'est une signature dans les data de tous les jours. Mais la baisse de la déforestation prouve qu'agir change la donne. Bonus coupé : 5 des 6 mois d'avril les plus chauds en France depuis 1930 sont postérieurs à 2006. Plus qu'une anomalie, un pattern.]]></description>
-        <category>Science</category>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
     </item>

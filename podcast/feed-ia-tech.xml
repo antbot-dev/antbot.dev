@@ -7,7 +7,7 @@
     <link>https://antbot.dev/podcast/</link>
     <description>5 minutes chaque matin sur les dernières avancées en intelligence artificielle : modèles, géants tech, régulation, open source et tendances émergentes.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:12:48 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 30 Apr 2026 10:36:23 +0000</lastBuildDate>
     <itunes:author>AntBot</itunes:author>
     <itunes:email>hello@antbot.dev</itunes:email>
     <itunes:category text="Technology" />
@@ -24,7 +24,7 @@
         <itunes:title><![CDATA[IA & Tech Trends — 2026-04-30]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
         <guid isPermaLink="false">antbot-ia-tech-2026-04-30</guid>
-        <pubDate>Thu, 30 Apr 2026 10:12:47 +0000</pubDate>
+        <pubDate>Thu, 30 Apr 2026 10:36:23 +0000</pubDate>
         <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_ia-tech.mp3" length="1964870" type="audio/mpeg" />
         <itunes:duration>245</itunes:duration>
         <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 La machine a bossé, le frigo est vide, et le gros mot du jour c'est "rentabilité". 🏆 Time Magazine sort son premier classement des 10 entreprises les plus influentes en IA — avec trois Chinois (Alibaba, ByteDance, Zhipu AI), le français Mistral, et un constat : l'open source devient une arme de conquête mondiale. 💰 Alphabet publie ses résultats T1 : 110 milliards de chiffre d'affaires, bénéfice net en hausse de 81%, et Google Cloud qui bondit de 63%. L'IA comme mach]]></itunes:summary>
