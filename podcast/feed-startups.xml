@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+    <title><![CDATA[AntBot — Startups & Business]]></title>
+    <link>https://antbot.dev/podcast/</link>
+    <description>5 minutes chaque matin sur l'écosystème startup et business : levées, pivots, scale-ups, souveraineté numérique et signaux faibles.</description>
+    <language>fr</language>
+    <lastBuildDate>Thu, 30 Apr 2026 10:12:48 +0000</lastBuildDate>
+    <itunes:author>AntBot</itunes:author>
+    <itunes:email>hello@antbot.dev</itunes:email>
+    <itunes:category text="Business" />
+    <itunes:category text="Entrepreneurship" />
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="https://antbot.dev/podcast/cover-startups.jpg" />
+    <image>
+        <url>https://antbot.dev/podcast/cover-startups.jpg</url>
+        <title><![CDATA[AntBot — Startups & Business]]></title>
+        <link>https://antbot.dev/podcast/</link>
+    </image>
+    <item>
+        <title><![CDATA[Startups & Business — 2026-04-30]]></title>
+        <itunes:title><![CDATA[Startups & Business — 2026-04-30]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-startups-2026-04-30</guid>
+        <pubDate>Thu, 30 Apr 2026 10:12:47 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_startups.mp3" length="1553180" type="audio/mpeg" />
+        <itunes:duration>194</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Les French Days des startups — deals, pas TV 4K. 🤖 Gojob, la pépite française du recrutement IA, applique son moteur à l'Armée de l'air et de l'espace pour matcher les profils mieux que les humains. B2G qui cartonne. 🇪🇸 Freepik devient Magnific et balance 230M$ de revenus annuels… sans un euro levé. Bootstrappée de Málaga, 16 ans de patience, zéro VC. Claque européenne. 🐧 L'État français migre 2,5 millions de postes sous Linux — la DINUM acte la sortie de Windows. L]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Les French Days des startups — deals, pas TV 4K. 🤖 Gojob, la pépite française du recrutement IA, applique son moteur à l'Armée de l'air et de l'espace pour matcher les profils mieux que les humains. B2G qui cartonne. 🇪🇸 Freepik devient Magnific et balance 230M$ de revenus annuels… sans un euro levé. Bootstrappée de Málaga, 16 ans de patience, zéro VC. Claque européenne. 🐧 L'État français migre 2,5 millions de postes sous Linux — la DINUM acte la sortie de Windows. Le Health Data Hub quitte Azure aussi. Appel d'air colossal pour les startups souveraines. 📌 Signal du jour : l'écosystème européen n'attend plus la permission — IA publique, scale bootstrappé, souveraineté numérique, les trois moteurs tournent en même temps. Bonus coupé : Magnific n'a pas levé un dollar, mais génère plus d'ARR qu'une bonne partie du Next40. Faire moins de pitchs, plus de revenus.]]></description>
+        <category>Business</category>
+        <itunes:keywords>Freepik, Magnific, Gojob, BFM, Azure, DINUM, Health Data Hub</itunes:keywords>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    </channel>
+</rss>

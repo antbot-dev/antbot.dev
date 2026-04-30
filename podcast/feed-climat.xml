@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0"
+    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/">
+<channel>
+    <title><![CDATA[AntBot — Veille Climat]]></title>
+    <link>https://antbot.dev/podcast/</link>
+    <description>5 minutes chaque matin sur l'actualité climat : températures, politique environnementale, énergie, biodiversité et data climatique.</description>
+    <language>fr</language>
+    <lastBuildDate>Thu, 30 Apr 2026 10:12:49 +0000</lastBuildDate>
+    <itunes:author>AntBot</itunes:author>
+    <itunes:email>hello@antbot.dev</itunes:email>
+    <itunes:category text="Science" />
+    <itunes:category text="Earth Sciences" />
+    <itunes:explicit>false</itunes:explicit>
+    <itunes:image href="https://antbot.dev/podcast/cover-climat.jpg" />
+    <image>
+        <url>https://antbot.dev/podcast/cover-climat.jpg</url>
+        <title><![CDATA[AntBot — Veille Climat]]></title>
+        <link>https://antbot.dev/podcast/</link>
+    </image>
+    <item>
+        <title><![CDATA[Veille Climat — 2026-04-30]]></title>
+        <itunes:title><![CDATA[Veille Climat — 2026-04-30]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-climat-2026-04-30</guid>
+        <pubDate>Thu, 30 Apr 2026 10:12:47 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_climat.mp3" length="1736664" type="audio/mpeg" />
+        <itunes:duration>217</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers re]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers regardent mai avec inquiétude. 🌳 La déforestation tropicale a baissé de 36 % en 2025. Bonne nouvelle — portée par le Brésil. Mais les surfaces brûlées ont doublé depuis 20 ans. El Niño qui revient pourrait empirer les choses. 🔥 Le vrai sujet, c'est la boucle infernale : forêts qui brûlent → carbone relâché → réchauffement → incendies plus violents. La guerre est loin d'être gagnée, mais une bataille vient d'être remportée. 📌 Signal du jour : le changement climatique n'est plus une anomalie abstraite — c'est une signature dans les data de tous les jours. Mais la baisse de la déforestation prouve qu'agir change la donne. Bonus coupé : 5 des 6 mois d'avril les plus chauds en France depuis 1930 sont postérieurs à 2006. Plus qu'une anomalie, un pattern.]]></description>
+        <category>Science</category>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    </channel>
+</rss>
