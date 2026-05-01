@@ -7,7 +7,7 @@
     <link>https://antbot.dev/podcast/</link>
     <description>5 minutes chaque matin sur les dernières avancées en intelligence artificielle : modèles, géants tech, régulation, open source et tendances émergentes.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:36:23 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 11:10:06 +0000</lastBuildDate>
     <itunes:author>AntBot</itunes:author>
     <itunes:email>hello@antbot.dev</itunes:email>
     <itunes:category text="Technology" />
@@ -31,6 +31,36 @@
         <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 La machine a bossé, le frigo est vide, et le gros mot du jour c'est "rentabilité". 🏆 Time Magazine sort son premier classement des 10 entreprises les plus influentes en IA — avec trois Chinois (Alibaba, ByteDance, Zhipu AI), le français Mistral, et un constat : l'open source devient une arme de conquête mondiale. 💰 Alphabet publie ses résultats T1 : 110 milliards de chiffre d'affaires, bénéfice net en hausse de 81%, et Google Cloud qui bondit de 63%. L'IA comme machine à cash, ça marche quand t'es le vendeur. 💸 Mais le VP Deep Learning de Nvidia lâche une bombe : l'IA coûte déjà plus cher que les humains qu'elle remplace. Factures de GPU et tokens qui explosent, économies salariales qui s'envolent. Le grand remplacement économique n'est pas automatique. 📌 Signal du jour : l'IA rapporte une fortune à ceux qui la vendent, coûte encore cher à ceux qui l'achètent, et les humains ne sont pas près de disparaître — surtout quand le calcul économique ne tient pas.]]></description>
         <category>Technology</category>
         <itunes:keywords>OpenAI, Google, Alphabet, Meta, Amazon, Anthropic, Mistral, Nvidia, Alibaba, ByteDance, Hugging Face, Zhipu, Google Cloud, Time</itunes:keywords>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    <item>
+        <title><![CDATA[IA & Tech Trends — 2026-05-01]]></title>
+        <itunes:title><![CDATA[IA & Tech Trends — 2026-05-01]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-ia-tech-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:09:17 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_ia-tech.mp3" length="2305088" type="audio/mpeg" />
+        <itunes:duration>288</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milli]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milliards rien qu'en GPU ce trimestre chez Microsoft. Seul Google a vu son action monter (+63% Cloud, Gemini 3 qui rapporte). 📉 Meta perd des utilisateurs pour la première fois : 20 millions de DAU en moins. Côté finances par contre : +33% de revenus et 8000 postes supprimés. Le robinet de la croissance organique se tarit. 😬 La génération Z face à l'IA : 42% d'anxiété, 31% de colère, seulement 22% d'enthousiasme. Ils utilisent les outils parce qu'ils n'ont pas le choix, mais la défiance monte vite. 📌 Signal du jour : plus que jamais, le vrai débat n'est pas la vitesse de l'IA — c'est notre capacité collective à décider où on va, plutôt que de se laisser tracter par la machine. Bonus coupé : Jer Crane, le fondateur de PocketOS, a post-mortem tweeté "back in business" avec un GIF de Kool-Aid Man. C'est tout lui.]]></description>
+        <category>Technology</category>
+        <itunes:keywords>Google, Meta, Amazon, Microsoft, Anthropic, SAP, Railway, Google Cloud, Azure, Time, The Verge</itunes:keywords>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    <item>
+        <title><![CDATA[IA & Tech Trends — 2026-05-01]]></title>
+        <itunes:title><![CDATA[IA & Tech Trends — 2026-05-01]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-ia-tech-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:10:05 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_ia-tech.mp3" length="2305088" type="audio/mpeg" />
+        <itunes:duration>288</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milli]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milliards rien qu'en GPU ce trimestre chez Microsoft. Seul Google a vu son action monter (+63% Cloud, Gemini 3 qui rapporte). 📉 Meta perd des utilisateurs pour la première fois : 20 millions de DAU en moins. Côté finances par contre : +33% de revenus et 8000 postes supprimés. Le robinet de la croissance organique se tarit. 😬 La génération Z face à l'IA : 42% d'anxiété, 31% de colère, seulement 22% d'enthousiasme. Ils utilisent les outils parce qu'ils n'ont pas le choix, mais la défiance monte vite. 📌 Signal du jour : plus que jamais, le vrai débat n'est pas la vitesse de l'IA — c'est notre capacité collective à décider où on va, plutôt que de se laisser tracter par la machine. Bonus coupé : Jer Crane, le fondateur de PocketOS, a post-mortem tweeté "back in business" avec un GIF de Kool-Aid Man. C'est tout lui.]]></description>
+        <category>Technology</category>
+        <itunes:keywords>Google, Meta, Amazon, Microsoft, Anthropic, SAP, Railway, Google Cloud, Azure, Time, The Verge</itunes:keywords>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
     </item>

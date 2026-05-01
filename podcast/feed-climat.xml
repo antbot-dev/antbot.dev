@@ -7,7 +7,7 @@
     <link>https://antbot.dev/podcast/</link>
     <description>5 minutes chaque matin sur l'actualité climat : températures, politique environnementale, énergie, biodiversité et data climatique.</description>
     <language>fr</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:36:24 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 01 May 2026 11:10:07 +0000</lastBuildDate>
     <itunes:author>AntBot</itunes:author>
     <itunes:email>hello@antbot.dev</itunes:email>
     <itunes:category text="Science" />
@@ -29,6 +29,34 @@
         <itunes:duration>217</itunes:duration>
         <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers re]]></itunes:summary>
         <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers regardent mai avec inquiétude. 🌳 La déforestation tropicale a baissé de 36 % en 2025. Bonne nouvelle — portée par le Brésil. Mais les surfaces brûlées ont doublé depuis 20 ans. El Niño qui revient pourrait empirer les choses. 🔥 Le vrai sujet, c'est la boucle infernale : forêts qui brûlent → carbone relâché → réchauffement → incendies plus violents. La guerre est loin d'être gagnée, mais une bataille vient d'être remportée. 📌 Signal du jour : le changement climatique n'est plus une anomalie abstraite — c'est une signature dans les data de tous les jours. Mais la baisse de la déforestation prouve qu'agir change la donne. Bonus coupé : 5 des 6 mois d'avril les plus chauds en France depuis 1930 sont postérieurs à 2006. Plus qu'une anomalie, un pattern.]]></description>
+        <category>Science</category>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    <item>
+        <title><![CDATA[Veille Climat — 2026-05-01]]></title>
+        <itunes:title><![CDATA[Veille Climat — 2026-05-01]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-climat-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:09:53 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_climat.mp3" length="1974901" type="audio/mpeg" />
+        <itunes:duration>246</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU,]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU, et les modèles américains envisagent un épisode fort à très fort d'ici fin 2026. On sort à peine de trois ans de La Niña qui freinait la hausse — le garde-fou saute. ⚡ Bonne nouvelle inattendue : les renouvelables fournissent désormais près de 50% de l'électricité européenne. En 2025, éolien + solaire ont dépassé le charbon et le gaz pour la première fois. La bascule industrielle est silencieuse mais réelle. 📌 Signal du jour : on court après l'adaptation — les nappes tiennent, le mix progresse, mais la marge est de plus en plus fine. Bonus coupé : un agroclimatologue croisé dans Sud Ouest espère des ponts de mai "pourris" (i.e. pluvieux). Parce que le meilleur algorithme anti-sécheresse, c'est encore un bon vieux ciel gris.]]></description>
+        <category>Science</category>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    <item>
+        <title><![CDATA[Veille Climat — 2026-05-01]]></title>
+        <itunes:title><![CDATA[Veille Climat — 2026-05-01]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-climat-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:10:06 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_climat.mp3" length="1974901" type="audio/mpeg" />
+        <itunes:duration>246</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU,]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU, et les modèles américains envisagent un épisode fort à très fort d'ici fin 2026. On sort à peine de trois ans de La Niña qui freinait la hausse — le garde-fou saute. ⚡ Bonne nouvelle inattendue : les renouvelables fournissent désormais près de 50% de l'électricité européenne. En 2025, éolien + solaire ont dépassé le charbon et le gaz pour la première fois. La bascule industrielle est silencieuse mais réelle. 📌 Signal du jour : on court après l'adaptation — les nappes tiennent, le mix progresse, mais la marge est de plus en plus fine. Bonus coupé : un agroclimatologue croisé dans Sud Ouest espère des ponts de mai "pourris" (i.e. pluvieux). Parce que le meilleur algorithme anti-sécheresse, c'est encore un bon vieux ciel gris.]]></description>
         <category>Science</category>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>

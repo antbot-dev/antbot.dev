@@ -1,66 +1,57 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0"
-    xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
-    xmlns:content="http://purl.org/rss/1.0/modules/content/">
-<channel>
-    <title><![CDATA[AntBot Podcast]]></title>
-    <link>https://antbot.dev/podcast/</link>
-    <description>Ta veille perso, en audio — 5min chaque matin sur WhatsApp. Podcast IA généré par AntBot. 3 thèmes : IA &amp; Tech, Startups, Climat.</description>
-    <language>fr</language>
-    <lastBuildDate>Thu, 30 Apr 2026 10:36:23 +0000</lastBuildDate>
-    <itunes:author>AntBot</itunes:author>
-    <itunes:email>hello@antbot.dev</itunes:email>
-    <itunes:category text="Technology" />
-    <itunes:category text="News" />
-    <itunes:category text="Business" />
-    <itunes:category text="Science" />
-    <itunes:explicit>false</itunes:explicit>
-    <itunes:image href="https://antbot.dev/podcast/cover.jpg" />
-    <image>
-        <url>https://antbot.dev/podcast/cover.jpg</url>
-        <title>AntBot Podcast</title>
-        <link>https://antbot.dev/podcast/</link>
-    </image>
     <item>
-        <title><![CDATA[IA & Tech Trends — 2026-04-30]]></title>
-        <itunes:title><![CDATA[IA & Tech Trends — 2026-04-30]]></itunes:title>
+        <title><![CDATA[Veille Climat — 2026-05-01]]></title>
+        <itunes:title><![CDATA[Veille Climat — 2026-05-01]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
-        <guid isPermaLink="false">antbot-ia-tech-2026-04-30</guid>
-        <pubDate>Thu, 30 Apr 2026 10:36:23 +0000</pubDate>
-        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_ia-tech.mp3" length="1964870" type="audio/mpeg" />
-        <itunes:duration>245</itunes:duration>
-        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 La machine a bossé, le frigo est vide, et le gros mot du jour c'est "rentabilité". 🏆 Time Magazine sort son premier classement des 10 entreprises les plus influentes en IA — avec trois Chinois (Alibaba, ByteDance, Zhipu AI), le français Mistral, et un constat : l'open source devient une arme de conquête mondiale. 💰 Alphabet publie ses résultats T1 : 110 milliards de chiffre d'affaires, bénéfice net en hausse de 81%, et Google Cloud qui bondit de 63%. L'IA comme mach]]></itunes:summary>
-        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 La machine a bossé, le frigo est vide, et le gros mot du jour c'est "rentabilité". 🏆 Time Magazine sort son premier classement des 10 entreprises les plus influentes en IA — avec trois Chinois (Alibaba, ByteDance, Zhipu AI), le français Mistral, et un constat : l'open source devient une arme de conquête mondiale. 💰 Alphabet publie ses résultats T1 : 110 milliards de chiffre d'affaires, bénéfice net en hausse de 81%, et Google Cloud qui bondit de 63%. L'IA comme machine à cash, ça marche quand t'es le vendeur. 💸 Mais le VP Deep Learning de Nvidia lâche une bombe : l'IA coûte déjà plus cher que les humains qu'elle remplace. Factures de GPU et tokens qui explosent, économies salariales qui s'envolent. Le grand remplacement économique n'est pas automatique. 📌 Signal du jour : l'IA rapporte une fortune à ceux qui la vendent, coûte encore cher à ceux qui l'achètent, et les humains ne sont pas près de disparaître — surtout quand le calcul économique ne tient pas.]]></description>
+        <guid isPermaLink="false">antbot-climat-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:09:53 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_climat.mp3" length="1974901" type="audio/mpeg" />
+        <itunes:duration>246</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU,]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU, et les modèles américains envisagent un épisode fort à très fort d'ici fin 2026. On sort à peine de trois ans de La Niña qui freinait la hausse — le garde-fou saute. ⚡ Bonne nouvelle inattendue : les renouvelables fournissent désormais près de 50% de l'électricité européenne. En 2025, éolien + solaire ont dépassé le charbon et le gaz pour la première fois. La bascule industrielle est silencieuse mais réelle. 📌 Signal du jour : on court après l'adaptation — les nappes tiennent, le mix progresse, mais la marge est de plus en plus fine. Bonus coupé : un agroclimatologue croisé dans Sud Ouest espère des ponts de mai "pourris" (i.e. pluvieux). Parce que le meilleur algorithme anti-sécheresse, c'est encore un bon vieux ciel gris.]]></description>
+        <category>Science</category>
+        <author>AntBot (hello@antbot.dev)</author>
+        <itunes:author>AntBot</itunes:author>
+    </item>
+    <item>
+        <title><![CDATA[IA & Tech Trends — 2026-05-01]]></title>
+        <itunes:title><![CDATA[IA & Tech Trends — 2026-05-01]]></itunes:title>
+        <link>https://antbot.dev/podcast/</link>
+        <guid isPermaLink="false">antbot-ia-tech-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:10:05 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_ia-tech.mp3" length="2305088" type="audio/mpeg" />
+        <itunes:duration>288</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milli]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Agent IA qui flingue une prod, 725 milliards qui partent en fumée dans les data centers, et la Gen Z qui regarde tout ça en serrant les dents. 💥 Un agent Cursor (Claude Opus 4.6) a supprimé toute la base de prod ET les backups de PocketOS en 9 secondes. Token API aux permissions explosives, personne savait. 30h de panne. Vibe coding, suite et fin ? Non — juste avec plus de trauma. 💰 Microsoft, Meta, Google, Amazon : 725 milliards de capex IA cumulés en 2026. 20 milliards rien qu'en GPU ce trimestre chez Microsoft. Seul Google a vu son action monter (+63% Cloud, Gemini 3 qui rapporte). 📉 Meta perd des utilisateurs pour la première fois : 20 millions de DAU en moins. Côté finances par contre : +33% de revenus et 8000 postes supprimés. Le robinet de la croissance organique se tarit. 😬 La génération Z face à l'IA : 42% d'anxiété, 31% de colère, seulement 22% d'enthousiasme. Ils utilisent les outils parce qu'ils n'ont pas le choix, mais la défiance monte vite. 📌 Signal du jour : plus que jamais, le vrai débat n'est pas la vitesse de l'IA — c'est notre capacité collective à décider où on va, plutôt que de se laisser tracter par la machine. Bonus coupé : Jer Crane, le fondateur de PocketOS, a post-mortem tweeté "back in business" avec un GIF de Kool-Aid Man. C'est tout lui.]]></description>
         <category>Technology</category>
-        <itunes:keywords>OpenAI, Google, Alphabet, Meta, Amazon, Anthropic, Mistral, Nvidia, Alibaba, ByteDance, Hugging Face, Zhipu, Google Cloud, Time</itunes:keywords>
+        <itunes:keywords>Google, Meta, Amazon, Microsoft, Anthropic, SAP, Railway, Google Cloud, Azure, Time, The Verge</itunes:keywords>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
     </item>
     <item>
-        <title><![CDATA[Startups & Business — 2026-04-30]]></title>
-        <itunes:title><![CDATA[Startups & Business — 2026-04-30]]></itunes:title>
+        <title><![CDATA[Startups & Business — 2026-05-01]]></title>
+        <itunes:title><![CDATA[Startups & Business — 2026-05-01]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
-        <guid isPermaLink="false">antbot-startups-2026-04-30</guid>
-        <pubDate>Thu, 30 Apr 2026 10:36:23 +0000</pubDate>
-        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_startups.mp3" length="1553180" type="audio/mpeg" />
-        <itunes:duration>194</itunes:duration>
-        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Les French Days des startups — deals, pas TV 4K. 🤖 Gojob, la pépite française du recrutement IA, applique son moteur à l'Armée de l'air et de l'espace pour matcher les profils mieux que les humains. B2G qui cartonne. 🇪🇸 Freepik devient Magnific et balance 230M$ de revenus annuels… sans un euro levé. Bootstrappée de Málaga, 16 ans de patience, zéro VC. Claque européenne. 🐧 L'État français migre 2,5 millions de postes sous Linux — la DINUM acte la sortie de Windows. L]]></itunes:summary>
-        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Les French Days des startups — deals, pas TV 4K. 🤖 Gojob, la pépite française du recrutement IA, applique son moteur à l'Armée de l'air et de l'espace pour matcher les profils mieux que les humains. B2G qui cartonne. 🇪🇸 Freepik devient Magnific et balance 230M$ de revenus annuels… sans un euro levé. Bootstrappée de Málaga, 16 ans de patience, zéro VC. Claque européenne. 🐧 L'État français migre 2,5 millions de postes sous Linux — la DINUM acte la sortie de Windows. Le Health Data Hub quitte Azure aussi. Appel d'air colossal pour les startups souveraines. 📌 Signal du jour : l'écosystème européen n'attend plus la permission — IA publique, scale bootstrappé, souveraineté numérique, les trois moteurs tournent en même temps. Bonus coupé : Magnific n'a pas levé un dollar, mais génère plus d'ARR qu'une bonne partie du Next40. Faire moins de pitchs, plus de revenus.]]></description>
+        <guid isPermaLink="false">antbot-startups-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:10:06 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_startups.mp3" length="1786401" type="audio/mpeg" />
+        <itunes:duration>223</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Berlin, Zurich, Paris — le capital-risque européen sort l'artillerie lourde. 🇪🇺 Earlybird clôt son 8e fonds à 360M€ avec un modèle inédit : la « propriété active perpétuelle », adieu la pression de sortie à 10 ans. Les startups européennes peuvent enfin respirer. 🏭 SPREAD AI lève 25M€ en série B pour imposer un standard européen d'IA industrielle, là où les géants US régnaient jusqu'ici. Souveraineté industrielle, acte 1. 🐱 Alice & Bob sélectionnée par la Commission ]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Berlin, Zurich, Paris — le capital-risque européen sort l'artillerie lourde. 🇪🇺 Earlybird clôt son 8e fonds à 360M€ avec un modèle inédit : la « propriété active perpétuelle », adieu la pression de sortie à 10 ans. Les startups européennes peuvent enfin respirer. 🏭 SPREAD AI lève 25M€ en série B pour imposer un standard européen d'IA industrielle, là où les géants US régnaient jusqu'ici. Souveraineté industrielle, acte 1. 🐱 Alice & Bob sélectionnée par la Commission européenne au programme STEP Scale Up — la scale-up française du quantique (chats de Schrödinger inclus) fait partie des 8 élus sur 44 candidats. 🧠 Mosaic SoC (spin-off ETH Zurich) lève 3,8M$ pour des puces de perception spatiale ultra-basse conso. Le genre de techno qui rendra les lunettes connectées vraiment portables. 📌 Signal du jour : l'Europe muscle son jeu sur la deep tech et l'IA — on n'est plus à l'ère des apps de livraison. Bonus coupé : la parenthèse « Alice et Bob, non pas le sketch des Inconnus » — elle était dans le script, et on l'a gardée parce que le quantique français mérite bien une vanne de qualité.]]></description>
         <category>Business</category>
-        <itunes:keywords>Freepik, Magnific, Gojob, BFM, Azure, DINUM, Health Data Hub</itunes:keywords>
+        <itunes:keywords>Le Monde</itunes:keywords>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
     </item>
     <item>
-        <title><![CDATA[Veille Climat — 2026-04-30]]></title>
-        <itunes:title><![CDATA[Veille Climat — 2026-04-30]]></itunes:title>
+        <title><![CDATA[Veille Climat — 2026-05-01]]></title>
+        <itunes:title><![CDATA[Veille Climat — 2026-05-01]]></itunes:title>
         <link>https://antbot.dev/podcast/</link>
-        <guid isPermaLink="false">antbot-climat-2026-04-30</guid>
-        <pubDate>Thu, 30 Apr 2026 10:36:23 +0000</pubDate>
-        <enclosure url="https://antbot.dev/podcast/episodes/2026-04-30_climat.mp3" length="1736664" type="audio/mpeg" />
-        <itunes:duration>217</itunes:duration>
-        <itunes:summary><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers re]]></itunes:summary>
-        <description><![CDATA[🎙️ Épisode du 30 avril 2026 📌 Avril se termine sur un record qui pique, et la déforestation recule pour la première fois depuis longtemps. Petit tour du cadran. 🌡️ Avril 2026 est le 6� avril le plus chaud jamais mesuré en France (+2,4°C), avec des pointes à +5,6°C au Mont Aigoual — et 28°C sur la moitié du pays. En avril. 💧 Le sol sèche à toute vitesse : déficit de pluie de 70 % sur le mois. Les nappes profondes sont pleines, mais en surface les cultures souffrent. Les vignerons et céréaliers regardent mai avec inquiétude. 🌳 La déforestation tropicale a baissé de 36 % en 2025. Bonne nouvelle — portée par le Brésil. Mais les surfaces brûlées ont doublé depuis 20 ans. El Niño qui revient pourrait empirer les choses. 🔥 Le vrai sujet, c'est la boucle infernale : forêts qui brûlent → carbone relâché → réchauffement → incendies plus violents. La guerre est loin d'être gagnée, mais une bataille vient d'être remportée. 📌 Signal du jour : le changement climatique n'est plus une anomalie abstraite — c'est une signature dans les data de tous les jours. Mais la baisse de la déforestation prouve qu'agir change la donne. Bonus coupé : 5 des 6 mois d'avril les plus chauds en France depuis 1930 sont postérieurs à 2006. Plus qu'une anomalie, un pattern.]]></description>
+        <guid isPermaLink="false">antbot-climat-2026-05-01</guid>
+        <pubDate>Fri, 01 May 2026 11:10:06 +0000</pubDate>
+        <enclosure url="https://antbot.dev/podcast/episodes/2026-05-01_climat.mp3" length="1974901" type="audio/mpeg" />
+        <itunes:duration>246</itunes:duration>
+        <itunes:summary><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU,]]></itunes:summary>
+        <description><![CDATA[🎙️ Épisode du 1er mai 2026 📌 Avril s'est cassé en mode fournaise sèche, et le Pacifique prépare un retour pas piqué des hannetons. 🌡️ Avril 2026 se classe 6e avril le plus chaud depuis 1930, avec +2,4°C de moyenne et des pointes à +5,6°C au Mont Aigoual. Problème : il n'est tombé qu'un tiers des pluies normales. Les nappes tiennent grâce à février, mais si mai continue comme ça, la sécheresse estivale revient en express. 🌊 El Niño pourrait pointer son nez dès mai avec 60% de chances selon l'ONU, et les modèles américains envisagent un épisode fort à très fort d'ici fin 2026. On sort à peine de trois ans de La Niña qui freinait la hausse — le garde-fou saute. ⚡ Bonne nouvelle inattendue : les renouvelables fournissent désormais près de 50% de l'électricité européenne. En 2025, éolien + solaire ont dépassé le charbon et le gaz pour la première fois. La bascule industrielle est silencieuse mais réelle. 📌 Signal du jour : on court après l'adaptation — les nappes tiennent, le mix progresse, mais la marge est de plus en plus fine. Bonus coupé : un agroclimatologue croisé dans Sud Ouest espère des ponts de mai "pourris" (i.e. pluvieux). Parce que le meilleur algorithme anti-sécheresse, c'est encore un bon vieux ciel gris.]]></description>
         <category>Science</category>
         <author>AntBot (hello@antbot.dev)</author>
         <itunes:author>AntBot</itunes:author>
