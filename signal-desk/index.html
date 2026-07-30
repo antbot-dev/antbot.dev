@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Signal Desk - L'actu utile, sans le bruit</title>
+  <meta name="description" content="Signal Desk lit la presse, les newsletters et les signaux sociaux pour t'envoyer chaque matin un brief court, clair et ecoutable.">
+  <style>
+    :root {
+      --ink: #171411;
+      --paper: #f6f0e6;
+      --paper-deep: #e3d5c0;
+      --oxide: #b4492f;
+      --signal: #0e8f8a;
+      --chart: #242b66;
+      --lime: #d8e45f;
+      --line: rgba(23, 20, 17, .16);
+      --soft: rgba(23, 20, 17, .68);
+      --shadow: 0 24px 70px rgba(43, 31, 21, .18);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(90deg, rgba(23, 20, 17, .035) 1px, transparent 1px) 0 0 / 24px 24px,
+        linear-gradient(rgba(23, 20, 17, .026) 1px, transparent 1px) 0 0 / 24px 24px,
+        radial-gradient(circle at 18% 12%, rgba(216, 228, 95, .45), transparent 24rem),
+        radial-gradient(circle at 88% 18%, rgba(14, 143, 138, .28), transparent 24rem),
+        var(--paper);
+      font-family: Georgia, "Times New Roman", serif;
+      letter-spacing: 0;
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      content: "";
+      opacity: .35;
+      background-color: transparent;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg' style='background:transparent'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      mix-blend-mode: multiply;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      min-height: 100vh;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      border-bottom: 1px solid var(--line);
+      background: rgba(246, 240, 230, .84);
+      backdrop-filter: blur(18px);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 68px;
+      gap: 20px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 800;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 34px;
+      height: 34px;
+      place-items: center;
+      color: var(--paper);
+      background: conic-gradient(from 220deg, var(--oxide), var(--chart), var(--signal), var(--oxide));
+      border: 1px solid rgba(23, 20, 17, .28);
+      border-radius: 7px;
+      box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--soft);
+    }
+
+    .nav-cta {
+      padding: 10px 13px;
+      color: var(--paper);
+      background: var(--ink);
+      border-radius: 6px;
+      box-shadow: 3px 3px 0 var(--oxide);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(360px, .95fr);
+      gap: 42px;
+      align-items: end;
+      min-height: calc(100vh - 68px);
+      padding: 54px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .kicker {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+      padding: 8px 10px;
+      margin-bottom: 22px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, .26);
+    }
+
+    .pulse {
+      width: 8px;
+      height: 8px;
+      border-radius: 99px;
+      background: var(--signal);
+      box-shadow: 0 0 0 0 rgba(14, 143, 138, .45);
+      animation: ping 1.8s ease-out infinite;
+    }
+
+    h1 {
+      max-width: 870px;
+      margin: 0;
+      font-size: clamp(54px, 8.5vw, 126px);
+      line-height: .86;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .hero-copy {
+      max-width: 650px;
+      margin: 26px 0 0;
+      color: rgba(23, 20, 17, .76);
+      font-size: clamp(19px, 2vw, 26px);
+      line-height: 1.22;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 32px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 17px;
+      border: 1px solid var(--ink);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .button.primary {
+      color: var(--paper);
+      background: var(--ink);
+      box-shadow: 5px 5px 0 var(--signal);
+    }
+
+    .button.secondary {
+      background: rgba(255, 255, 255, .28);
+      box-shadow: 5px 5px 0 var(--paper-deep);
+    }
+
+    .button:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--oxide);
+    }
+
+    .frontpage {
+      position: relative;
+      padding: 18px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(250, 246, 238, .88);
+      box-shadow: var(--shadow), 10px 10px 0 rgba(180, 73, 47, .16);
+      transform: rotate(1.2deg);
+    }
+
+    .frontpage::before {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      width: 94px;
+      height: 94px;
+      content: "";
+      background:
+        linear-gradient(90deg, var(--ink) 50%, transparent 0) 0 0 / 10px 10px,
+        linear-gradient(var(--ink) 50%, transparent 0) 0 0 / 10px 10px;
+      opacity: .08;
+    }
+
+    .paper-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 3px double var(--ink);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .paper-title {
+      margin: 18px 0 14px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height: .92;
+    }
+
+    .brief-card {
+      display: grid;
+      gap: 12px;
+      padding: 16px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .brief-card:first-of-type {
+      border-top: 0;
+    }
+
+    .brief-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      padding: 5px 7px;
+      color: var(--paper);
+      background: var(--chart);
+      border-radius: 4px;
+    }
+
+    .tag.alt {
+      color: var(--ink);
+      background: var(--lime);
+    }
+
+    .brief-title {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.04;
+    }
+
+    .brief-copy {
+      margin: 0;
+      color: var(--soft);
+      font: 15px/1.45 ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .ticker {
+      overflow: hidden;
+      border-block: 1px solid var(--ink);
+      background: var(--ink);
+      color: var(--paper);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-transform: uppercase;
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: ticker 28s linear infinite;
+    }
+
+    .ticker span {
+      display: inline-flex;
+      padding: 12px 18px;
+      white-space: nowrap;
+    }
+
+    section {
+      padding: 82px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-label {
+      margin: 0 0 14px;
+      color: var(--oxide);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    h2 {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(36px, 5vw, 72px);
+      line-height: .93;
+      letter-spacing: 0;
+      text-wrap: balance;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .tile {
+      min-height: 245px;
+      padding: 22px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .24);
+      box-shadow: 6px 6px 0 rgba(23, 20, 17, .08);
+    }
+
+    .tile-index {
+      display: inline-flex;
+      width: 34px;
+      height: 34px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      color: var(--paper);
+      background: var(--oxide);
+      border-radius: 5px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-weight: 900;
+    }
+
+    .tile h3 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .tile p {
+      margin: 0;
+      color: var(--soft);
+      font: 16px/1.45 ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: 42px;
+      align-items: start;
+    }
+
+    .console {
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      overflow: hidden;
+      background: #12120f;
+      color: #f7f1df;
+      box-shadow: var(--shadow);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .console-bar {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      padding: 12px;
+      background: #242016;
+      border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 99px;
+      background: var(--oxide);
+    }
+
+    .dot:nth-child(2) {
+      background: var(--lime);
+    }
+
+    .dot:nth-child(3) {
+      background: var(--signal);
+    }
+
+    .console-lines {
+      display: grid;
+      gap: 14px;
+      padding: 22px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .line {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 14px;
+    }
+
+    .time {
+      color: #8fe1db;
+    }
+
+    .market {
+      display: grid;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .market-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--line);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .market-row strong {
+      display: block;
+      margin-bottom: 4px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+    }
+
+    .score {
+      min-width: 86px;
+      padding: 8px 10px;
+      text-align: center;
+      border: 1px solid var(--ink);
+      border-radius: 5px;
+      background: var(--lime);
+      font: 800 13px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    }
+
+    .distribution {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 34px;
+    }
+
+    .route {
+      padding: 24px;
+      border-left: 6px solid var(--signal);
+      background: rgba(255, 255, 255, .32);
+    }
+
+    .route:nth-child(2) {
+      border-color: var(--oxide);
+    }
+
+    .route h3 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .route p {
+      margin: 0;
+      color: var(--soft);
+      font: 16px/1.5 ui-sans-serif, system-ui, sans-serif;
+    }
+
+    .closing {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px;
+      align-items: center;
+      padding: 44px 0 60px;
+    }
+
+    .closing h2 {
+      max-width: 850px;
+    }
+
+    .stamp {
+      display: grid;
+      width: 154px;
+      height: 154px;
+      place-items: center;
+      transform: rotate(-8deg);
+      border: 3px solid var(--oxide);
+      border-radius: 50%;
+      color: var(--oxide);
+      font: 900 18px/1 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: rise .65s ease forwards;
+    }
+
+    .reveal:nth-child(2) {
+      animation-delay: .08s;
+    }
+
+    .reveal:nth-child(3) {
+      animation-delay: .16s;
+    }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @keyframes ping {
+      70%, 100% {
+        box-shadow: 0 0 0 12px rgba(14, 143, 138, 0);
+      }
+    }
+
+    @keyframes ticker {
+      to {
+        transform: translateX(-50%);
+      }
+    }
+
+    @media (max-width: 920px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero,
+      .split,
+      .distribution,
+      .closing {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 38px;
+      }
+
+      .frontpage {
+        transform: none;
+      }
+
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .closing {
+        padding-bottom: 42px;
+      }
+
+      .stamp {
+        width: 132px;
+        height: 132px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .shell {
+        width: min(100% - 22px, 1180px);
+      }
+
+      .nav {
+        min-height: 58px;
+      }
+
+      h1 {
+        font-size: 52px;
+      }
+
+      section {
+        padding: 58px 0;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      .line {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <nav class="shell nav" aria-label="Navigation principale">
+        <a class="brand" href="#">
+          <span class="brand-mark">SD</span>
+          <span>Signal Desk</span>
+        </a>
+        <div class="nav-links">
+          <a href="#workflow">Comment ca marche</a>
+          <a href="#brief">Exemple</a>
+          <a href="#distribution">Reception</a>
+        </div>
+        <a class="nav-cta" href="#distribution">Recevoir le brief</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="shell hero">
+        <div>
+          <div class="kicker reveal"><span class="pulse"></span> Brief quotidien intelligent</div>
+          <h1 class="reveal">Toute l'actu utile. Dix minutes. Zero scroll.</h1>
+          <p class="hero-copy reveal">Signal Desk lit pour toi la presse, les newsletters, RSS, X et les signaux de niche. Chaque matin, tu recois ce qui compte vraiment : en texte court, avec un audio si tu preferes ecouter.</p>
+          <div class="hero-actions reveal">
+            <a class="button primary" href="#brief">Voir un exemple</a>
+            <a class="button secondary" href="#workflow">Voir le tri</a>
+          </div>
+        </div>
+
+        <aside class="frontpage reveal" aria-label="Exemple de revue de presse">
+          <div class="paper-head">
+            <span>Edition 07:30</span>
+            <span>8 sujets / 212 sources</span>
+          </div>
+          <h2 class="paper-title">Ce matin, pas besoin de tout lire.</h2>
+          <article class="brief-card">
+            <div class="brief-meta"><span class="tag">IA</span><span class="tag alt">Urgent</span></div>
+            <h3 class="brief-title">Les boites solo deviennent un vrai sujet business.</h3>
+            <p class="brief-copy">Stripe voit monter des fondateurs seuls a gros revenus. Signal interessant, mais pas magique : beaucoup s'appuient encore sur freelances, agences et automatisations.</p>
+          </article>
+          <article class="brief-card">
+            <div class="brief-meta"><span class="tag">Media</span><span class="tag alt">Moat</span></div>
+            <h3 class="brief-title">Le probleme n'est plus l'acces a l'info. C'est le tri.</h3>
+            <p class="brief-copy">Tout le monde peut ouvrir 20 onglets. Peu de gens savent quoi garder, quoi ignorer, et ce qui change vraiment quelque chose.</p>
+          </article>
+          <article class="brief-card">
+            <div class="brief-meta"><span class="tag">Go-to-market</span></div>
+            <h3 class="brief-title">Le bon format gagne parce qu'il arrive au bon endroit.</h3>
+            <p class="brief-copy">Un court message WhatsApp, un vocal de 4 minutes, les liens si besoin. Pas une nouvelle app a ouvrir.</p>
+          </article>
+        </aside>
+      </section>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>Presse business</span>
+          <span>Grands medias</span>
+          <span>Newsletters specialisees</span>
+          <span>Sources US</span>
+          <span>Signaux faibles</span>
+          <span>X pour la temperature</span>
+          <span>RSS et alertes</span>
+          <span>Presse business</span>
+          <span>Grands medias</span>
+          <span>Newsletters specialisees</span>
+          <span>Sources US</span>
+          <span>Signaux faibles</span>
+          <span>X pour la temperature</span>
+          <span>RSS et alertes</span>
+        </div>
+      </div>
+
+      <section id="workflow">
+        <div class="shell">
+          <p class="section-label">Avant de resumer, on elimine</p>
+          <h2>Le vrai service, ce n'est pas de lire plus vite. C'est de ne pas te faire perdre la matinee.</h2>
+          <div class="grid-3">
+            <div class="tile">
+              <span class="tile-index">01</span>
+              <h3>On surveille large</h3>
+              <p>Presse, newsletters, RSS, alertes, X et sources specialisees. Le but : ne pas rater le signal qui compte.</p>
+            </div>
+            <div class="tile">
+              <span class="tile-index">02</span>
+              <h3>On trie dur</h3>
+              <p>Doublons retires, sources comparees, nouveaute verifiee, impact estime, angles faibles ecartes.</p>
+            </div>
+            <div class="tile">
+              <span class="tile-index">03</span>
+              <h3>On livre court</h3>
+              <p>Quelques sujets seulement : le fait, pourquoi c'est important, ce qu'il faut surveiller, les liens, et une version audio.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="brief">
+        <div class="shell split">
+          <div>
+            <p class="section-label">Exemple de brief</p>
+            <h2>Chaque sujet doit tenir debout en 30 secondes.</h2>
+            <div class="market">
+              <div class="market-row">
+                <div><strong>Fait</strong><span>Stripe observe des milliers de solo operators qui depassent 1M$ de revenus annuels.</span></div>
+                <span class="score">8.7/10</span>
+              </div>
+              <div class="market-row">
+                <div><strong>Lecture</strong><span>L'IA augmente le levier individuel, mais le fantasme du fondateur totalement seul masque souvent une petite armee invisible.</span></div>
+                <span class="score">Nuance</span>
+              </div>
+              <div class="market-row">
+                <div><strong>A suivre</strong><span>Les niches ou support, ops et distribution peuvent etre automatises sans casser la qualite.</span></div>
+                <span class="score">Watch</span>
+              </div>
+            </div>
+          </div>
+          <div class="console" aria-label="Journal de traitement Signal Desk">
+            <div class="console-bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+            <div class="console-lines">
+              <div class="line"><span class="time">06:12</span><span>212 elements lus, 37 doublons retires</span></div>
+              <div class="line"><span class="time">06:18</span><span>les sujets faibles sortent, meme s'ils font du bruit</span></div>
+              <div class="line"><span class="time">06:26</span><span>priorite : IA, business, media, startups</span></div>
+              <div class="line"><span class="time">06:41</span><span>8 sujets gardes, 19 jetes, 3 nuances ajoutees</span></div>
+              <div class="line"><span class="time">07:08</span><span>audio genere : 4 min 20, direct, sans remplissage</span></div>
+              <div class="line"><span class="time">07:30</span><span>envoye : texte court + vocal + liens</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="distribution">
+        <div class="shell">
+          <p class="section-label">Recu ou tu lis deja</p>
+          <h2>Pas une app de plus. Un brief qui arrive dans ton flux naturel.</h2>
+          <div class="distribution">
+            <div class="route">
+              <h3>WhatsApp</h3>
+              <p>Un message court le matin, avec les points importants et le vocal pour l'ecouter en marchant, en voiture ou entre deux calls.</p>
+            </div>
+            <div class="route">
+              <h3>Email</h3>
+              <p>Une version ecrite propre, partageable, facile a retrouver quand tu veux renvoyer un sujet a quelqu'un.</p>
+            </div>
+            <div class="route">
+              <h3>Filtres perso</h3>
+              <p>IA, business, media, marche, climat, startup, sport : chacun garde les sujets qui l'aident vraiment.</p>
+            </div>
+            <div class="route">
+              <h3>Groupes prives</h3>
+              <p>Un brief commun pour une bande, une equipe ou une communaute. Meme base, mais le filtre apprend ce que le groupe trouve utile.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="shell closing">
+        <h2>Signal Desk : rester informe sans passer sa vie a scroller.</h2>
+        <div class="stamp">Read<br>less<br>know<br>more</div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>
